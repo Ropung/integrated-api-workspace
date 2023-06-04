@@ -4,19 +4,28 @@ plugins {
 	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
 }
 
-group = 'com.joara'
-version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '17'
+allprojects {
+	group = 'com.joara'
+	version = '0.0.1-SNAPSHOT'
+	sourceCompatibility = JavaVersion.VERSION_17
+	targetCompatibility = JavaVersion.VERSION_17
 
-repositories {
-	mavenCentral()
+	apply plugin: 'java'
+	apply plugin: 'org.springframework.boot'
+	apply plugin: 'io.spring.dependency-management'
+
+	repositories {
+		mavenCentral()
+	}
 }
 
-dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-}
+subprojects {
+	dependencies {
+		implementation 'org.springframework.boot:spring-boot-starter-web'
+		testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	}
 
-tasks.named('test') {
-	useJUnitPlatform()
+	tasks.named('test') {
+		useJUnitPlatform()
+	}
 }
