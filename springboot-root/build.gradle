@@ -17,15 +17,55 @@ allprojects {
 	repositories {
 		mavenCentral()
 	}
+
+	bootJar {
+		enabled = false
+	}
 }
 
 subprojects {
 	dependencies {
 		implementation 'org.springframework.boot:spring-boot-starter-web'
 		testImplementation 'org.springframework.boot:spring-boot-starter-test'
+		developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+		// Lombok
+		compileOnly 'org.projectlombok:lombok'
+		testCompileOnly 'org.projectlombok:lombok'
+		annotationProcessor 'org.projectlombok:lombok'
+		testAnnotationProcessor 'org.projectlombok:lombok'
+
+		// Logging
+		implementation 'org.apache.logging.log4j:log4j-api:2.19.0'
+		implementation 'org.apache.logging.log4j:log4j-core:2.19.0'
+
+		// JSON
+		implementation 'com.google.code.gson:gson:2.10.1'
+
+
 	}
 
 	tasks.named('test') {
 		useJUnitPlatform()
+	}
+}
+
+// NOTE this module is for execution. All required beans must be included.
+project(':authentication-service') {
+
+	dependencies {
+		implementation project(':authentication-service:domain')
+		implementation project(':authentication-service:adapters:rdb-adapter')
+		implementation project(':authentication-service:adapters:web-adapter')
+	}
+
+	bootJar {
+		enabled = true
+	}
+}
+
+project(':base-modules:joara-jpa-base') {
+	dependencies {
+		implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	}
 }
