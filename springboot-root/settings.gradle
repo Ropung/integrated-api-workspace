@@ -1,1 +1,11 @@
 rootProject.name = 'springboot-root'
+include 'authentication-service'
+include 'authentication-service:adapters'
+findProject(':authentication-service:adapters')?.name = 'adapters'
+include 'authentication-service:adapters:web-adapter'
+findProject(':authentication-service:adapters:web-adapter')?.name = 'web-adapter'
+include 'authentication-service:adapters:rdb-adapter'
+findProject(':authentication-service:adapters:rdb-adapter')?.name = 'rdb-adapter'
+include 'authentication-service:domain'
+findProject(':authentication-service:domain')?.name = 'domain'
+
