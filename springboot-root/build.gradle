@@ -54,6 +54,7 @@ subprojects {
 project(':authentication-service') {
 
 	dependencies {
+		implementation project(':common')
 		implementation project(':authentication-service:domain')
 		implementation project(':authentication-service:adapters:rdb-adapter')
 		implementation project(':authentication-service:adapters:web-adapter')
@@ -64,8 +65,16 @@ project(':authentication-service') {
 	}
 }
 
+// === Base Modules ====================================================================================================
+
 project(':base-modules:joara-jpa-base') {
 	dependencies {
 		implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	}
+}
+
+project(':base-modules:joara-global-exception-handler') {
+	dependencies {
+		implementation project(':common')
 	}
 }
