@@ -1,7 +1,7 @@
 version: "3"
 
 services:
-  swagger-integrated-proto:
+  swagger-integrated:
     image: swaggerapi/swagger-ui
     container_name: swagger-integrated-proto
     ports:
@@ -14,3 +14,38 @@ services:
         {url:'http://localhost:8000/docs/openapi3.sample-fastapi.json',name:'My Subproject A'},
         {url:'http://localhost:5000/docs/openapi3.sample-express.json',name:'My Subproject B'}
         ]
+
+  joara_postgres14:
+    image: postgres:14
+    container_name: joara_postgres14
+    environment:
+      TZ: Asia/Seoul
+      POSTGRES_DB: "joara_postgres"
+      POSTGRES_USER: "root"
+      POSTGRES_PASSWORD: "root"
+      POSTGRES_INITDB_ARGS: '--encoding=UTF-8 --lc-collate=C --lc-ctype=C'
+    ports:
+      - 5432:5432
+    restart: on-failure
+    volumes:
+      - sticky_volume:/var/lib/postgresql/data
+      - ./db/initdb.d:/docker-entrypoint-initdb.d:ro
+
+  joara_redis7:
+    image: redis:7.0
+    container_name: joara_redis7
+    ports:
+      - 6379:6379
+    volumes:
+      - sticky_volume:/redis/data
+      - ./config/redis.conf:/usr/local/conf/redis.conf
+    # 컨테이너에 docker label을 이용해서 메타데이터 추가
+    labels:
+      - "name=redis"
+      - "mode=standalone"
+    # 컨테이너 종료시 재시작 여부 설정
+    restart: on-failure
+    command: redis-server /usr/local/conf/redis.conf
+
+volumes:
+  sticky_volume:

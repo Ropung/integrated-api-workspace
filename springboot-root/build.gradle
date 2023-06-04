@@ -41,8 +41,6 @@ subprojects {
 
 		// JSON
 		implementation 'com.google.code.gson:gson:2.10.1'
-
-
 	}
 
 	tasks.named('test') {
@@ -52,16 +50,36 @@ subprojects {
 
 // NOTE this module is for execution. All required beans must be included.
 project(':authentication-service') {
-
 	dependencies {
-		implementation project(':common')
 		implementation project(':authentication-service:domain')
 		implementation project(':authentication-service:adapters:rdb-adapter')
 		implementation project(':authentication-service:adapters:web-adapter')
+		implementation project(':common')
+		implementation project(':base-modules:joara-global-exception-handler')
+		implementation project(':base-modules:joara-integrated-flyway')
+
+		implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+		runtimeOnly 'org.postgresql:postgresql'
+
+		// Flyway
+		implementation 'org.flywaydb:flyway-core'
 	}
 
 	bootJar {
 		enabled = true
+	}
+}
+
+// === Book Service ====================================================================================================
+
+project(':book-service') {
+	dependencies {
+		implementation project(':common')
+		implementation project(':base-modules:joara-global-exception-handler')
+		implementation project(':base-modules:joara-integrated-flyway')
+
+		// Flyway
+		implementation 'org.flywaydb:flyway-core'
 	}
 }
 

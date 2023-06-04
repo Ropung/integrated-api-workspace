@@ -1,0 +1,16 @@
+app:
+  security:
+    cors:
+      exposed-headers: "*"
+      allowed:
+        methods: "*"
+        headers: "*"
+        origins:
+          - https://ropung.github.io
+          - https://ropung.github.io/react-joara-front
+          - http://localhost:3000
+          - http://127.0.0.1:3000
+        credentials: true
+
+
+        # 프로파일 잘 안 되면 아래처럼 목록 추가해서 사용

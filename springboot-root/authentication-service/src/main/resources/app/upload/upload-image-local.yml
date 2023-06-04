@@ -1,0 +1,5 @@
+app:
+  upload:
+    files:
+      target: local
+      upload-url: /Users/nogihun/Desktop/upload-image

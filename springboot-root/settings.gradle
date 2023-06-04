@@ -14,4 +14,7 @@ include 'base-modules:joara-global-exception-handler'
 findProject(':base-modules:joara-global-exception-handler')?.name = 'joara-global-exception-handler'
 include 'base-modules:joara-jpa-base'
 findProject(':base-modules:joara-jpa-base')?.name = 'joara-jpa-base'
+include 'book-service'
+include 'base-modules:joara-integrated-flyway'
+findProject(':base-modules:joara-integrated-flyway')?.name = 'joara-integrated-flyway'
 
