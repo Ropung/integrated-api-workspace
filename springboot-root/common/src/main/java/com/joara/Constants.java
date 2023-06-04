@@ -1,4 +1,4 @@
-package com.joara.auth;
+package com.joara;
 
 public final class Constants {
 
