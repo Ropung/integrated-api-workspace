@@ -1,8 +1,8 @@
-package com.joara.entity;
+package com.joara.auth.entity;
 
 import com.joara.base.jpa.entity.UuidBaseEntity;
-import com.joara.domain.model.type.AccountStatus;
-import com.joara.domain.model.type.Gender;
+import com.joara.auth.domain.model.type.AccountStatus;
+import com.joara.auth.domain.model.type.Gender;
 import com.joara.rdb.JoaraPostgresSchemaConstants;
 import com.joara.util.time.ServerTime;
 import lombok.*;

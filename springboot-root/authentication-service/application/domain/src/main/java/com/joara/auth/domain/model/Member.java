@@ -1,7 +1,7 @@
-package com.joara.domain.model;
+package com.joara.auth.domain.model;
 
-import com.joara.domain.model.type.AccountStatus;
-import com.joara.domain.model.type.Gender;
+import com.joara.auth.domain.model.type.AccountStatus;
+import com.joara.auth.domain.model.type.Gender;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;

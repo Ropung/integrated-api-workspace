@@ -1,5 +1,6 @@
 plugins {
 	id 'java'
+	id 'java-library'
 	id 'org.springframework.boot' version '2.7.12'
 	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
 }
@@ -11,6 +12,7 @@ allprojects {
 	targetCompatibility = JavaVersion.VERSION_17
 
 	apply plugin: 'java'
+	apply plugin: 'java-library'
 	apply plugin: 'org.springframework.boot'
 	apply plugin: 'io.spring.dependency-management'
 
@@ -53,7 +55,7 @@ subprojects {
 // NOTE this module is for execution. All required beans must be included.
 project(':authentication-service') {
 	dependencies {
-		implementation project(':authentication-service:domain')
+		implementation project(':authentication-service:application')
 		implementation project(':authentication-service:adapters:rdb-adapter')
 		implementation project(':authentication-service:adapters:web-adapter')
 		implementation project(':common')
@@ -62,9 +64,6 @@ project(':authentication-service') {
 
 		implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 		runtimeOnly 'org.postgresql:postgresql'
-
-		// Flyway
-		implementation 'org.flywaydb:flyway-core'
 	}
 
 	bootJar {
@@ -75,15 +74,26 @@ project(':authentication-service') {
 project(':authentication-service:adapters:rdb-adapter') {
 	dependencies {
 		implementation project(':common')
-		implementation project(':authentication-service:domain')
+		implementation project(':authentication-service:application')
 		implementation project(':base-modules:joara-jpa-base')
 		implementation project(':base-modules:joara-integrated-flyway')
 
-		implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+		// Map Struct
+		implementation 'org.mapstruct:mapstruct:1.5.3.Final'
+		annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.3.Final'
+		annotationProcessor 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
 	}
 }
 
-project(':authentication-service:domain') {
+project(':authentication-service:application') {
+	dependencies {
+		implementation project(':common')
+		api project(':authentication-service:application:domain')
+		api 'org.springframework.data:spring-data-commons' // 여기에 있는 Page 등의 기능을 ...
+	}
+}
+
+project(':authentication-service:application:domain') {
 	dependencies {
 		implementation project(':common')
 	}
@@ -96,9 +106,6 @@ project(':book-service') {
 		implementation project(':common')
 		implementation project(':base-modules:joara-global-exception-handler')
 		implementation project(':base-modules:joara-integrated-flyway')
-
-		// Flyway
-		implementation 'org.flywaydb:flyway-core'
 	}
 }
 
@@ -106,12 +113,18 @@ project(':book-service') {
 
 project(':base-modules:joara-jpa-base') {
 	dependencies {
-		implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+		api 'org.springframework.boot:spring-boot-starter-data-jpa'
 	}
 }
 
 project(':base-modules:joara-global-exception-handler') {
 	dependencies {
-		implementation project(':common')
+		api project(':common')
+	}
+}
+
+project(':base-modules:joara-integrated-flyway') { // 초창기 전략: 통합 DB 채택 -> ... (대신 이것을 유지하는 동안 모든 서버 재배포) -> 점진적으로 디비를 나눠 가는 선택을 할 수 있음.
+	dependencies {
+		api 'org.flywaydb:flyway-core' // api는 비권장. 그럼에도 불구하고 쓴 이유? -> 사람이 심장은 달고 다녀야 함.
 	}
 }
