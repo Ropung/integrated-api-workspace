@@ -1,12 +1,9 @@
 # API Workspace
-- [Spring Auth APIs (as a multi-modules project)]()
-  - ...
-  - ...
-  - ...
-- [Spring Boot APIs (as a multi-modules project)]()
-  - ...
-    - [Spring Episode APIs (as a multi-modules project)]()
-      - ...
+
+- [Spring Boot API Servers (as a multi-modules project)](./springboot-root)
+  - [인증 서버](./springboot-root/authentication-service): 회원가입, 로그인(JWT 발급 - 일반/소셜로그인), 프로필 CRUD
+  - [작품 서버](./springboot-root/book-service)
+    - 작품/회차 CRUD
 - [Fast API]()
   - ...
   - ...
@@ -30,6 +27,6 @@
 
 이제 각 서버가 실행되어 있다면, API 문서를 받아 올 수 있다.
 
-접속 정보: http://localhost:2999
+접속 정보(Local): http://localhost:2999
 
 ---

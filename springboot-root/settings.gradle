@@ -1,4 +1,6 @@
 rootProject.name = 'springboot-root'
+
+// auth service
 include 'authentication-service'
 include 'authentication-service:adapters'
 findProject(':authentication-service:adapters')?.name = 'adapters'
@@ -8,14 +10,31 @@ include 'authentication-service:adapters:rdb-adapter'
 findProject(':authentication-service:adapters:rdb-adapter')?.name = 'rdb-adapter'
 include 'authentication-service:application:domain'
 findProject(':authentication-service:application:domain')?.name = 'domain'
+include 'authentication-service:application'
+findProject(':authentication-service:application')?.name = 'application'
+
+// book service
+include 'book-service'
+include 'book-service:adapters'
+findProject(':book-service:adapters')?.name = 'adapters'
+include 'book-service:adapters:web-adapter'
+findProject(':book-service:adapters:web-adapter')?.name = 'web-adapter'
+include 'book-service:adapters:rdb-adapter'
+findProject(':book-service:adapters:rdb-adapter')?.name = 'rdb-adapter'
+include 'book-service:application:domain'
+findProject(':book-service:application:domain')?.name = 'domain'
+include 'book-service:application'
+findProject(':book-service:application')?.name = 'application'
+
+// common
 include 'common'
+
+// base
 include 'base-modules'
 include 'base-modules:joara-global-exception-handler'
 findProject(':base-modules:joara-global-exception-handler')?.name = 'joara-global-exception-handler'
 include 'base-modules:joara-jpa-base'
 findProject(':base-modules:joara-jpa-base')?.name = 'joara-jpa-base'
-include 'book-service'
 include 'base-modules:joara-integrated-flyway'
 findProject(':base-modules:joara-integrated-flyway')?.name = 'joara-integrated-flyway'
-include 'authentication-service:application'
-findProject(':authentication-service:application')?.name = 'application'
+

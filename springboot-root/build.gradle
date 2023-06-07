@@ -3,6 +3,9 @@ plugins {
 	id 'java-library'
 	id 'org.springframework.boot' version '2.7.12'
 	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+
+	id 'org.asciidoctor.jvm.convert' version '3.3.2'
+	id 'com.epages.restdocs-api-spec' version '0.17.1'
 }
 
 allprojects {
@@ -43,10 +46,54 @@ subprojects {
 
 		// JSON
 		implementation 'com.google.code.gson:gson:2.10.1'
+
+		// RestDoc as Open API
+		implementation "org.springdoc:springdoc-openapi-ui:1.6.14"
+		testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
+		testImplementation 'com.epages:restdocs-api-spec-mockmvc:0.17.1'
 	}
 
-	tasks.named('test') {
+	// javac vm arguments (1)
+	compileJava {
+		options.compilerArgs += ['--enable-preview', '-Amapstruct.defaultComponentModel=spring']
+	}
+
+	// javac vm arguments (2)
+	compileTestJava {
+		options.compilerArgs += ['--enable-preview', '-Amapstruct.defaultComponentModel=spring']
+	}
+
+	// javac vm arguments (3)
+	test {
 		useJUnitPlatform()
+		jvmArgs(['--enable-preview', '-Amapstruct.defaultComponentModel=spring'])
+	}
+
+	// rest docs open api
+	openapi3 {
+		println("project.rootProject.rootDir: $project.rootProject.rootDir")
+		println("project.name: ${project.name}")
+
+		switch(project.name) {
+			case 'authentication-service':
+				server = System.getenv('AUTH_SERVER_URL') ?: 'http://localhost:8080'
+				break
+			case 'book-service':
+				server = System.getenv('BOOK_SERVER_URL') ?: 'http://localhost:8080'
+				break
+			default:
+				server = 'http://localhost:8080'
+		}
+
+		title = 'My API'
+		description = 'My API description'
+		tagDescriptionsPropertiesFile = "${project.rootProject.projectDir}/docs/tag-descriptions.yml"
+		version = '0.1.0'
+		format = 'json'
+		outputDirectory = 'src/main/resources/static/docs'
+		outputFileNamePrefix = "openapi3.${project.name}"
+
+		project.mkdir "${project.projectDir}/${outputDirectory}"
 	}
 }
 
@@ -55,10 +102,11 @@ subprojects {
 // NOTE this module is for execution. All required beans must be included.
 project(':authentication-service') {
 	dependencies {
+		implementation project(':common')
 		implementation project(':authentication-service:application')
 		implementation project(':authentication-service:adapters:rdb-adapter')
 		implementation project(':authentication-service:adapters:web-adapter')
-		implementation project(':common')
+
 		implementation project(':base-modules:joara-global-exception-handler')
 		implementation project(':base-modules:joara-integrated-flyway')
 
@@ -68,6 +116,13 @@ project(':authentication-service') {
 
 	bootJar {
 		enabled = true
+	}
+}
+
+project(':authentication-service:adapters:web-adapter') {
+	dependencies {
+		implementation project(':common')
+		implementation project(':authentication-service:application')
 	}
 }
 
@@ -87,9 +142,18 @@ project(':authentication-service:adapters:rdb-adapter') {
 
 project(':authentication-service:application') {
 	dependencies {
+		// NOTE: Rule: NO ADAPTER INCLUDED
 		implementation project(':common')
 		api project(':authentication-service:application:domain')
 		api 'org.springframework.data:spring-data-commons' // 여기에 있는 Page 등의 기능을 ...
+
+		implementation 'org.springframework.boot:spring-boot-starter-security'
+		testImplementation 'org.springframework.security:spring-security-test'
+
+		// Map Struct
+		implementation 'org.mapstruct:mapstruct:1.5.3.Final'
+		annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.3.Final'
+		annotationProcessor 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
 	}
 }
 
@@ -104,10 +168,50 @@ project(':authentication-service:application:domain') {
 project(':book-service') {
 	dependencies {
 		implementation project(':common')
+		implementation project(':book-service:application')
+		implementation project(':book-service:adapters:rdb-adapter')
+		implementation project(':book-service:adapters:web-adapter')
+
 		implementation project(':base-modules:joara-global-exception-handler')
 		implementation project(':base-modules:joara-integrated-flyway')
+		implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+		runtimeOnly 'org.postgresql:postgresql'
+	}
+
+	bootJar {
+		enabled = true
 	}
 }
+
+project(':book-service:adapters:rdb-adapter') {
+	dependencies {
+		implementation project(':common')
+		implementation project(':book-service:application')
+		implementation project(':base-modules:joara-jpa-base')
+		implementation project(':base-modules:joara-integrated-flyway')
+
+		// Map Struct
+		implementation 'org.mapstruct:mapstruct:1.5.3.Final'
+		annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.3.Final'
+		annotationProcessor 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
+	}
+}
+
+project(':book-service:application') {
+	dependencies {
+		implementation project(':common')
+		api project(':book-service:application:domain')
+		api 'org.springframework.data:spring-data-commons' // 여기에 있는 Page 등의 기능을 ...
+	}
+}
+
+project(':book-service:application:domain') {
+	dependencies {
+		implementation project(':common')
+	}
+}
+
+
 
 // === Base Modules ====================================================================================================
 
