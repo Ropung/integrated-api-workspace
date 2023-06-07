@@ -3,6 +3,6 @@ package com.joara.web;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public final class AuthenticationApi {
+public final class BookApi {
 
 }
