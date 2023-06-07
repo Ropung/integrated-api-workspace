@@ -1,0 +1,3 @@
+app:
+  jwt:
+    password: ${JWT_SECRET_KEY}

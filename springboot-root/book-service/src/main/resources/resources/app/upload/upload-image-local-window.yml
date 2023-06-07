@@ -2,4 +2,4 @@ app:
   upload:
     files:
       target: local
-      upload-url: ~/Desktop/upload-image
+      upload-url: # TODO 나중에 작성
