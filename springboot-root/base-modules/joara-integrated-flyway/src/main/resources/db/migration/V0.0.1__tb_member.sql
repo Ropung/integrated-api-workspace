@@ -3,9 +3,9 @@ CREATE TABLE IF NOT EXISTS joara_basic.refresh_token (
     id                  UUID                                PRIMARY KEY,
     member_id           UUID                                NOT NULL,
     refresh_token       VARCHAR(255)                        ,
-    created_at           DATE                               NOT NULL,
-    updated_at           DATE                               ,
-    deleted_at           DATE
+    created_at          DATE                                NOT NULL,
+    updated_at          DATE                                ,
+    deleted_at          DATE
 );
 
 --회원(Member)테이블
@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS joara_basic.member (
     id                  UUID                                PRIMARY KEY,
     email               VARCHAR(255)                        NOT NULL        UNIQUE,
     password            VARCHAR(255)                        NOT NULL,
-    name                VARCHAR(255)                        NOT NULL,
+    "name"              VARCHAR(255)                        NOT NULL,
     nickname            VARCHAR(255)                        NOT NULL        UNIQUE,
     phone               VARCHAR(255)                        ,
     gender              CHAR(1)                             ,
@@ -21,8 +21,13 @@ CREATE TABLE IF NOT EXISTS joara_basic.member (
     created_at          DATE                                NOT NULL,
     updated_at          DATE                                ,
     deleted_at          DATE                                ,
-    status              VARCHAR(255)
+    status              VARCHAR(255)                        ,
+    certificated_by     VARCHAR(255)                        ,
+    oauth_serial        BIGINT
 );
+
+COMMENT ON COLUMN joara_basic."member".certificated_by IS '인증처';
+COMMENT ON COLUMN joara_basic."member".oauth_serial IS 'OAUTH 일련번호';
 
 CREATE UNIQUE INDEX udx_member_email ON joara_basic.member(email);
 
@@ -40,7 +45,7 @@ CREATE TABLE IF NOT EXISTS joara_basic.member_favor_book (
     id                  UUID                                PRIMARY KEY,
     member_id           UUID                                NOT NULL,
     book_id             UUID                                NOT NULL,
-    favor_book_name     VARCHAR(30)                         NOT NULL,
+    favor_book_name     VARCHAR(255)                        NOT NULL,
     created_at          DATE                                NOT NULL
 );
 
