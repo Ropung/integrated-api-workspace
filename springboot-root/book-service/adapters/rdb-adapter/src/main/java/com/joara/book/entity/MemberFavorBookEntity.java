@@ -1,4 +1,4 @@
-package com.joara.auth.entity;
+package com.joara.book.entity;
 
 import com.joara.base.jpa.entity.UuidBaseEntity;
 import com.joara.rdb.JoaraPostgresSchemaConstants;

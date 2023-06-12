@@ -1,4 +1,4 @@
-package com.joara.book.entity;
+package com.joara.genre.entity;
 
 
 import com.joara.base.jpa.entity.UuidBaseEntity;

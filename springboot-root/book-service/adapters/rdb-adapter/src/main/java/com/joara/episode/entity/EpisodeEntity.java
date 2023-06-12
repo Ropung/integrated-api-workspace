@@ -2,7 +2,7 @@ package com.joara.episode.entity;
 
 
 import com.joara.base.jpa.entity.UuidBaseEntity;
-import com.joara.episode.entity.type.EpisodeStatus;
+import com.joara.book.domain.model.episode.type.EpisodeStatus;
 import com.joara.rdb.JoaraPostgresSchemaConstants;
 import com.joara.util.time.ServerTime;
 import lombok.*;
