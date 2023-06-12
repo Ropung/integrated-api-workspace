@@ -1,6 +1,7 @@
 package com.joara.auth.domain.model;
 
 import com.joara.auth.domain.model.type.AccountStatus;
+import com.joara.auth.domain.model.type.CertType;
 import com.joara.auth.domain.model.type.Gender;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,9 +25,11 @@ public class Member {
     public String nickname;
     public String phone;
     public Gender gender;
-    public OffsetDateTime birth;
+    public String birth;
     public OffsetDateTime createdAt;
     public OffsetDateTime updatedAt;
     public OffsetDateTime deletedAt;
     public AccountStatus status;
+    public CertType certificatedBy;
+    public Long oauthSerial;
 }
