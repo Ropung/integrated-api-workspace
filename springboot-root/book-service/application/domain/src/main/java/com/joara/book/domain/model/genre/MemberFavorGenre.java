@@ -1,5 +1,4 @@
-package com.joara.book.domain.model.book;
-
+package com.joara.book.domain.model.genre;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -7,6 +6,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.time.OffsetDateTime;
 import java.util.UUID;
 
 @NoArgsConstructor
@@ -14,8 +14,10 @@ import java.util.UUID;
 @ToString
 @EqualsAndHashCode
 @Builder
-public class BookGenre {
+public class MemberFavorGenre{
 	public UUID id;
-	public String kor;
-	public String eng;
+	public UUID genreId;
+	public UUID memberId;
+	public String favorGenreName;
+	public OffsetDateTime createdAt;
 }
