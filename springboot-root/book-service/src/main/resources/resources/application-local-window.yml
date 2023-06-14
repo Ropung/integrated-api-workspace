@@ -1,4 +1,0 @@
-spring:
-  profiles:
-    include:
-      - local # 생략 가능한지 아닌지 확인

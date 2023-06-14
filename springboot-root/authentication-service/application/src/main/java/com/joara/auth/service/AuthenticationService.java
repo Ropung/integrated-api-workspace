@@ -33,27 +33,28 @@ public class AuthenticationService implements SignUpUseCase, LoginUseCase {
 	private final PasswordEncoder passwordEncoder;
 	private final JwtProvider jwtProvider;
 	private final AuthenticationManager authenticationManager;
-	
+
 	@Override
 	public boolean signUp(Member member) {
 		boolean isValid = memberQueryRepository.existsMemberByEmail(member.email);
 		if (isValid) throw new IllegalArgumentException("이미 존재하는 이메일입니다.");
 		member.password = passwordEncoder.encode(member.password);
-		
+
 		memberCommandRepository.save(member);
 		return true;
 	}
+
 	@Override
 	public MemberSignUpResponseDto signUp(MemberSignUpRequestDto dto, AccountStatus status, CertType certType) {
-		
+
 		OffsetDateTime createdAt = ServerTime.now();
 		Member member = mapper.from(dto, status ,createdAt, certType);
-		
+
 		return MemberSignUpResponseDto.builder()
 				.success(signUp(member)) // 인계
 				.build();
 	}
-	
+
 	@Override
 	public MemberLoginResponseDto login(MemberLoginRequestDto dto) {
 		// 스프링 시큐리티 Authentication Manager를 통한 인증
@@ -63,9 +64,13 @@ public class AuthenticationService implements SignUpUseCase, LoginUseCase {
 		} catch (org.springframework.security.core.AuthenticationException e) {
 			throw AuthenticationErrorCode.MISMATCHED.defaultException(e);
 		}
-		
-		String token = jwtProvider.generate(dto.email());
-		
+
+		// Acceptable
+		String nickname = memberQueryRepository.findByEmail(dto.email())
+				.orElseThrow()
+				.nickname;;
+		String token = jwtProvider.generateAsUser(dto.email(), nickname);
+
 		return MemberLoginResponseDto.builder()
 				.token(token)
 				.build();

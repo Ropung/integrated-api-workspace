@@ -6,7 +6,6 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;
@@ -26,18 +25,19 @@ public final class JwtProvider {
 		expiredIn = jwtProperties.expiredIn();
 	}
 	
-	public String generate(String email) {
-		return generate(email, "USER");
+	public String generateAsUser(String email, String nickname) {
+		return generate(email, nickname, "USER");
 	}
 	
-	public String generate(String email, String... roles) {
+	public String generate(String email, String nickname, String... roles) {
 		Claims claims = Jwts.claims().setSubject(email);
 		
 		Date now = new Date();
 		Date expireAt = new Date(now.getTime() + expiredIn);
 		
+		claims.put("nickname", nickname);
 		claims.put("roles", roles);
-		
+
 		return Jwts.builder()
 				.setClaims(claims)
 				.setIssuedAt(now)

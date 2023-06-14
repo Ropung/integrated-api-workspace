@@ -1,11 +1,7 @@
 package com.joara.book.domain.model.book;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import java.time.OffsetDateTime;
 import java.util.UUID;
@@ -26,7 +22,7 @@ public class Book {
 	public String coverUrl;
 	public String isbn;
 	public String cip;
-	public Double avgScore = 0.;
+	public Double avgScore;
 	public OffsetDateTime createdAt;
 	public OffsetDateTime updatedAt;
 	public OffsetDateTime deletedAt;

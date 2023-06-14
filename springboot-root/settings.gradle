@@ -13,6 +13,23 @@ findProject(':authentication-service:application:domain')?.name = 'domain'
 include 'authentication-service:application'
 findProject(':authentication-service:application')?.name = 'application'
 
+// base
+include 'base-modules'
+include 'base-modules:joara-global-exception-handler'
+findProject(':base-modules:joara-global-exception-handler')?.name = 'joara-global-exception-handler'
+include 'base-modules:joara-jpa-base'
+findProject(':base-modules:joara-jpa-base')?.name = 'joara-jpa-base'
+include 'base-modules:joara-integrated-flyway'
+findProject(':base-modules:joara-integrated-flyway')?.name = 'joara-integrated-flyway'
+include 'base-modules:joara-file-uploader'
+findProject(':base-modules:joara-file-uploader')?.name = 'joara-file-uploader'
+include 'base-modules:joara-jwt-parser'
+findProject(':base-modules:joara-jwt-parser')?.name = 'joara-jwt-parser'
+
+
+// board
+include 'board-service'
+
 // book service
 include 'book-service'
 include 'book-service:adapters'
@@ -28,14 +45,12 @@ findProject(':book-service:application')?.name = 'application'
 
 // common
 include 'common'
-
-// base
-include 'base-modules'
-include 'base-modules:joara-global-exception-handler'
-findProject(':base-modules:joara-global-exception-handler')?.name = 'joara-global-exception-handler'
-include 'base-modules:joara-jpa-base'
-findProject(':base-modules:joara-jpa-base')?.name = 'joara-jpa-base'
-include 'base-modules:joara-integrated-flyway'
-findProject(':base-modules:joara-integrated-flyway')?.name = 'joara-integrated-flyway'
-include 'board-service'
+include 'authentication-service:adapters:internal-api-adapter'
+findProject(':authentication-service:adapters:internal-api-adapter')?.name = 'internal-api-adapter'
+include 'authentication-service:application:read-models'
+findProject(':authentication-service:application:read-models')?.name = 'read-models'
+include 'book-service:adapters:client-adapters'
+findProject(':book-service:adapters:client-adapters')?.name = 'client-adapters'
+include 'book-service:adapters:client-adapters:joara-member-client'
+findProject(':book-service:adapters:client-adapters:joara-member-client')?.name = 'joara-member-client'
 

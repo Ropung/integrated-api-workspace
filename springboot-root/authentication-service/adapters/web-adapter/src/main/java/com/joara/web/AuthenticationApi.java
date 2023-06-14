@@ -20,7 +20,6 @@ import javax.validation.Valid;
 public final class AuthenticationApi {
 	
 	private final SignUpUseCase signUpUseCase;
-	
 	private final LoginUseCase loginUseCase;
 	
 	@PostMapping("/sign-up")

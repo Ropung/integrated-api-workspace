@@ -1,5 +1,0 @@
-app:
-  upload:
-    files:
-      target: local
-      upload-url: ~/Desktop/upload-image

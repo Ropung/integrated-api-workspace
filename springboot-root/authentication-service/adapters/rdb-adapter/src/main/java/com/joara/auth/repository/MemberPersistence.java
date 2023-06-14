@@ -6,7 +6,8 @@ import com.joara.auth.mapper.MemberEntityMapper;
 import com.joara.auth.repository.projection.MemberProjections.DefaultMemberProjection;
 import com.joara.auth.repository.projection.MemberQueryProjection.MemberEmailNicknameProjection;
 import com.joara.auth.repository.projection.MemberQueryProjection.MemberIdProjection;
-import com.joara.auth.repository.projection.MemberReadModels.DefaultMemberReadModel;
+import com.joara.member.MemberReadModels.DefaultMemberReadModel;
+import com.joara.member.MemberReadModels.MemberIdReadModel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -60,8 +61,10 @@ public class MemberPersistence implements MemberCommandRepository, MemberQueryRe
     }
     
     @Override
-    public Optional<MemberIdProjection> findIdByEmail(String email) {
-        return Optional.empty();
+    public Optional<MemberIdReadModel> findIdByEmail(String email) {
+        Optional<MemberIdProjection> memberIdWrapper =
+                memberJpaRepository.findIdByEmail(email);
+        return memberIdWrapper.map(mapper::toReadModel);
     }
     
     @Override

@@ -92,6 +92,7 @@ project(':authentication-service') {
 		implementation project(':authentication-service:application')
 		implementation project(':authentication-service:adapters:rdb-adapter')
 		implementation project(':authentication-service:adapters:web-adapter')
+		implementation project(':authentication-service:adapters:internal-api-adapter')
 
 		implementation project(':base-modules:joara-global-exception-handler')
 		implementation project(':base-modules:joara-integrated-flyway')
@@ -106,6 +107,13 @@ project(':authentication-service') {
 }
 
 project(':authentication-service:adapters:web-adapter') {
+	dependencies {
+		implementation project(':common')
+		implementation project(':authentication-service:application')
+	}
+}
+
+project(':authentication-service:adapters:internal-api-adapter') {
 	dependencies {
 		implementation project(':common')
 		implementation project(':authentication-service:application')
@@ -131,6 +139,7 @@ project(':authentication-service:application') {
 		// NOTE: Rule: NO ADAPTER INCLUDED
 		implementation project(':common')
 		api project(':authentication-service:application:domain')
+		api project(':authentication-service:application:read-models')
 		api 'org.springframework.data:spring-data-commons' // 여기에 있는 Page 등의 기능을 ...
 
 		implementation 'org.springframework.boot:spring-boot-starter-security'
@@ -154,6 +163,13 @@ project(':authentication-service:application:domain') {
 	}
 }
 
+project(':authentication-service:application:read-models') {
+	dependencies {
+		implementation project(':common')
+		implementation project(':authentication-service:application:domain')
+	}
+}
+
 // === Book Service ====================================================================================================
 
 project(':book-service') {
@@ -162,6 +178,7 @@ project(':book-service') {
 		implementation project(':book-service:application')
 		implementation project(':book-service:adapters:rdb-adapter')
 		implementation project(':book-service:adapters:web-adapter')
+		implementation project(':book-service:adapters:client-adapters:joara-member-client')
 
 		implementation project(':base-modules:joara-global-exception-handler')
 		implementation project(':base-modules:joara-integrated-flyway')
@@ -171,6 +188,13 @@ project(':book-service') {
 
 	bootJar {
 		enabled = true
+	}
+}
+
+project(':book-service:adapters:web-adapter') {
+	dependencies {
+		implementation project(':common')
+		implementation project(':book-service:application')
 	}
 }
 
@@ -188,11 +212,32 @@ project(':book-service:adapters:rdb-adapter') {
 	}
 }
 
+project(':book-service:adapters:client-adapters:joara-member-client') {
+	dependencies {
+		implementation project(':common')
+		implementation project(':book-service:application')
+		implementation project(':authentication-service:application:read-models')
+	}
+}
+
+
 project(':book-service:application') {
 	dependencies {
 		implementation project(':common')
+		implementation project(':base-modules:joara-file-uploader')
+		implementation project(':base-modules:joara-jwt-parser')
+		implementation project(':authentication-service:application:read-models')
+
 		api project(':book-service:application:domain')
-		api 'org.springframework.data:spring-data-commons' // 여기에 있는 Page 등의 기능을 ...
+		api 'org.springframework.data:spring-data-commons'
+
+		implementation 'org.springframework.boot:spring-boot-starter-security'
+		testImplementation 'org.springframework.security:spring-security-test'
+
+		// Map Struct
+		implementation 'org.mapstruct:mapstruct:1.5.3.Final'
+		annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.3.Final'
+		annotationProcessor 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
 	}
 }
 
@@ -215,6 +260,20 @@ project(':base-modules:joara-jpa-base') {
 project(':base-modules:joara-global-exception-handler') {
 	dependencies {
 		api project(':common')
+	}
+}
+
+project(':base-modules:joara-jwt-parser') {
+	dependencies {
+		implementation project(':common')
+
+		implementation 'org.springframework.boot:spring-boot-starter-security'
+		testImplementation 'org.springframework.security:spring-security-test'
+
+		// jwt
+		implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
+		implementation 'io.jsonwebtoken:jjwt-impl:0.11.5'
+		implementation 'io.jsonwebtoken:jjwt-gson:0.11.5'
 	}
 }
 

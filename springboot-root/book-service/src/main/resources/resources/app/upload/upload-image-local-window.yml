@@ -1,5 +1,0 @@
-app:
-  upload:
-    files:
-      target: local
-      upload-url: # TODO 나중에 작성
