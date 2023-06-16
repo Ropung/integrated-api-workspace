@@ -53,8 +53,6 @@ subprojects {
 		testImplementation 'com.epages:restdocs-api-spec-mockmvc:0.17.1'
 	}
 
-
-
 	// rest docs open api
 	openapi3 {
 		println("project.rootProject.rootDir: $project.rootProject.rootDir")
@@ -90,9 +88,9 @@ project(':authentication-service') {
 	dependencies {
 		implementation project(':common')
 		implementation project(':authentication-service:application')
-		implementation project(':authentication-service:adapters:rdb-adapter')
-		implementation project(':authentication-service:adapters:web-adapter')
-		implementation project(':authentication-service:adapters:internal-api-adapter')
+		implementation project(':authentication-service:driven:rdb-adapter')
+		implementation project(':authentication-service:driving:web-adapter')
+		implementation project(':authentication-service:driving:internal-api-adapter')
 
 		implementation project(':base-modules:joara-global-exception-handler')
 		implementation project(':base-modules:joara-integrated-flyway')
@@ -106,21 +104,21 @@ project(':authentication-service') {
 	}
 }
 
-project(':authentication-service:adapters:web-adapter') {
+project(':authentication-service:driving:web-adapter') {
 	dependencies {
 		implementation project(':common')
 		implementation project(':authentication-service:application')
 	}
 }
 
-project(':authentication-service:adapters:internal-api-adapter') {
+project(':authentication-service:driving:internal-api-adapter') {
 	dependencies {
 		implementation project(':common')
 		implementation project(':authentication-service:application')
 	}
 }
 
-project(':authentication-service:adapters:rdb-adapter') {
+project(':authentication-service:driven:rdb-adapter') {
 	dependencies {
 		implementation project(':common')
 		implementation project(':authentication-service:application')

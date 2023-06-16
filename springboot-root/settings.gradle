@@ -2,16 +2,24 @@ rootProject.name = 'springboot-root'
 
 // auth service
 include 'authentication-service'
-include 'authentication-service:adapters'
-findProject(':authentication-service:adapters')?.name = 'adapters'
-include 'authentication-service:adapters:web-adapter'
-findProject(':authentication-service:adapters:web-adapter')?.name = 'web-adapter'
-include 'authentication-service:adapters:rdb-adapter'
-findProject(':authentication-service:adapters:rdb-adapter')?.name = 'rdb-adapter'
-include 'authentication-service:application:domain'
-findProject(':authentication-service:application:domain')?.name = 'domain'
+include 'authentication-service:driving'
+include 'authentication-service:driving:web-adapter'
+include 'authentication-service:driving:internal-api-adapter'
+findProject(':authentication-service:driving')?.name = 'driving'
+findProject(':authentication-service:driving:web-adapter')?.name = 'web-adapter'
+findProject(':authentication-service:driving:internal-api-adapter')?.name = 'internal-api-adapter'
+
+include 'authentication-service:driven'
+include 'authentication-service:driven:rdb-adapter'
+findProject(':authentication-service:driven')?.name = 'driven'
+findProject(':authentication-service:driven:rdb-adapter')?.name = 'rdb-adapter'
+
 include 'authentication-service:application'
+include 'authentication-service:application:domain'
+include 'authentication-service:application:read-models'
 findProject(':authentication-service:application')?.name = 'application'
+findProject(':authentication-service:application:domain')?.name = 'domain'
+findProject(':authentication-service:application:read-models')?.name = 'read-models'
 
 // base
 include 'base-modules'
@@ -26,31 +34,27 @@ findProject(':base-modules:joara-file-uploader')?.name = 'joara-file-uploader'
 include 'base-modules:joara-jwt-parser'
 findProject(':base-modules:joara-jwt-parser')?.name = 'joara-jwt-parser'
 
-
 // board
 include 'board-service'
 
 // book service
 include 'book-service'
 include 'book-service:adapters'
-findProject(':book-service:adapters')?.name = 'adapters'
 include 'book-service:adapters:web-adapter'
-findProject(':book-service:adapters:web-adapter')?.name = 'web-adapter'
 include 'book-service:adapters:rdb-adapter'
+findProject(':book-service:adapters')?.name = 'adapters'
+findProject(':book-service:adapters:web-adapter')?.name = 'web-adapter'
 findProject(':book-service:adapters:rdb-adapter')?.name = 'rdb-adapter'
-include 'book-service:application:domain'
-findProject(':book-service:application:domain')?.name = 'domain'
+
+include 'book-service:adapters:client-adapters'
+include 'book-service:adapters:client-adapters:joara-member-client'
+findProject(':book-service:adapters:client-adapters')?.name = 'client-adapters'
+findProject(':book-service:adapters:client-adapters:joara-member-client')?.name = 'joara-member-client'
+
 include 'book-service:application'
+include 'book-service:application:domain'
 findProject(':book-service:application')?.name = 'application'
+findProject(':book-service:application:domain')?.name = 'domain'
 
 // common
 include 'common'
-include 'authentication-service:adapters:internal-api-adapter'
-findProject(':authentication-service:adapters:internal-api-adapter')?.name = 'internal-api-adapter'
-include 'authentication-service:application:read-models'
-findProject(':authentication-service:application:read-models')?.name = 'read-models'
-include 'book-service:adapters:client-adapters'
-findProject(':book-service:adapters:client-adapters')?.name = 'client-adapters'
-include 'book-service:adapters:client-adapters:joara-member-client'
-findProject(':book-service:adapters:client-adapters:joara-member-client')?.name = 'joara-member-client'
-
