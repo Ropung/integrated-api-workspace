@@ -1,6 +1,6 @@
 -- 회원 선호 작품 테이블
 CREATE TABLE IF NOT EXISTS joara_basic.member_favor_book(
-    id                  UUID                                PRIMARY KEY,
+    id                  UUID                                PRIMARY KEY     DEFAULT uuid_generate_v4(),
     book_id             BIGINT                              NOT NULL,
     genre_id            BIGINT                              NOT NULL,
     member_id           UUID                                NOT NULL,

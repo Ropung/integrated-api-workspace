@@ -4,8 +4,14 @@ import com.joara.book.domain.model.book.Book;
 import com.joara.book.exception.BookErrorCode;
 import com.joara.book.repository.BookCommandRepository;
 import com.joara.book.usecase.BookCreateUseCase;
+import com.joara.book.usecase.BookEditUseCase;
+import com.joara.book.usecase.BookRemoveUseCase;
 import com.joara.book.usecase.dto.BookCommandDto.BookCreateRequestDto;
 import com.joara.book.usecase.dto.BookCommandDto.BookCreateResponseDto;
+import com.joara.book.usecase.dto.BookCommandDto.BookModifyRequestDto;
+import com.joara.book.usecase.dto.BookCommandDto.BookModifyResponseDto;
+import com.joara.book.usecase.dto.BookCommandDto.BookRemoveRequestDto;
+import com.joara.book.usecase.dto.BookCommandDto.BookRemoveResponseDto;
 import com.joara.book.usecase.mapper.BookDtoMapper;
 import com.joara.clients.MemberQueryPort;
 import com.joara.jwt.util.JwtParser;
@@ -22,7 +28,8 @@ import java.io.IOException;
 
 @Service
 @RequiredArgsConstructor
-public class BookCommandService implements BookCreateUseCase {
+public class BookCommandService
+		implements BookCreateUseCase, BookEditUseCase, BookRemoveUseCase {
 
 	private final BookCommandRepository bookCommandRepository;
 	private final BookDtoMapper mapper;
@@ -53,7 +60,7 @@ public class BookCommandService implements BookCreateUseCase {
 		book.memberId = memberQueryPort.findIdByEmail(email)
 				.orElseThrow(BookErrorCode.SERVICE_UNAVAILABLE::defaultException)
 				.id();
-		book.memberNickname = nickname;
+		book.nickname = nickname;
 		book.coverUrl = coverUrl;
 		if (book.createdAt == null) {
 			book.createdAt = ServerTime.now();
@@ -69,6 +76,29 @@ public class BookCommandService implements BookCreateUseCase {
 
 		return BookCreateResponseDto.builder()
 				.success(create(book, file, request))
+				.build();
+	}
+
+	@Override
+	public BookModifyResponseDto modify(BookModifyRequestDto dto) {
+		boolean result = bookCommandRepository.update(
+				dto.title(),
+				dto.description(),
+				dto.status(),
+				dto.bookId()
+		);
+
+		return BookModifyResponseDto.builder()
+				.success(result)
+				.build();
+	}
+
+	@Override
+	public BookRemoveResponseDto remove(BookRemoveRequestDto dto) {
+		bookCommandRepository.deleteById(dto.bookId());
+
+		return BookRemoveResponseDto.builder()
+				.success(true)
 				.build();
 	}
 }

@@ -124,6 +124,7 @@ project(':authentication-service:driving:web-adapter') {
 	dependencies {
 		implementation project(':common')
 		implementation project(':authentication-service:application')
+		implementation project(':base-modules:joara-jwt-parser')
 	}
 }
 
@@ -209,6 +210,8 @@ project(':book-service:adapters:web-adapter') {
 	dependencies {
 		implementation project(':common')
 		implementation project(':book-service:application')
+		implementation project(':base-modules:joara-jwt-parser')
+		implementation project(':authentication-service:application:read-models')
 	}
 }
 
@@ -231,6 +234,7 @@ project(':book-service:adapters:client-adapters:joara-member-client') {
 		implementation project(':common')
 		implementation project(':book-service:application')
 		implementation project(':authentication-service:application:read-models')
+		implementation project(':base-modules:joara-server-communication-core')
 	}
 }
 
@@ -294,5 +298,11 @@ project(':base-modules:joara-jwt-parser') {
 project(':base-modules:joara-integrated-flyway') { // 초창기 전략: 통합 DB 채택 -> ... (대신 이것을 유지하는 동안 모든 서버 재배포) -> 점진적으로 디비를 나눠 가는 선택을 할 수 있음.
 	dependencies {
 		api 'org.flywaydb:flyway-core' // api는 비권장. 그럼에도 불구하고 쓴 이유? -> 사람이 심장은 달고 다녀야 함.
+	}
+}
+
+project(':base-modules:joara-server-communication-core') {
+	dependencies {
+
 	}
 }

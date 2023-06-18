@@ -33,6 +33,8 @@ include 'base-modules:joara-file-uploader'
 findProject(':base-modules:joara-file-uploader')?.name = 'joara-file-uploader'
 include 'base-modules:joara-jwt-parser'
 findProject(':base-modules:joara-jwt-parser')?.name = 'joara-jwt-parser'
+include 'base-modules:joara-server-communication-core'
+findProject(':base-modules:joara-server-communication-core')?.name = 'joara-server-communication-core'
 
 // board
 include 'board-service'
@@ -58,3 +60,4 @@ findProject(':book-service:application:domain')?.name = 'domain'
 
 // common
 include 'common'
+

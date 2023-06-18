@@ -19,19 +19,19 @@ import java.util.UUID;
 @ToString
 @EqualsAndHashCode
 public class Member {
-    public UUID id;
+    public UUID id; // not required
     public String email;
-    public String password;
+    public String password; // not required
     public String name;
     public String nickname;
     public String phone;
     public Gender gender;
     public String birth;
-    public AccountStatus status;
+    public AccountStatus status; // not required
     public MemberTier tier;
-    public CertType certificatedBy;
-    public Long oauthSerial;
-    public OffsetDateTime createdAt;
-    public OffsetDateTime updatedAt;
-    public OffsetDateTime deletedAt;
+    public CertType certificatedBy; // not required
+    public Long oauthSerial; // not required
+    public OffsetDateTime createdAt; // not required
+    public OffsetDateTime updatedAt; // not required
+    public OffsetDateTime deletedAt; // not required
 }

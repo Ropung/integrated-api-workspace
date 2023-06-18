@@ -8,6 +8,7 @@ import com.joara.auth.repository.projection.MemberQueryProjection.MemberEmailNic
 import com.joara.auth.repository.projection.MemberQueryProjection.MemberIdProjection;
 import com.joara.member.MemberReadModels.DefaultMemberReadModel;
 import com.joara.member.MemberReadModels.MemberIdReadModel;
+import com.joara.member.MemberReadModels.MemberProfileReadModel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -88,5 +89,14 @@ public class MemberPersistence implements MemberCommandRepository, MemberQueryRe
                 pageable,
                 memberJpaRepository.count() // TODO use after refactor, ... if necessary
         );
+    }
+
+    @Override
+    public Optional<MemberProfileReadModel> findProfileByEmail(String email) {
+        // memberJpaRepository.do() -> ENTITY -> DOMAIN
+        return memberJpaRepository
+                .findProfileByEmail(email)
+                // Projection(JPA Entity Relative) -> ReadModel(DOMAIN relative)
+                .map(mapper::toReadModel);
     }
 }

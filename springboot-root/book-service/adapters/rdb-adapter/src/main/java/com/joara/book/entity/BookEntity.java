@@ -1,7 +1,7 @@
 package com.joara.book.entity;
 
 import com.joara.base.jpa.entity.BaseEntity;
-import com.joara.book.entity.type.BookStatus;
+import com.joara.book.domain.model.book.type.BookStatus;
 import com.joara.rdb.JoaraPostgresSchemaConstants;
 import com.joara.util.time.ServerTime;
 import lombok.AccessLevel;

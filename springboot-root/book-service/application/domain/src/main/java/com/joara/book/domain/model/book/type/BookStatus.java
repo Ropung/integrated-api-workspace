@@ -1,4 +1,4 @@
-package com.joara.book.entity.type;
+package com.joara.book.domain.model.book.type;
 
 public enum BookStatus {
     PENDING,
