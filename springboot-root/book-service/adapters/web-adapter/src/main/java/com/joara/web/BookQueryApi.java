@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RestController;
 public final class BookQueryApi {
 
 //	private final BookQueryService bookQueryService;
-
 //	@GetMapping(path = "/genre/{genreEng}")
 //	public GetBooksResponseDto getBooksByGenre(
 //			@PathVariable String genreEng,
