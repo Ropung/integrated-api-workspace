@@ -9,4 +9,6 @@ public interface MemberQueryPort {
     Optional<MemberIdReadModel> findIdByEmail(String email);
 
     Optional<MemberProfileReadModel> findProfileByEmail(String email, String accessToken);
+
+    Optional<MemberProfileReadModel> findProfileByEmail(String email);
 }

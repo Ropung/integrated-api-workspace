@@ -33,4 +33,9 @@ public final class MemberQueryService implements MemberIdQueryUseCase, MemberPro
                 .profile(profile)
                 .build();
     }
+
+    @Override
+    public Optional<MemberProfileReadModel> findProfileByEmailAsOptional(String email) {
+        return memberQueryRepository.findProfileByEmail(email);
+    }
 }

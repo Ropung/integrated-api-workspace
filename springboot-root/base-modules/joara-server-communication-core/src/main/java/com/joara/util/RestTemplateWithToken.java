@@ -14,7 +14,7 @@ import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
-public final class RestWithAccessToken {
+public final class RestTemplateWithToken {
 
     private final RestTemplate restTemplate;
 

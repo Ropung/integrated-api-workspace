@@ -4,7 +4,7 @@ import com.joara.book.exception.BookErrorCode;
 import com.joara.clients.MemberQueryPort;
 import com.joara.member.MemberReadModels.MemberIdReadModel;
 import com.joara.member.MemberReadModels.MemberProfileReadModel;
-import com.joara.util.RestWithAccessToken;
+import com.joara.util.RestTemplateWithToken;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -16,7 +16,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public final class MemberQueryClientAdapter implements MemberQueryPort {
     private final RestTemplate restTemplate; // AJAX 같은 거.
-    private final RestWithAccessToken restWithAccessToken;
+    private final RestTemplateWithToken restTemplateWithToken;
 
     private static final class TempServiceDiscoveryResults {
         static final String MEMBER_QUERY_SERVICE = "http://localhost:8080";
@@ -47,7 +47,7 @@ public final class MemberQueryClientAdapter implements MemberQueryPort {
 
         // TODO 나중에 볼거임
         ResponseEntity<Optional<MemberProfileReadModel>> responseEntity =
-                restWithAccessToken.getOptional(
+                restTemplateWithToken.getOptional(
                         "%s%s".formatted(target, path),
                         accessToken,
                         MemberProfileReadModel.class
@@ -58,5 +58,23 @@ public final class MemberQueryClientAdapter implements MemberQueryPort {
         }
 
         return responseEntity.getBody();
+    }
+
+    @Override
+    public Optional<MemberProfileReadModel> findProfileByEmail(String email) {
+        String target = TempServiceDiscoveryResults.MEMBER_QUERY_SERVICE;
+        String path = "/members/%s/profile".formatted(email);
+
+        ResponseEntity<MemberProfileReadModel> memberIdResponse =
+                restTemplate.getForEntity(
+                        "%s%s".formatted(target, path), // 받아 올 URL
+                        MemberProfileReadModel.class // 받아 올 타입
+                );
+
+        if (!memberIdResponse.getStatusCode().is2xxSuccessful()) {
+            throw new IllegalStateException("...");
+        }
+
+        return Optional.ofNullable(memberIdResponse.getBody());
     }
 }
