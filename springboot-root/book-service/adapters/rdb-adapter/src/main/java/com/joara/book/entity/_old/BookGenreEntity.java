@@ -1,34 +1,30 @@
-package com.joara.genre.entity;
+package com.joara.book.entity._old;
 
-import com.joara.base.jpa.entity.BaseEntity;
+
+import com.joara.base.jpa.entity.UuidBaseEntity;
 import com.joara.rdb.JoaraPostgresSchemaConstants;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Getter;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import lombok.ToString;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
 @Entity
-@Getter
-@Setter
+@ToString
+@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
-@ToString
 @Table(
 		name = JoaraPostgresSchemaConstants.TB_BOOK_GENRE,
-		schema = JoaraPostgresSchemaConstants.SCHEMA
+		schema = JoaraPostgresSchemaConstants.SCHEMA,
+		catalog = JoaraPostgresSchemaConstants.SCHEMA
 )
-public class BookGenreEntity extends BaseEntity {
-	@Column(name = "genre_kor")
+public class BookGenreEntity extends UuidBaseEntity {
 	public String kor;
-
-	@Column(name = "genre_eng")
 	public String eng;
 }

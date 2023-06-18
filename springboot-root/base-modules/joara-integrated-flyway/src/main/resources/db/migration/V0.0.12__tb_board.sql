@@ -4,6 +4,7 @@ CREATE SEQUENCE IF NOT EXISTS board_sequence START 1;
 -- 게시판(Board)
 CREATE TABLE IF NOT EXISTS joara_basic.board (
     id                  UUID                PRIMARY KEY        DEFAULT uuid_generate_v4(),
+    member_id           UUID                NOT NULL,
     nickname            VARCHAR(255)        ,
     board_num           BIGSERIAL           NOT NULL,
     title               VARCHAR(255)        ,

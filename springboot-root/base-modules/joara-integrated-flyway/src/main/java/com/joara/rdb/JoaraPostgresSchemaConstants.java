@@ -4,8 +4,8 @@ public final class JoaraPostgresSchemaConstants {
 	public static final String SCHEMA = "joara_basic";
 	public static final String TB_Refresh = "refresh_token";
 	public static final String TB_MEMBER = "member";
-	public static final String TB_FAVOR_GENRE = "member_favor_genre";
-	public static final String TB_FAVOR_BOOK = "member_favor_book";
+	public static final String TB_MEMBER_FAVOR_GENRE = "member_favor_genre";
+	public static final String TB_MEMBER_FAVOR_BOOK = "member_favor_book";
 	public static final String TB_BOOK_GENRE = "book_genre";
 	public static final String TB_BOOK = "book";
 	public static final String TB_BOOK_TAG = "book_tag";

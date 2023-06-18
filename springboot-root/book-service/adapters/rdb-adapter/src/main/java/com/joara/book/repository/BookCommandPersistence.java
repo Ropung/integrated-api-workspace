@@ -2,7 +2,7 @@ package com.joara.book.repository;
 
 
 import com.joara.book.domain.model.book.Book;
-import com.joara.book.entity.BookEntity;
+import com.joara.book.entity._old.BookEntity;
 import com.joara.book.mapper.BookEntityMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

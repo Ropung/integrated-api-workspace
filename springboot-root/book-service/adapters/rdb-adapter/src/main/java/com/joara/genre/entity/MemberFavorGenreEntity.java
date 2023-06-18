@@ -10,11 +10,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import java.time.OffsetDateTime;
 import java.util.UUID;
+
 @Entity
 @Getter
 @Setter
@@ -22,18 +22,15 @@ import java.util.UUID;
 @AllArgsConstructor
 @Builder
 @Table(
-		name = JoaraPostgresSchemaConstants.TB_FAVOR_GENRE,
-		schema = JoaraPostgresSchemaConstants.SCHEMA,
-				catalog = JoaraPostgresSchemaConstants.SCHEMA
+        name = JoaraPostgresSchemaConstants.TB_MEMBER_FAVOR_GENRE,
+        schema = JoaraPostgresSchemaConstants.SCHEMA
 )
 public class MemberFavorGenreEntity extends UuidBaseEntity {
-	@Column
-	private UUID genreId;
-	@Column
-	private UUID memberId;
-	@Column
-	private String favorGenreName;
-	@Column
-	@Builder.Default
-	private OffsetDateTime createdAt = ServerTime.now();
+    public Long genreId;
+    public UUID memberId;
+    public String nickname;
+    @Builder.Default
+    public OffsetDateTime createdAt = ServerTime.now();
+    public OffsetDateTime updatedAt;
+    public OffsetDateTime deletedAt;
 }

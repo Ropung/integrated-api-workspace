@@ -1,4 +1,4 @@
-package com.joara.book.entity;
+package com.joara.book.entity._old;
 
 import com.joara.base.jpa.entity.UuidBaseEntity;
 import com.joara.rdb.JoaraPostgresSchemaConstants;
@@ -15,6 +15,7 @@ import javax.persistence.Table;
 import java.time.OffsetDateTime;
 import java.util.UUID;
 
+
 @Entity
 @Getter
 @Setter
@@ -22,17 +23,14 @@ import java.util.UUID;
 @AllArgsConstructor
 @Builder
 @Table(
-        name = JoaraPostgresSchemaConstants.TB_MEMBER_FAVOR_BOOK,
-        schema = JoaraPostgresSchemaConstants.SCHEMA
+		name = JoaraPostgresSchemaConstants.TB_MEMBER_FAVOR_BOOK,
+		schema = JoaraPostgresSchemaConstants.SCHEMA,
+				catalog = JoaraPostgresSchemaConstants.SCHEMA
 )
 public class MemberFavorBookEntity extends UuidBaseEntity {
-   public Long bookId;
-   public Long genreId;
-   public UUID memberId;
-   public String nickname;
-   public String bookTitle;
-   @Builder.Default
-   public OffsetDateTime createdAt = ServerTime.now();
-   public OffsetDateTime updatedAt;
-   public OffsetDateTime deletedAt;
+	public UUID memberId;
+	public UUID bookId;
+	public String favorBookName;
+	@Builder.Default
+	public OffsetDateTime createdAt = ServerTime.now();
 }
