@@ -1,6 +1,5 @@
-package com.joara.web;
+package com.joara.web.book;
 
-import com.joara.book.domain.model.book.Book;
 import com.joara.book.exception.BookErrorCode;
 import com.joara.book.usecase.BookCreateUseCase;
 import com.joara.book.usecase.BookEditUseCase;
@@ -14,6 +13,7 @@ import com.joara.book.usecase.dto.BookCommandDto.BookRemoveRequestDto;
 import com.joara.book.usecase.dto.BookCommandDto.BookRemoveResponseDto;
 import com.joara.clients.MemberQueryPort;
 import com.joara.jwt.util.JwtParser;
+import com.joara.web.util.AuthorVerifier;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -27,8 +27,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.util.Objects;
-import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
@@ -42,6 +40,7 @@ public final class BookCommandApi {
 	private final MemberQueryPort memberQueryPort;
 
 	private final JwtParser jwtParser;
+	private final AuthorVerifier authorVerifier;
 
 	@PostMapping("")
 	public BookCreateResponseDto bookCreateResponseDto(
@@ -58,7 +57,7 @@ public final class BookCommandApi {
 			@RequestBody @Valid BookModifyRequestDto body,
 			HttpServletRequest request) {
 		// BOOK DB에 있는 member ID랑 이 요청을 보낸 member ID가 일치하는지:
-		if (!confirmOwner(request, body.bookId())) {
+		if (!authorVerifier.verify(request, body.bookId())) {
 			throw BookErrorCode.FORBIDDEN.defaultException();
 		}
 
@@ -70,27 +69,10 @@ public final class BookCommandApi {
 			@RequestBody @Valid BookRemoveRequestDto body,
 			HttpServletRequest request) {
 		// 본인 책이 맞는지.
-		if (!confirmOwner(request, body.bookId())) {
+		if (!authorVerifier.verify(request, body.bookId())) {
 			throw BookErrorCode.FORBIDDEN.defaultException();
 		}
 
 		return bookRemoveUseCase.remove(body);
-	}
-
-	private boolean confirmOwner(HttpServletRequest userRequest, Long bookId) {
-		String email = jwtParser.withRequest(userRequest).subject(); // member id (X), email (O)
-
-		// email -> memberId
-		UUID memberId = memberQueryPort
-				.findIdByEmail(email)
-				.orElseThrow(BookErrorCode.FORBIDDEN::defaultException)
-				.id();
-
-		// body.bookId -> BOOK 조회
-		Book book = bookQueryUseCase
-				.findById(bookId)
-				.orElseThrow(BookErrorCode.BOOK_NOT_FOUND::defaultException);
-
-		return Objects.equals(memberId, book.memberId);
 	}
 }

@@ -1,4 +1,4 @@
-package com.joara.web;
+package com.joara.web.book;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RestController;
