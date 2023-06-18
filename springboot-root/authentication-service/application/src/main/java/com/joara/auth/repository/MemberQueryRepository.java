@@ -4,14 +4,14 @@ import com.joara.auth.domain.model.Member;
 import com.joara.auth.repository.projection.MemberQueryProjection.MemberEmailNicknameProjection;
 import com.joara.member.MemberReadModels.DefaultMemberReadModel;
 import com.joara.member.MemberReadModels.MemberIdReadModel;
-import com.joara.support.repository.BaseRepository;
+import com.joara.support.repository.BaseCommandRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.Optional;
 import java.util.UUID;
 
-public interface MemberQueryRepository extends BaseRepository<Member, UUID>  {
+public interface MemberQueryRepository extends BaseCommandRepository<Member, UUID> {
     Optional<Member> findByEmail(String email);
     Optional<DefaultMemberReadModel> findProjectionByEmail(String email);
     Optional<MemberIdReadModel> findIdByEmail(String email);

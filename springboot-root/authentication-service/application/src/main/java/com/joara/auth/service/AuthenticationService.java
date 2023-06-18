@@ -9,7 +9,7 @@ import com.joara.auth.repository.MemberCommandRepository;
 import com.joara.auth.repository.MemberQueryRepository;
 import com.joara.auth.usecase.LoginUseCase;
 import com.joara.auth.usecase.SignUpUseCase;
-import com.joara.auth.usecase.dto.MemberLoginDto.MemberLoginRequestDto;
+import com.joara.auth.usecase.dto.MemberLoginDto.EmailAndPasswordLoginRequestDto;
 import com.joara.auth.usecase.dto.MemberLoginDto.MemberLoginResponseDto;
 import com.joara.auth.usecase.dto.MemberSignUpDto.MemberSignUpRequestDto;
 import com.joara.auth.usecase.dto.MemberSignUpDto.MemberSignUpResponseDto;
@@ -37,8 +37,11 @@ public class AuthenticationService implements SignUpUseCase, LoginUseCase {
 
 	@Override
 	public boolean signUp(Member member) {
-		boolean isValid = memberQueryRepository.existsMemberByEmail(member.email);
-		if (isValid) throw new IllegalArgumentException("이미 존재하는 이메일입니다.");
+		// 중복 체크
+		boolean exists = memberQueryRepository.existsMemberByEmail(member.email);
+		if (exists) throw new IllegalArgumentException("이미 존재하는 이메일입니다.");
+
+		// 비밀번호 인코딩
 		member.password = passwordEncoder.encode(member.password);
 
 		memberCommandRepository.save(member);
@@ -47,16 +50,18 @@ public class AuthenticationService implements SignUpUseCase, LoginUseCase {
 
 	@Override
 	public MemberSignUpResponseDto signUp(MemberSignUpRequestDto dto, AccountStatus status, CertType certType, MemberTier tier) {
+		// DTO와 기타 입력값들을 -> Member 도메인으로 변환.
 		OffsetDateTime createdAt = ServerTime.now();
 		Member member = mapper.from(dto, status ,createdAt, certType, tier);
 
+		// 변환한 도메인을 signUp(Member member) 메서드에게 인계 + 그 결과를 반환 DTO로 변환.
 		return MemberSignUpResponseDto.builder()
 				.success(signUp(member)) // 인계
 				.build();
 	}
 
 	@Override
-	public MemberLoginResponseDto login(MemberLoginRequestDto dto) {
+	public MemberLoginResponseDto login(EmailAndPasswordLoginRequestDto dto) {
 		// 스프링 시큐리티 Authentication Manager를 통한 인증
 		try {
 			UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(dto.email(), dto.rawPassword());

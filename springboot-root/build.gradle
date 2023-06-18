@@ -79,6 +79,22 @@ subprojects {
 
 		project.mkdir "${project.projectDir}/${outputDirectory}"
 	}
+
+	// Compile Time VM Options (1)
+	compileJava {
+		options.compilerArgs += ['--enable-preview', '-Amapstruct.defaultComponentModel=spring']
+	}
+
+	// Compile Time VM Options (2)
+	compileTestJava {
+		options.compilerArgs += ['--enable-preview', '-Amapstruct.defaultComponentModel=spring']
+	}
+
+	// Compile Time VM Options (3)
+	test {
+		useJUnitPlatform()
+		jvmArgs(['--enable-preview', '-Amapstruct.defaultComponentModel=spring'])
+	}
 }
 
 // === Auth Service ====================================================================================================

@@ -15,4 +15,5 @@ public interface MemberJpaRepository extends JpaRepository<MemberEntity, UUID> {
 	Optional<MemberIdProjection> findIdByEmail(String email);
 	Optional<DefaultMemberProjection> findProjectionByEmail(String email);
 	List<MemberEntity> findAllBy(Pageable pageable);
+	boolean existsMemberByEmail(String email);
 }

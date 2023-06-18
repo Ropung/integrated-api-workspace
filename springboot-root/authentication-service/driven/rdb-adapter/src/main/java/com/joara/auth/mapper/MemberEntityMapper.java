@@ -9,7 +9,7 @@ import com.joara.member.MemberReadModels.MemberIdReadModel;
 import com.joara.support.mapper.BaseEntityMapper;
 import org.mapstruct.Mapper;
 
-@Mapper(componentModel = "spring")
+@Mapper // (componentModel = "spring")
 public interface MemberEntityMapper extends BaseEntityMapper<Member, MemberEntity> {
 	Member toDomain(DefaultMemberProjection projection);
 	DefaultMemberReadModel toReadModel(DefaultMemberProjection projection);

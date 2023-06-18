@@ -10,7 +10,7 @@ import org.mapstruct.Mapping;
 
 import java.time.OffsetDateTime;
 
-@Mapper(componentModel = "spring")
+@Mapper // (componentModel = "spring")
 public interface MemberDtoMapper {
 	@Mapping(target = "password", source = "dto.rawPassword")
 	Member from(MemberSignUpRequestDto dto, AccountStatus status, OffsetDateTime createdAt, CertType certificatedBy, MemberTier tier);

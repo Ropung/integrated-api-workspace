@@ -5,7 +5,7 @@ import com.joara.auth.domain.model.type.CertType;
 import com.joara.auth.domain.model.type.MemberTier;
 import com.joara.auth.usecase.LoginUseCase;
 import com.joara.auth.usecase.SignUpUseCase;
-import com.joara.auth.usecase.dto.MemberLoginDto.MemberLoginRequestDto;
+import com.joara.auth.usecase.dto.MemberLoginDto.EmailAndPasswordLoginRequestDto;
 import com.joara.auth.usecase.dto.MemberLoginDto.MemberLoginResponseDto;
 import com.joara.auth.usecase.dto.MemberSignUpDto.MemberSignUpRequestDto;
 import com.joara.auth.usecase.dto.MemberSignUpDto.MemberSignUpResponseDto;
@@ -35,7 +35,7 @@ public final class AuthenticationApi {
 
 	@PostMapping("/login")
 	public MemberLoginResponseDto login(
-			@RequestBody MemberLoginRequestDto body
+			@RequestBody EmailAndPasswordLoginRequestDto body
 	) {
 		return loginUseCase.login(body);
 	}

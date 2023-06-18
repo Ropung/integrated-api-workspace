@@ -20,14 +20,19 @@ import java.util.UUID;
 @Repository
 @RequiredArgsConstructor
 public class MemberPersistence implements MemberCommandRepository, MemberQueryRepository {
-    // Delegation
+    // Delegation(위임)
     private final MemberJpaRepository memberJpaRepository;
     private final MemberEntityMapper mapper;
 
+    /*
+    mapper(DOMAIN -> ENTITY)
+    -> jpaRepository.do()
+    mapper(ENTITY -> DOMAIN)
+     */
+
     @Override
     public Member save(Member domain) {
-        // use mapper: Member -> MemberEntity
-        // use mapper: MemberEntity -> Member
+        // DOMAIN -> ENTITY -> save -> ENTITY -> DOMAIN
         MemberEntity entity = mapper.toEntity(domain);
         MemberEntity savedEntity = memberJpaRepository.save(entity);
         return mapper.toDomain(savedEntity);
@@ -35,7 +40,7 @@ public class MemberPersistence implements MemberCommandRepository, MemberQueryRe
     
     @Override
     public boolean existsMemberByEmail(String email) {
-        return false;
+        return memberJpaRepository.existsMemberByEmail(email);
     }
     
     @Override
@@ -45,11 +50,9 @@ public class MemberPersistence implements MemberCommandRepository, MemberQueryRe
     
     @Override
     public Optional<Member> findByEmail(String email) {
-        Optional<MemberEntity> member = memberJpaRepository.findByEmail(email);
-        return member.map(mapper::toDomain);
-//        return member.map((mem) -> {
-//            return mapper.toDomain(mem);
-//        });
+        Optional<MemberEntity> optionalMember = memberJpaRepository.findByEmail(email);
+        // Optional<MemberEntity> -> Optional<Member>
+        return optionalMember.map(mapper::toDomain);
     }
     
     @Override

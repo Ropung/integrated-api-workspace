@@ -8,7 +8,7 @@ import lombok.Builder;
 import javax.validation.constraints.Pattern;
 
 public record MemberLoginDto() {
-	public record MemberLoginRequestDto(
+	public record EmailAndPasswordLoginRequestDto(
 			String email,
 			@JsonProperty("password")
 			@Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{8,}$")
