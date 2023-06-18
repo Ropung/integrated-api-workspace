@@ -14,7 +14,8 @@ public record MemberReadModels() {
 			String phone,
 			Gender gender,
 			String birth,
-			AccountStatus status
+			AccountStatus status,
+			String tier
 	) {}
 
 	public record MemberIdReadModel(UUID id) {}

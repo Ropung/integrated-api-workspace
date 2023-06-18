@@ -1,6 +1,6 @@
 package com.joara.book.repository;
 
-import com.joara.book.entity._old.BookEntity;
+import com.joara.book.entity.BookEntity;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 

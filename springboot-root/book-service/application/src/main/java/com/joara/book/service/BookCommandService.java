@@ -71,6 +71,4 @@ public class BookCommandService implements BookCreateUseCase {
 				.success(create(book, file, request))
 				.build();
 	}
-
-
 }

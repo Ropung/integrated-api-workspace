@@ -14,6 +14,7 @@ public record MemberProjections() {
 			String phone,
 			Gender gender,
 			String birth,
-			AccountStatus status
+			AccountStatus status,
+			String tier
 	) {}
 }

@@ -3,6 +3,7 @@ package com.joara.auth.service;
 import com.joara.auth.domain.model.Member;
 import com.joara.auth.domain.model.type.AccountStatus;
 import com.joara.auth.domain.model.type.CertType;
+import com.joara.auth.domain.model.type.MemberTier;
 import com.joara.auth.exception.AuthenticationErrorCode;
 import com.joara.auth.repository.MemberCommandRepository;
 import com.joara.auth.repository.MemberQueryRepository;
@@ -45,10 +46,9 @@ public class AuthenticationService implements SignUpUseCase, LoginUseCase {
 	}
 
 	@Override
-	public MemberSignUpResponseDto signUp(MemberSignUpRequestDto dto, AccountStatus status, CertType certType) {
-
+	public MemberSignUpResponseDto signUp(MemberSignUpRequestDto dto, AccountStatus status, CertType certType, MemberTier tier) {
 		OffsetDateTime createdAt = ServerTime.now();
-		Member member = mapper.from(dto, status ,createdAt, certType);
+		Member member = mapper.from(dto, status ,createdAt, certType, tier);
 
 		return MemberSignUpResponseDto.builder()
 				.success(signUp(member)) // 인계
