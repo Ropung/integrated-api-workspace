@@ -1,11 +1,24 @@
 package com.joara.web.book;
 
+import com.joara.book.usecase.BookQueryUseCase;
+import com.joara.book.usecase.dto.BookQueryDto.BookReadByOneRequestDto;
+import com.joara.book.usecase.dto.BookQueryDto.BookReadByOneResponseDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @RestController
-@RequiredArgsConstructor
+@RequiredArgsConstructor // final, not null
+@RequestMapping("/books")
 public final class BookQueryApi {
+
+    private final BookQueryUseCase bookQueryUseCase;
+
+    @GetMapping("/{bookId}") //  ~/books/1
+    public BookReadByOneResponseDto findBookById(@PathVariable Long bookId){
+        return bookQueryUseCase.findBookById(bookId);
+    }
 
 //	private final BookQueryService bookQueryService;
 //	@GetMapping(path = "/genre/{genreEng}")

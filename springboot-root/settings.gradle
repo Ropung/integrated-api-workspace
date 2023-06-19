@@ -23,14 +23,14 @@ findProject(':authentication-service:application:read-models')?.name = 'read-mod
 
 // base
 include 'base-modules'
-include 'base-modules:joara-global-exception-handler'
-findProject(':base-modules:joara-global-exception-handler')?.name = 'joara-global-exception-handler'
-include 'base-modules:joara-jpa-base'
-findProject(':base-modules:joara-jpa-base')?.name = 'joara-jpa-base'
-include 'base-modules:joara-integrated-flyway'
-findProject(':base-modules:joara-integrated-flyway')?.name = 'joara-integrated-flyway'
 include 'base-modules:joara-file-uploader'
 findProject(':base-modules:joara-file-uploader')?.name = 'joara-file-uploader'
+include 'base-modules:joara-global-exception-handler'
+findProject(':base-modules:joara-global-exception-handler')?.name = 'joara-global-exception-handler'
+include 'base-modules:joara-integrated-flyway'
+findProject(':base-modules:joara-integrated-flyway')?.name = 'joara-integrated-flyway'
+include 'base-modules:joara-jpa-base'
+findProject(':base-modules:joara-jpa-base')?.name = 'joara-jpa-base'
 include 'base-modules:joara-jwt-parser'
 findProject(':base-modules:joara-jwt-parser')?.name = 'joara-jwt-parser'
 include 'base-modules:joara-server-communication-core'
@@ -55,9 +55,10 @@ findProject(':book-service:adapters:client-adapters:joara-member-client')?.name 
 
 include 'book-service:application'
 include 'book-service:application:domain'
+include 'book-service:application:read-models'
 findProject(':book-service:application')?.name = 'application'
 findProject(':book-service:application:domain')?.name = 'domain'
+findProject(':book-service:application:read-models')?.name = 'read-models'
 
 // common
 include 'common'
-

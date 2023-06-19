@@ -28,9 +28,9 @@ public class BookQueryPersistence implements BookQueryRepository {
     }
 
     @Override
-    public Optional<Book> findById(Long aLong) {
+    public Optional<Book> findById(Long id) {
         return bookQueryJpaRepository
-                .findById(aLong)
+                .findById(id)
                 .map(mapper::toDomain);
     }
 }

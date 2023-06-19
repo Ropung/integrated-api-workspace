@@ -38,12 +38,11 @@ public final class BookCommandApi {
 	private final BookRemoveUseCase bookRemoveUseCase;
 	private final BookQueryUseCase bookQueryUseCase;
 	private final MemberQueryPort memberQueryPort;
-
 	private final JwtParser jwtParser;
 	private final AuthorVerifier authorVerifier;
 
 	@PostMapping("")
-	public BookCreateResponseDto bookCreateResponseDto(
+	public BookCreateResponseDto create(
 			@ModelAttribute @Valid BookCommandDto.BookCreateRequestDto dto,
 			@RequestPart(value = "coverImage", required = false)
 			MultipartFile file,
@@ -53,7 +52,7 @@ public final class BookCommandApi {
 	}
 
 	@PutMapping("")
-	public BookModifyResponseDto modify(
+	public BookModifyResponseDto update(
 			@RequestBody @Valid BookModifyRequestDto body,
 			HttpServletRequest request) {
 		// BOOK DB에 있는 member ID랑 이 요청을 보낸 member ID가 일치하는지:
@@ -65,7 +64,7 @@ public final class BookCommandApi {
 	}
 
 	@DeleteMapping("")
-	public BookRemoveResponseDto remove(
+	public BookRemoveResponseDto delete(
 			@RequestBody @Valid BookRemoveRequestDto body,
 			HttpServletRequest request) {
 		// 본인 책이 맞는지.
