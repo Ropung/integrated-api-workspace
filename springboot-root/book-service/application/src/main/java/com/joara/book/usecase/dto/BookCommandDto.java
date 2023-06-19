@@ -13,7 +13,8 @@ public record BookCommandDto() {
 			@Size(max = 30, min = 3, message = "책 제목은 3~30 자리입니다.")
 			String title,
 			@Size(max = 255, message = "책 소개는 최대 255 자리입니다.")
-        	String description
+        	String description,
+			BookStatus status
 	) {}
 
 	public record BookModifyRequestDto(

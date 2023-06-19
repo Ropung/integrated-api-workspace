@@ -1,3 +1,4 @@
 app:
   jwt:
     password: ${JWT_SECRET_KEY:77d1b474a0920ab13e44a05170117cf0e809bad5c554d19020a95b45e9e2fb95893b8b149382e294d78fdb8e5aa2ae266b5797d985f5dc127366d2a50ec3938e}
+    expired-in: 1_800_000 # [ms]

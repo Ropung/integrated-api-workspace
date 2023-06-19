@@ -1,6 +1,7 @@
 package com.joara.book.service;
 
 import com.joara.book.domain.model.book.Book;
+import com.joara.book.domain.model.book.type.BookStatus;
 import com.joara.book.exception.BookErrorCode;
 import com.joara.book.repository.BookCommandRepository;
 import com.joara.book.usecase.BookCreateUseCase;
@@ -62,6 +63,8 @@ public class BookCommandService
 				.id();
 		book.nickname = nickname;
 		book.coverUrl = coverUrl;
+		book.status = BookStatus.ACTIVE;
+
 		if (book.createdAt == null) {
 			book.createdAt = ServerTime.now();
 		}
