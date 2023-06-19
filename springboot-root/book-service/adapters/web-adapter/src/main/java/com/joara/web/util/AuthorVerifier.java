@@ -3,6 +3,7 @@ package com.joara.web.util;
 import com.joara.book.domain.model.book.Book;
 import com.joara.book.exception.BookErrorCode;
 import com.joara.book.usecase.BookQueryUseCase;
+import com.joara.book.usecase.dto.BookQueryDto;
 import com.joara.clients.MemberQueryPort;
 import com.joara.jwt.util.JwtParser;
 import lombok.RequiredArgsConstructor;

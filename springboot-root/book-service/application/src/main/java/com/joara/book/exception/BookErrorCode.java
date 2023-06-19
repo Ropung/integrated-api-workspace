@@ -10,7 +10,7 @@ public enum BookErrorCode implements ErrorCode {
 	DUPLICATED_BOOK_TITLE("동일한 작품이 이미 등록되어 있습니다.", HttpStatus.BAD_REQUEST),
 	IMAGE_UPLOAD_FAILURE("파일 업로드에 실패하였습니다.", HttpStatus.INTERNAL_SERVER_ERROR),
 	SERVICE_UNAVAILABLE("연결된 작업 처리에서 문제가 발생했습니다.", HttpStatus.SERVICE_UNAVAILABLE),
-	BOOK_NOT_FOUND("작품정보가 일치하지 않습니다.", HttpStatus.NOT_FOUND),
+	BOOK_NOT_FOUND("작품정보를 찾을 수 없습니다.", HttpStatus.NOT_FOUND),
 	DEFAULT("", HttpStatus.INTERNAL_SERVER_ERROR);
 	
 	public final String message;
