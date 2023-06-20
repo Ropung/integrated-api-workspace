@@ -1,12 +1,14 @@
 package com.joara.web.book;
 
+import com.joara.book.domain.model.book.type.SearchType;
 import com.joara.book.usecase.BookQueryUseCase;
-import com.joara.book.usecase.dto.BookQueryDto.BookReadByOneRequestDto;
+import com.joara.book.usecase.dto.BookQueryDto.BookReadByGenreResponseDto;
 import com.joara.book.usecase.dto.BookQueryDto.BookReadByOneResponseDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
 
 @RestController
 @RequiredArgsConstructor // final, not null
@@ -18,6 +20,17 @@ public final class BookQueryApi {
     @GetMapping("/{bookId}") //  ~/books/1
     public BookReadByOneResponseDto findBookById(@PathVariable Long bookId){
         return bookQueryUseCase.findBookById(bookId);
+    }
+
+    @GetMapping("/genre/{genreId}")
+    public BookReadByGenreResponseDto findBookGenreById(
+            @PathVariable Long genreId,
+            @PageableDefault(size=10, sort="createdAt", direction = Sort.Direction.DESC) Pageable pageable,
+            @RequestParam(required = false) String page,
+            @RequestParam(required = false, defaultValue = "NONE") SearchType searchType,
+            @RequestParam(required = false) String keyword
+            ){
+        return bookQueryUseCase.findBooksByGenreId(genreId, pageable, page, searchType, keyword);
     }
 
 //	private final BookQueryService bookQueryService;
