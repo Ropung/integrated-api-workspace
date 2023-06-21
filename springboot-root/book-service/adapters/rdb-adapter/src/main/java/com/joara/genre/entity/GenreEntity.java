@@ -25,7 +25,7 @@ import javax.persistence.Table;
 		name = JoaraPostgresSchemaConstants.TB_BOOK_GENRE,
 		schema = JoaraPostgresSchemaConstants.SCHEMA
 )
-public class BookGenreEntity extends BaseEntity {
+public class GenreEntity extends BaseEntity {
 	@Column(name = "genre_kor")
 	public String kor;
 
