@@ -65,6 +65,16 @@ public class BookCommandService
 		book.coverUrl = coverUrl;
 		book.status = BookStatus.ACTIVE;
 
+		if(book.genreId == 1){
+			book.genreKor = "액션";
+		} else if (book.genreId == 2) {
+			book.genreKor = "로맨스";
+		} else if (book.genreId == 3) {
+			book.genreKor = "판타지";
+		} else {
+			book.genreKor = "없음";
+		}
+
 		if (book.createdAt == null) {
 			book.createdAt = ServerTime.now();
 		}

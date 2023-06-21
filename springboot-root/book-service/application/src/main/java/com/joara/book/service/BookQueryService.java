@@ -74,6 +74,7 @@ public class BookQueryService implements BookQueryUseCase {
 
         return BookReadByGenreResponseDto.builder()
                 .bookList(bookList)
+                .genreId(genreId)
                 .lastPage(lastPageNumber)
                 .build();
     }

@@ -31,6 +31,7 @@ import java.util.UUID;
 public class BookEntity extends BaseEntity {
     public UUID memberId;
     public Long genreId;
+    public String genreKor;
     public String nickname;
     public String title;
     public String description;

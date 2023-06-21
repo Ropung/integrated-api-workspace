@@ -3,6 +3,7 @@ CREATE TABLE IF NOT EXISTS joara_basic.book (
     id                  BIGSERIAL                           PRIMARY KEY,
     member_id           UUID                                ,
     genre_id            BIGINT                              ,
+    genre_kor           VARCHAR(255)                        ,
     nickname            VARCHAR(255)                        ,
     title               VARCHAR(255)                        ,
     description         TEXT                                ,

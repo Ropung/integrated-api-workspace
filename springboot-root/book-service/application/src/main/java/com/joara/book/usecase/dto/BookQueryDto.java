@@ -20,6 +20,7 @@ public record BookQueryDto() {
     @Builder
     public record BookReadByGenreResponseDto(
             List<Book> bookList,
+            Long genreId,
             Long lastPage
 
     ){}
