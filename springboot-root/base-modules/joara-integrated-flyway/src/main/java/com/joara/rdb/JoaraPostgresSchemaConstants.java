@@ -9,10 +9,10 @@ public final class JoaraPostgresSchemaConstants {
 	public static final String TB_BOOK_GENRE = "book_genre";
 	public static final String TB_BOOK = "book";
 	public static final String TB_BOOK_TAG = "book_tag";
-	public static final String TB_EPI_LOVE = "epi_love";
-	public static final String TB_EPI = "epi";
-	public static final String TB_EPI_REPLY = "epi_reply";
-	public static final String TB_EPI_SUB_REPLY = "epi_sub_reply";
+	public static final String TB_EPISODE = "episode";
+	public static final String TB_EPISODE_COMMENT = "episode_comment";
+	public static final String TB_EPISODE_REPLY = "episode_reply";
+	public static final String TB_EPISODE_HEART = "episode_heart";
 	private JoaraPostgresSchemaConstants() {
 	
 	}
