@@ -22,6 +22,5 @@ public record BookQueryDto() {
             List<Book> bookList,
             Long genreId,
             Long lastPage
-
     ){}
 }

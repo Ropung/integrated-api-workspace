@@ -32,7 +32,7 @@ import java.util.UUID;
 )
 public class EpisodeReplyEntity extends UuidBaseEntity {
 	public UUID commentId;
-	private String memberId;
+	public String memberId;
 	public String nickname;
 	public String content;
 	@Builder.Default

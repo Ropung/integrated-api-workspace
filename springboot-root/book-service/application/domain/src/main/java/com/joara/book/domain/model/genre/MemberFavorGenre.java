@@ -1,5 +1,6 @@
 package com.joara.book.domain.model.genre;
 
+import com.joara.util.time.ServerTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -16,8 +17,11 @@ import java.util.UUID;
 @Builder
 public class MemberFavorGenre{
 	public UUID id;
-	public UUID genreId;
+	public Long genreId;
 	public UUID memberId;
-	public String favorGenreName;
-	public OffsetDateTime createdAt;
+	public String nickname;
+	@Builder.Default
+	public OffsetDateTime createdAt = ServerTime.now();
+	public OffsetDateTime updatedAt;
+	public OffsetDateTime deletedAt;
 }

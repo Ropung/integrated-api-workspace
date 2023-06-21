@@ -75,19 +75,17 @@ public class BookCommandService
 		book.coverUrl = coverUrl;
 		book.status = BookStatus.ACTIVE;
 
-		if(book.genreId == 1){
-			book.genreKor = "액션";
-		} else if (book.genreId == 2) {
-			book.genreKor = "로맨스";
-		} else if (book.genreId == 3) {
-			book.genreKor = "판타지";
-		} else {
-			book.genreKor = "없음";
-		}
+		book.genreKor = switch (book.genreId) {
+			case 1L -> "액션";
+			case 2L -> "로맨스";
+			case 3L -> "판타지";
+			default -> throw BookErrorCode.NO_GENRE_SELECTED.defaultException();
+		};
 
 		if (book.createdAt == null) {
 			book.createdAt = ServerTime.now();
 		}
+
 		bookCommandRepository.save(book);
 		return true;
 	}

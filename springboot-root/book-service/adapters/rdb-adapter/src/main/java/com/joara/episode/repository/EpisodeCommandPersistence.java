@@ -13,19 +13,19 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class EpisodeCommandPersistence implements EpisodeCommandRepository {
 
-    private final EpisodeCommandJpaRepository episodeCommandJpaRepository;
+    private final EpisodeCommandJpaRepo episodeCommandJpaRepo;
     private final EpisodeEntityMapper mapper;
 
     @Override
     public Episode save(Episode domain) {
         EpisodeEntity entity = mapper.toEntity(domain);
-        EpisodeEntity savedEntity = episodeCommandJpaRepository.save(entity);
+        EpisodeEntity savedEntity = episodeCommandJpaRepo.save(entity);
         return mapper.toDomain(savedEntity);
     }
 
     @Override
     public Optional<Episode> findById(UUID id) {
-        return episodeCommandJpaRepository.findById(id)
+        return episodeCommandJpaRepo.findById(id)
                 .map(mapper::toDomain);
     }
 
