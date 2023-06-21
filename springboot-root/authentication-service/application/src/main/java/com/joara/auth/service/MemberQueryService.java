@@ -15,6 +15,7 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public final class MemberQueryService implements MemberIdQueryUseCase, MemberProfileQueryUseCase {
+
     private final MemberQueryRepository memberQueryRepository;
 
     @Override

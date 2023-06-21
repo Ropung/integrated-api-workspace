@@ -27,6 +27,7 @@ public class BookCommandPersistence implements BookCommandRepository {
         // use mapper: Member -> MemberEntity
         // use mapper: MemberEntity -> Member
         BookEntity entity = mapper.toEntity(domain);
+
         BookEntity savedEntity = bookCommandJpaRepository.save(entity);
         return mapper.toDomain(savedEntity);
     }
