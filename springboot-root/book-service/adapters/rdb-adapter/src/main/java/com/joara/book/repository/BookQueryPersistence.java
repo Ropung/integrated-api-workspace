@@ -1,8 +1,10 @@
 package com.joara.book.repository;
 
+import com.joara.book.domain.model.BookReadModels.BookListViewReadModel;
 import com.joara.book.domain.model.book.Book;
 import com.joara.book.entity.BookEntity;
 import com.joara.book.mapper.BookEntityMapper;
+import com.joara.book.projection.BookQueryProjections.BookListViewProjection;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -57,9 +59,9 @@ public class BookQueryPersistence implements BookQueryRepository {
     }
 
     @Override
-    public Page<Book> findAllByGenreId(Long id, Pageable pageable) {
-        Page<BookEntity> bookEntities = bookQueryJpaRepository
+    public Page<BookListViewReadModel> findAllByGenreId(Long id, Pageable pageable) {
+        Page<BookListViewProjection> bookEntities = bookQueryJpaRepository
                 .findAllByGenreId(id, pageable);
-        return bookEntities.map(mapper::toDomain);
+        return bookEntities.map(mapper::toReadModel);
     }
 }

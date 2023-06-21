@@ -240,7 +240,6 @@ project(':book-service:adapters:client-adapters:joara-member-client') {
 	}
 }
 
-
 project(':book-service:application') {
 	dependencies {
 		implementation project(':common')
