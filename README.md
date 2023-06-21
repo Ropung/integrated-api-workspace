@@ -31,6 +31,3 @@
 접속 정보(Local): http://localhost:2999
 
 ---
-
-test
-test
