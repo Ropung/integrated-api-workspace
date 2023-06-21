@@ -75,10 +75,10 @@ public class BookCommandService
 		book.coverUrl = coverUrl;
 		book.status = BookStatus.ACTIVE;
 
-		book.genreKor = switch (book.genreId) {
-			case 1L -> "액션";
-			case 2L -> "로맨스";
-			case 3L -> "판타지";
+		book.genreKor = switch ((int) book.genreId.longValue()) {
+			case 1 -> "액션";
+			case 2 -> "로맨스";
+			case 3 -> "판타지";
 			default -> throw BookErrorCode.NO_GENRE_SELECTED.defaultException();
 		};
 

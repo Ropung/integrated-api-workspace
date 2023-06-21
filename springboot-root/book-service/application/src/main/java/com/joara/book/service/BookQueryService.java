@@ -1,5 +1,6 @@
 package com.joara.book.service;
 
+import com.joara.book.domain.model.BookReadModels.BookListViewReadModel;
 import com.joara.book.domain.model.book.Book;
 import com.joara.book.domain.model.book.type.SearchType;
 import com.joara.book.exception.BookErrorCode;
@@ -10,7 +11,6 @@ import com.joara.book.usecase.dto.BookQueryDto.BookReadByOneResponseDto;
 import com.joara.book.usecase.mapper.BookDtoMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -43,7 +43,7 @@ public class BookQueryService implements BookQueryUseCase {
     public BookReadByGenreResponseDto findBooksByGenreId(
             Long genreId, Pageable pageable, SearchType searchType, String keyword) {
         // 향상된 switch문 Java 14
-        Page<Book> bookSearchResult = switch (searchType) {
+        Page<BookListViewReadModel> bookSearchResult = switch (searchType) {
             case TITLE ->
                     bookQueryRepository.findAllByGenreIdAndTitleContainsIgnoreCase(genreId, keyword, pageable);
             case CONTENT ->
@@ -58,7 +58,7 @@ public class BookQueryService implements BookQueryUseCase {
             throw BookErrorCode.PAGE_OUT_OF_RANGE.defaultException();
         }
 
-        List<Book> bookList = bookSearchResult.toList();
+        List<BookListViewReadModel> bookList = bookSearchResult.toList();
 
         if (bookList.isEmpty()) {
             throw BookErrorCode.BOOK_NOT_FOUND.defaultException();

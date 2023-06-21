@@ -81,6 +81,12 @@ subprojects {
 		project.mkdir "${project.projectDir}/${outputDirectory}"
 	}
 
+	jar {
+		enabled = true
+	}
+
+	// .java -> Compile Time -> .class -> Runtime (-> machine code)
+
 	// Compile Time VM Options (1)
 	compileJava {
 		options.compilerArgs += ['--enable-preview', '-Amapstruct.defaultComponentModel=spring']
@@ -222,7 +228,7 @@ project(':book-service:adapters:rdb-adapter') {
 		implementation project(':book-service:application')
 		implementation project(':base-modules:joara-jpa-base')
 		implementation project(':base-modules:joara-integrated-flyway')
-		implementation project(':book-service:application:read-models')
+		implementation project(':book-service:application:read-model')
 
 		// Map Struct
 		implementation 'org.mapstruct:mapstruct:1.5.3.Final'
@@ -246,7 +252,7 @@ project(':book-service:application') {
 		implementation project(':base-modules:joara-file-uploader')
 		implementation project(':base-modules:joara-jwt-parser')
 		implementation project(':authentication-service:application:read-models')
-		implementation project(':book-service:application:read-models')
+		implementation project(':book-service:application:read-model')
 
 		api project(':book-service:application:domain')
 		api 'org.springframework.data:spring-data-commons'
@@ -267,15 +273,10 @@ project(':book-service:application:domain') {
 	}
 }
 
-project(':book-service:application:read-models') {
+project(':book-service:application:read-model') {
 	dependencies {
 		implementation project(':common')
 		implementation project(':book-service:application:domain')
-
-		// Map Struct
-		implementation 'org.mapstruct:mapstruct:1.5.3.Final'
-		annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.3.Final'
-		annotationProcessor 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
 	}
 }
 

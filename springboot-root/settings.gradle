@@ -55,10 +55,11 @@ findProject(':book-service:adapters:client-adapters:joara-member-client')?.name 
 
 include 'book-service:application'
 include 'book-service:application:domain'
-include 'book-service:application:read-models'
 findProject(':book-service:application')?.name = 'application'
 findProject(':book-service:application:domain')?.name = 'domain'
-findProject(':book-service:application:read-models')?.name = 'read-models'
+include 'book-service:application:read-model'
+findProject(':book-service:application:read-model')?.name = 'read-model'
 
 // common
 include 'common'
+
