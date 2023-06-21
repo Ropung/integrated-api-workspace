@@ -21,6 +21,7 @@ public class Book {
 	public Long id;
 	public UUID memberId;
 	public Long genreId; // list view -> genre name
+	public String genreKor;
 	public String nickname; // list view
 	public String title; // list view
 	public String description; // list view
