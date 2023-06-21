@@ -34,9 +34,19 @@ public class BookCommandService
 
 	private final BookCommandRepository bookCommandRepository;
 	private final BookDtoMapper mapper;
+	private final MemberQueryPort memberQueryPort;
 	private final UploadImageService uploadImageService;
 	private final JwtParser jwtParser;
-	private final MemberQueryPort memberQueryPort;
+
+	@Override
+	public BookCreateResponseDto create(BookCreateRequestDto dto, MultipartFile file, HttpServletRequest request) {
+
+		Book book = mapper.from(dto);
+
+		return BookCreateResponseDto.builder()
+				.success(create(book, file, request))
+				.build();
+	}
 
 	@Override
 	public boolean create(Book book, MultipartFile file, HttpServletRequest request) {
@@ -80,16 +90,6 @@ public class BookCommandService
 		}
 		bookCommandRepository.save(book);
 		return true;
-	}
-
-	@Override
-	public BookCreateResponseDto create(BookCreateRequestDto dto, MultipartFile file, HttpServletRequest request) {
-
-		Book book = mapper.from(dto);
-
-		return BookCreateResponseDto.builder()
-				.success(create(book, file, request))
-				.build();
 	}
 
 	@Override
