@@ -18,6 +18,9 @@ public class EpisodeReply{
 	public UUID id;
 	public UUID epiId;
 	public String epiReply;
+	public String nickname; // add
+	public String content;
+	public String status;
 	public OffsetDateTime createdAt;
 	public OffsetDateTime updatedAt;
 	public OffsetDateTime deletedAt;
