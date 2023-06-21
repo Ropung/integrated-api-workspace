@@ -32,6 +32,7 @@ subprojects {
 	dependencies {
 		implementation 'org.springframework.boot:spring-boot-starter-web'
 		testImplementation 'org.springframework.boot:spring-boot-starter-test'
+		annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 		developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
 		// Lombok
@@ -238,7 +239,6 @@ project(':book-service:adapters:client-adapters:joara-member-client') {
 		implementation project(':base-modules:joara-server-communication-core')
 	}
 }
-
 
 project(':book-service:application') {
 	dependencies {

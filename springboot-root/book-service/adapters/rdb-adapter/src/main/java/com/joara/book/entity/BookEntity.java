@@ -49,4 +49,6 @@ public class BookEntity extends BaseEntity {
     public OffsetDateTime createdAt = ServerTime.now();
     public OffsetDateTime updatedAt;
     public OffsetDateTime deletedAt;
+    @Builder.Default
+    public Double score = 0.0;
 }

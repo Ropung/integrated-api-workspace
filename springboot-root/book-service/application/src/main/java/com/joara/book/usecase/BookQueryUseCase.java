@@ -13,5 +13,5 @@ public interface BookQueryUseCase {
 
     BookReadByOneResponseDto findBookById(Long id);
 
-    BookReadByGenreResponseDto findBooksByGenreId(Long genreId, Pageable pageable, String page, SearchType searchType, String keyword);
+    BookReadByGenreResponseDto findBooksByGenreId(Long genreId, Pageable pageable, SearchType searchType, String keyword);
 }

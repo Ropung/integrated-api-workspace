@@ -20,18 +20,16 @@ import java.time.OffsetDateTime;
 import java.util.UUID;
 
 @Entity
-@Getter
-@Setter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
 @Builder
 @ToString
 @Table(
 		name = JoaraPostgresSchemaConstants.TB_EPISODE,
-		schema = JoaraPostgresSchemaConstants.SCHEMA
+		schema = JoaraPostgresSchemaConstants.SCHEMA,
+		catalog = JoaraPostgresSchemaConstants.SCHEMA
 )
 public class EpisodeEntity extends UuidBaseEntity {
-	public UUID id;
 	public Long bookId;
 	public UUID memberId;
 	public String bookTitle;

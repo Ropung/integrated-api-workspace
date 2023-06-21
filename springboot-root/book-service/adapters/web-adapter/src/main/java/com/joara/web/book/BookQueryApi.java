@@ -26,11 +26,11 @@ public final class BookQueryApi {
     public BookReadByGenreResponseDto findBookGenreById(
             @PathVariable Long genreId,
             @PageableDefault(size=10, sort="createdAt", direction = Sort.Direction.DESC) Pageable pageable,
-            @RequestParam(required = false) String page,
             @RequestParam(required = false, defaultValue = "NONE") SearchType searchType,
             @RequestParam(required = false) String keyword
             ){
-        return bookQueryUseCase.findBooksByGenreId(genreId, pageable, page, searchType, keyword);
+        pageable = pageable.previousOrFirst(); // 0, 1 <--
+        return bookQueryUseCase.findBooksByGenreId(genreId, pageable, searchType, keyword);
     }
 
 //	private final BookQueryService bookQueryService;

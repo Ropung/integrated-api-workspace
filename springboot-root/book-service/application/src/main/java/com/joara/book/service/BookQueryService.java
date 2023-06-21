@@ -41,24 +41,16 @@ public class BookQueryService implements BookQueryUseCase {
 
     @Override
     public BookReadByGenreResponseDto findBooksByGenreId(
-            Long genreId, Pageable pageable, String page, SearchType searchType, String keyword) {
-
-        pageable = pageable.previousOrFirst();
-        if (page != null && !page.isEmpty()) {
-            // 만약 'page' 매개변수가 제공되었다면, pageable 객체를 해당 페이지로 업데이트
-            pageable = PageRequest.of(Integer.parseInt(page) - 1, pageable.getPageSize(), pageable.getSort());
-        }
-
-        Page<Book> bookSearchResult = null;
-        // 향상된 switch문 Java14
-        switch (searchType) {
+            Long genreId, Pageable pageable, SearchType searchType, String keyword) {
+        // 향상된 switch문 Java 14
+        Page<Book> bookSearchResult = switch (searchType) {
             case TITLE ->
-                    bookSearchResult = bookQueryRepository.findAllByGenreIdAndTitleContainsIgnoreCase(genreId, keyword, pageable);
-            case CONTENT -> //
-                    bookSearchResult = bookQueryRepository.findAllByGenreIdAndDescriptionContainsIgnoreCase(genreId, keyword, pageable);
+                    bookQueryRepository.findAllByGenreIdAndTitleContainsIgnoreCase(genreId, keyword, pageable);
+            case CONTENT ->
+                    bookQueryRepository.findAllByGenreIdAndDescriptionContainsIgnoreCase(genreId, keyword, pageable);
             case MEMBER_NAME ->
-                    bookSearchResult =bookQueryRepository.findAllByGenreIdAndNicknameContainsIgnoreCase(genreId, keyword, pageable);
-            case NONE ->  bookSearchResult = bookQueryRepository.findAllByGenreId(genreId, pageable);
+                    bookQueryRepository.findAllByGenreIdAndNicknameContainsIgnoreCase(genreId, keyword, pageable);
+            case NONE -> bookQueryRepository.findAllByGenreId(genreId, pageable);
         };
 
         long lastPageNumber = bookSearchResult.getTotalPages();
