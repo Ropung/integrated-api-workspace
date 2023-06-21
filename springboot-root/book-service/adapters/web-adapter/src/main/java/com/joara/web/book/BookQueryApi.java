@@ -8,7 +8,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor // final, not null
@@ -25,12 +29,12 @@ public final class BookQueryApi {
     @GetMapping("/genre/{genreId}")
     public BookReadByGenreResponseDto findBookGenreById(
             @PathVariable Long genreId,
-            @PageableDefault(size=10, sort="createdAt", direction = Sort.Direction.DESC) Pageable pageable,
-            @RequestParam(required = false) String page,
             @RequestParam(required = false, defaultValue = "NONE") SearchType searchType,
-            @RequestParam(required = false) String keyword
-            ){
-        return bookQueryUseCase.findBooksByGenreId(genreId, pageable, page, searchType, keyword);
+            @RequestParam(required = false) String keyword,
+            @PageableDefault(size=10, sort="createdAt", direction = Sort.Direction.DESC) Pageable pageable
+    ){
+        pageable = pageable.previousOrFirst(); // 0, 1 <--
+        return bookQueryUseCase.findBooksByGenreId(genreId, pageable, searchType, keyword);
     }
 
 //	private final BookQueryService bookQueryService;

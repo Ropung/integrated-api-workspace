@@ -33,5 +33,7 @@ public class Book {
 	public OffsetDateTime createdAt; // list view
 	public OffsetDateTime updatedAt; // list view
 	public OffsetDateTime deletedAt; // list view
+	public Double score;
+
 }
 

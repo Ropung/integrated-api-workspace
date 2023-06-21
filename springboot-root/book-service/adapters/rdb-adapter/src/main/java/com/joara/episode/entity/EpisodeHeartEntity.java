@@ -1,6 +1,6 @@
-package com.joara.genre.entity;
+package com.joara.episode.entity;
 
-import com.joara.base.jpa.entity.BaseEntity;
+import com.joara.base.jpa.entity.UuidBaseEntity;
 import com.joara.rdb.JoaraPostgresSchemaConstants;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -10,9 +10,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import java.util.UUID;
 
 @Entity
 @Getter
@@ -22,13 +22,12 @@ import javax.persistence.Table;
 @Builder
 @ToString
 @Table(
-		name = JoaraPostgresSchemaConstants.TB_BOOK_GENRE,
+		name = JoaraPostgresSchemaConstants.TB_EPISODE_HEART,
 		schema = JoaraPostgresSchemaConstants.SCHEMA
 )
-public class BookGenreEntity extends BaseEntity {
-	@Column(name = "genre_kor")
-	public String kor;
+public class EpisodeHeartEntity extends UuidBaseEntity {
+	public UUID memberId;
+	public UUID eipId;
+	public String nickname;
 
-	@Column(name = "genre_eng")
-	public String eng;
 }

@@ -1,5 +1,6 @@
 package com.joara.book.usecase.dto;
 
+import com.joara.book.domain.model.BookReadModels.BookListViewReadModel;
 import com.joara.book.domain.model.book.Book;
 import lombok.Builder;
 
@@ -19,9 +20,8 @@ public record BookQueryDto() {
 
     @Builder
     public record BookReadByGenreResponseDto(
-            List<Book> bookList,
+            List<BookListViewReadModel> bookList,
             Long genreId,
             Long lastPage
-
     ){}
 }

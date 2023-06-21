@@ -18,14 +18,17 @@ import java.util.UUID;
 @Builder
 public class Episode {
 	public UUID id;
-	public UUID bookId;
+	public Long bookId;
 	public UUID memberId;
+	public String bookTitle;
 	public String nickname;
-	public String title;
+	public String epiTitle;
 	public String content;
-	public String review;
-	public String coverUrl;
-	public Integer viewCount;
+	public String quote;
+	public String cover;
+	public Long heartCount;
+	public Long viewCount;
+	public Long commentCount;
 	public EpisodeStatus status;
 	public OffsetDateTime createdAt;
 	public OffsetDateTime updatedAt;

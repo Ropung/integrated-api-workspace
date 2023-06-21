@@ -19,7 +19,7 @@ import java.util.UUID;
 public class MemberFavorBook {
 	public UUID id;
 	public UUID memberId;
-	private UUID bookId;
-	private String favorBookName;
-	private OffsetDateTime createdAt;
+	public UUID bookId;
+	public String favorBookName;
+	public OffsetDateTime createdAt;
 }

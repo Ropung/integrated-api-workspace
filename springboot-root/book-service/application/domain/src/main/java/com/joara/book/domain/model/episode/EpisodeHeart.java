@@ -13,9 +13,11 @@ import java.util.UUID;
 @ToString
 @EqualsAndHashCode
 @Builder
-public class EpisodeLove{
+public class EpisodeHeart{ // Love -> Heart
 	public UUID id;
 	public UUID memberId;
 	public UUID epiId;
-	public Boolean isEpi;
+	public String nickname;
+//	public Boolean isEpi; // 삭제
+
 }
