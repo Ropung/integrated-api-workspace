@@ -28,6 +28,11 @@ public class BookQueryPersistence implements BookQueryRepository {
     }
 
     @Override
+    public boolean existsById(Long id) {
+        return bookQueryJpaRepository.existsById(id);
+    }
+
+    @Override
     public Page<Book> findAll(Pageable pageable) {
         // TODO
         return null;

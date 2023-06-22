@@ -29,6 +29,10 @@ public class EpisodeCommandPersistence implements EpisodeCommandRepository {
                 .map(mapper::toDomain);
     }
 
+    public void deleteById(UUID eid) {
+        episodeCommandJpaRepo.deleteById(eid);
+    }
+
 //    @Override
 //    public Page<Episode> findAll(Pageable pageable) {
 ////        return memberJpaRepository.findAll(pageable) // returns Page<MemberEntity> ... -> Low Performance

@@ -18,4 +18,9 @@ public record EpisodeCommandDto() {
     public record EpisodeCreateResponseDto(
         boolean success
     ){}
+
+    @Builder
+    public record EpisodeDeleteResponseDto(
+            boolean success
+    ){}
 }
