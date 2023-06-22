@@ -8,6 +8,7 @@ import java.time.OffsetDateTime;
 public record BookReadModels() {
     @Builder
     public record BookListViewReadModel(
+            Long id,
             Long genreId,
             // added
             String genreName,
@@ -18,6 +19,7 @@ public record BookReadModels() {
 
     @Builder
     public record BookDetailedViewReadModel(
+            Long id,
             Long genreId,
             // added
             String genreName,
