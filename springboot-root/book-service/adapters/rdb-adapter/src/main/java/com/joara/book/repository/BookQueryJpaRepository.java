@@ -9,10 +9,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.UUID;
 
 public interface BookQueryJpaRepository extends JpaRepository<BookEntity, Long> {
+    BookEntity findBookEntityById(Long bookId);
     boolean existsByMemberIdAndTitle(UUID memberId, String title);
 
     Page<BookListViewProjection> findAllByGenreIdAndTitleContainsIgnoreCase(Long id, String keyword, Pageable pageable);
     Page<BookListViewProjection> findAllByGenreIdAndDescriptionContainsIgnoreCase(Long id, String keyword, Pageable pageable);
     Page<BookListViewProjection> findAllByGenreIdAndNicknameContainsIgnoreCase(Long id, String keyword, Pageable pageable);
     Page<BookListViewProjection> findAllByGenreId(Long id, Pageable pageable);
+
+
 }

@@ -4,9 +4,9 @@ import com.joara.episode.usecase.EpisodeCreateUseCase;
 import com.joara.episode.usecase.dto.EpisodeCommandDto;
 import com.joara.episode.usecase.dto.EpisodeCommandDto.EpisodeCreateResponseDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,7 +25,7 @@ public class EpisodeCommandApi {
     @PostMapping("/{bookId}/episode")
     public EpisodeCreateResponseDto create(
             @PathVariable Long bookId,
-            @RequestBody @Valid EpisodeCommandDto.EpisodeCreateRequestDto dto,
+            @ModelAttribute @Valid EpisodeCommandDto.EpisodeCreateRequestDto dto,
             @RequestPart(value = "coverImage", required = false)
             MultipartFile file,
             HttpServletRequest request
