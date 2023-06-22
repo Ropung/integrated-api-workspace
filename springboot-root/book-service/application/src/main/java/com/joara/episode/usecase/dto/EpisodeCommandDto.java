@@ -14,9 +14,21 @@ public record EpisodeCommandDto() {
             String cover
     ){}
 
+    public record EpisodeUpdateRequestDto(
+            String epiTitle,
+            String content,
+            String quote,
+            String cover
+    ){}
+
     @Builder
     public record EpisodeCreateResponseDto(
         boolean success
+    ){}
+
+    @Builder
+    public record EpisodeUpdateResponseDto(
+            boolean success
     ){}
 
     @Builder

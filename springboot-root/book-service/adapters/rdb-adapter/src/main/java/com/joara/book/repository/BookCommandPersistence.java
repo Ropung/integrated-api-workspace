@@ -82,4 +82,9 @@ public class BookCommandPersistence implements BookCommandRepository {
     public void deleteById(Long id) {
         bookCommandJpaRepository.deleteById(id);
     }
+
+    @Override
+    public boolean existsNicknameByNickname(String nickname) {
+        return bookCommandJpaRepository.existsNicknameByNickname(nickname);
+    }
 }
