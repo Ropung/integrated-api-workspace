@@ -1,6 +1,7 @@
 package com.joara.episode.repository;
 
 import com.joara.book.domain.model.episode.Episode;
+import com.joara.book.exception.BookErrorCode;
 import com.joara.episode.entity.EpisodeEntity;
 import com.joara.episode.mapper.EpisodeEntityMapper;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +15,7 @@ import java.util.UUID;
 public class EpisodeCommandPersistence implements EpisodeCommandRepository {
 
     private final EpisodeCommandJpaRepo episodeCommandJpaRepo;
+    private final EpisodeQueryJpaRepo episodeQueryJpaRepo;
     private final EpisodeEntityMapper mapper;
 
     @Override
@@ -29,54 +31,33 @@ public class EpisodeCommandPersistence implements EpisodeCommandRepository {
                 .map(mapper::toDomain);
     }
 
+    @Override
+    public boolean update(Long bid, UUID eid, String title, String content, String quote) {
+        boolean isBook = episodeQueryJpaRepo.existsByBookIdAndId(bid, eid);
+        if (!isBook) {
+            throw BookErrorCode.BOOK_NOT_FOUND.defaultException();
+        }
+        EpisodeEntity episodeEntity = episodeCommandJpaRepo.findById(eid)
+                .orElseThrow(BookErrorCode.EPISODE_NOT_FOUND::defaultException);
+
+        if (title != null && !title.isEmpty()) {
+            episodeEntity.epiTitle = title;
+        }
+
+        if (content != null && !content.isEmpty()) {
+            episodeEntity.content = content;
+        }
+
+        if (quote != null && !quote.isEmpty()) {
+            episodeEntity.quote = quote;
+        }
+
+        episodeCommandJpaRepo.save(episodeEntity);
+        return true;
+    }
+
+    @Override
     public void deleteById(UUID eid) {
         episodeCommandJpaRepo.deleteById(eid);
     }
-
-//    @Override
-//    public Page<Episode> findAll(Pageable pageable) {
-////        return memberJpaRepository.findAll(pageable) // returns Page<MemberEntity> ... -> Low Performance
-////                .map(mapper::toDomain);
-//        return new PageImpl<>(
-//                episodeCommandJpaRepository.findAllBy(pageable)
-//                        .stream()
-//                        .map(mapper::toDomain)
-//                        .toList(),
-//                pageable,
-//                episodeCommandJpaRepository.count() // TODO use after refactor, ... if necessary
-//        );
-//    }
-
-
-
-//    @Override
-//    public boolean existsBookByTitle(String title) {
-//        return false;
-//    }
-
-//    @Override
-//    @Transactional
-//    public boolean update(String title, String description, EpisodeStatus status, Long bookId) {
-//        EpisodeEntity bookEntity = episodeCommandJpaRepository.findById(bookId)
-//                .orElseThrow(BookErrorCode.BOOK_NOT_FOUND::defaultException);
-//
-//        if (title != null && !"".equals(title)) {
-//            bookEntity.title = title;
-//        }
-//
-//        if (description != null && !"".equals(description)) {
-//            bookEntity.description = description;
-//        }
-//
-//        if (status != null) {
-//            bookEntity.status = status;
-//        }
-//
-//        return true;
-//    }
-//
-//    @Override
-//    public void deleteById(String title) {
-//        episodeCommandJpaRepository.deleteByTitle(title);
-//    }
 }

@@ -9,9 +9,12 @@ import com.joara.episode.repository.EpisodeCommandRepository;
 import com.joara.episode.repository.EpisodeQueryRepository;
 import com.joara.episode.usecase.EpisodeCreateUseCase;
 import com.joara.episode.usecase.EpisodeDeleteUseCase;
+import com.joara.episode.usecase.EpisodeUpdateUseCase;
 import com.joara.episode.usecase.dto.EpisodeCommandDto.EpisodeCreateRequestDto;
 import com.joara.episode.usecase.dto.EpisodeCommandDto.EpisodeCreateResponseDto;
 import com.joara.episode.usecase.dto.EpisodeCommandDto.EpisodeDeleteResponseDto;
+import com.joara.episode.usecase.dto.EpisodeCommandDto.EpisodeUpdateRequestDto;
+import com.joara.episode.usecase.dto.EpisodeCommandDto.EpisodeUpdateResponseDto;
 import com.joara.episode.usecase.mapper.EpisodeDtoMapper;
 import com.joara.jwt.util.JwtParser;
 import com.joara.jwt.util.JwtParser.JwtPayloadParser;
@@ -28,7 +31,7 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class EpisodeCommandService implements EpisodeCreateUseCase, EpisodeDeleteUseCase {
+public class EpisodeCommandService implements EpisodeCreateUseCase, EpisodeUpdateUseCase, EpisodeDeleteUseCase {
 
 	private final EpisodeCommandRepository episodeCommandRepository;
 	private final EpisodeQueryRepository episodeQueryRepository;
@@ -76,6 +79,29 @@ public class EpisodeCommandService implements EpisodeCreateUseCase, EpisodeDelet
 		episode.createdAt = ServerTime.now(); // 디폴트인데 안들어가서 추가..
 		episodeCommandRepository.save(episode);
 		return true;
+	}
+
+	@Override
+	public EpisodeUpdateResponseDto update(Long bid, UUID eid, EpisodeUpdateRequestDto dto, HttpServletRequest request) {
+		// 책에 에피소드 존재 여부 확인
+		boolean isBook = episodeQueryRepository.existsByIdAndBookId(bid, eid);
+		if (!isBook) {
+			throw BookErrorCode.BOOK_NOT_FOUND.defaultException();
+		}
+
+		// 에피소드 존재 여부
+		boolean isEpi = episodeQueryRepository.existsById(eid);
+		if(!isEpi){
+			throw BookErrorCode.EPISODE_NOT_FOUND.defaultException();
+		}
+
+		boolean result = episodeCommandRepository.update(
+				bid, eid, dto.epiTitle(), dto.content(), dto.quote()
+		);
+
+		return EpisodeUpdateResponseDto.builder()
+				.success(result)
+				.build();
 	}
 
 	@Override

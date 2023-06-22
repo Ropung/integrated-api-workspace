@@ -1,7 +1,6 @@
 package com.joara.episode.repository;
 
 import com.joara.book.domain.model.episode.Episode;
-import com.joara.episode.entity.EpisodeEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -17,6 +16,11 @@ public class EpisodeQueryPersistence implements EpisodeQueryRepository {
     @Override
     public boolean existsById(UUID eid) {
         return episodeQueryJpaRepo.existsById(eid);
+    }
+
+    @Override
+    public boolean existsByIdAndBookId(Long bid, UUID eid) {
+        return episodeQueryJpaRepo.existsByBookIdAndId(bid, eid);
     }
 
     // Base

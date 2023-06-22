@@ -9,4 +9,6 @@ import java.util.UUID;
 public interface EpisodeQueryRepository extends BaseCommandRepository<Episode, UUID> {
 
     boolean existsById(UUID eid);
+
+    boolean existsByIdAndBookId(Long bid, UUID eid);
 }

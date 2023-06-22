@@ -9,5 +9,7 @@ import java.util.UUID;
 @Component
 public interface EpisodeQueryJpaRepo extends JpaRepository<EpisodeEntity, UUID> {
 
+    boolean existsByBookIdAndId(Long bid, UUID eid);
+
     boolean existsById(UUID eid);
 }
