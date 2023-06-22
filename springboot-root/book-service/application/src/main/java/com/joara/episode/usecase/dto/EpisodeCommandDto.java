@@ -8,7 +8,7 @@ import java.util.UUID;
 
 public record EpisodeCommandDto() {
     public record EpisodeCreateRequestDto(
-            String title,
+            String epiTitle,
             String content,
             String quote,
             String cover
@@ -17,5 +17,10 @@ public record EpisodeCommandDto() {
     @Builder
     public record EpisodeCreateResponseDto(
         boolean success
+    ){}
+
+    @Builder
+    public record EpisodeDeleteResponseDto(
+            boolean success
     ){}
 }

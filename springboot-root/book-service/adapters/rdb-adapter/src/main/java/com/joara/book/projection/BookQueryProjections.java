@@ -5,6 +5,7 @@ import lombok.Builder;
 public record BookQueryProjections() {
     @Builder
     public record BookListViewProjection(
+            Long id,
             Long genreId,
             String genreKor,
             String nickname,

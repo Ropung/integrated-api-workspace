@@ -31,7 +31,7 @@ public final class BookQueryApi {
             @PathVariable Long genreId,
             @RequestParam(required = false, defaultValue = "NONE") SearchType searchType,
             @RequestParam(required = false) String keyword,
-            @PageableDefault(size=10, sort="createdAt", direction = Sort.Direction.DESC) Pageable pageable
+            @PageableDefault(size=20, sort="createdAt", direction = Sort.Direction.DESC) Pageable pageable
     ){
         pageable = pageable.previousOrFirst(); // 0, 1 <--
         return bookQueryUseCase.findBooksByGenreId(genreId, pageable, searchType, keyword);
