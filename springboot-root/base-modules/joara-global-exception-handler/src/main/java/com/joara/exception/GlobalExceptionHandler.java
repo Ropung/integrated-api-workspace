@@ -30,8 +30,9 @@ public final class GlobalExceptionHandler {
     @ExceptionHandler(NoContentException.class)
     public ResponseEntity<?> handleNoContentException(NoContentException exception) {
         return ResponseEntity.noContent().build();
-    }   // 서브 에러를 중첩 구조에서 1차원 배열 구조로 펼치는 메서드 예시.
+    }
 
+    // 서브 에러를 중첩 구조에서 1차원 배열 구조로 펼치는 메서드 예시.
     private SubError[] getPlattedSubErrors(Throwable cause) {
         Throwable currentCause = cause;
         List<SubError> subErrors = new ArrayList<>();

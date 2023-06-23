@@ -217,6 +217,7 @@ project(':book-service:adapters:web-adapter') {
 	dependencies {
 		implementation project(':common')
 		implementation project(':book-service:application')
+		implementation project(':book-service:application:read-model')
 		implementation project(':base-modules:joara-jwt-parser')
 		implementation project(':authentication-service:application:read-models')
 	}

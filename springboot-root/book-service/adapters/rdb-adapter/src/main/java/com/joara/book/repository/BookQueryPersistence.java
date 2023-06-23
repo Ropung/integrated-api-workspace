@@ -61,7 +61,7 @@ public class BookQueryPersistence implements BookQueryRepository {
     }
 
     @Override
-    public Optional<BookDetailedViewReadModel> findDetailedViewByBookId(Long bookId) {
+    public Optional<BookDetailedViewReadModel> findDetailedViewById(Long bookId) {
         Optional<BookDetailedViewProjection> optionalBook =
                 bookQueryJpaRepository.findDetailedProjectionById(bookId);
 
@@ -79,7 +79,7 @@ public class BookQueryPersistence implements BookQueryRepository {
     @Override
     public Page<BookListViewReadModel> findAllByGenreIdAndTitleContainsIgnoreCase(Long genreId, String keyword, Pageable pageable) {
         Page<BookListViewProjection> bookEntities = bookQueryJpaRepository
-                .findAllByGenreIdAndTitleContainsIgnoreCase(genreId, keyword, pageable);
+                .findAllByTitleContainsIgnoreCase(keyword, pageable);
 
         return bookEntities.map(this::mapToBookListViewModel);
     }
@@ -87,7 +87,7 @@ public class BookQueryPersistence implements BookQueryRepository {
     @Override
     public Page<BookListViewReadModel> findAllByGenreIdAndDescriptionContainsIgnoreCase(Long genreId, String keyword, Pageable pageable) {
         Page<BookListViewProjection> bookEntities = bookQueryJpaRepository
-                .findAllByGenreIdAndDescriptionContainsIgnoreCase(genreId, keyword, pageable);
+                .findAllByDescriptionContainsIgnoreCase(keyword, pageable);
 
         return bookEntities.map(this::mapToBookListViewModel);
     }
@@ -95,21 +95,27 @@ public class BookQueryPersistence implements BookQueryRepository {
     @Override
     public Page<BookListViewReadModel> findAllByGenreIdAndNicknameContainsIgnoreCase(Long genreId, String keyword, Pageable pageable) {
         Page<BookListViewProjection> bookEntities = bookQueryJpaRepository
-                .findAllByGenreIdAndNicknameContainsIgnoreCase(genreId, keyword, pageable);
+                .findAllByNicknameContainsIgnoreCase(keyword, pageable);
 
         return bookEntities.map(this::mapToBookListViewModel);
     }
 
     @Override
     public Page<BookListViewReadModel> findAllByGenreId(Long genreId, Pageable pageable) {
+        // book genre map -> by genre id -> book list
+        List<Long> bookIdList = bookGenreMapQueryJpaRepository
+                .findByGenreId(genreId).stream()
+                .map((item) -> item.bookId)
+                .toList();
         Page<BookListViewProjection> bookEntities = bookQueryJpaRepository
-                .findAllByGenreId(genreId, pageable);
+                .findAllByIdIn(bookIdList, pageable);
+
         return bookEntities.map(this::mapToBookListViewModel);
     }
 
     private BookGenreMappedInfo findBookGenreMapByBookId(Long bookId) {
         List<BookGenreMapEntity> genreIdResultSet = bookGenreMapQueryJpaRepository.findByBookId(bookId);
-        List<GenreEntity> genreResultSet = genreQueryJpaRepository.findAllInGenreId(genreIdResultSet);
+        List<GenreEntity> genreResultSet = genreQueryJpaRepository.findAllByIdIn(genreIdResultSet);
 
         List<Long> genreIds = genreIdResultSet.stream()
                 .map((genre) -> genre.genreId)

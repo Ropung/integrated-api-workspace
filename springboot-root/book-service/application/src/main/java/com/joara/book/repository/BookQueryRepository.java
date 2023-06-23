@@ -11,7 +11,7 @@ import java.util.Optional;
 
 public interface BookQueryRepository extends BaseCommandRepository<Book, Long> {
     String findTitleByBookId(Long bookId);
-    Optional<BookDetailedViewReadModel> findDetailedViewByBookId(Long bookId);
+    Optional<BookDetailedViewReadModel> findDetailedViewById(Long bookId);
 
     boolean existsById(Long id);
 
