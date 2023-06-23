@@ -26,7 +26,7 @@ public final class BookQueryApi {
         return bookQueryUseCase.findBookById(bookId);
     }
 
-    @GetMapping("/genre/{genreId}")
+    @GetMapping("/genre/{genreIdList}")
     public BookReadByGenreResponseDto findBookGenreById(
             @PathVariable Long genreId,
             @RequestParam(required = false, defaultValue = "NONE") SearchType searchType,

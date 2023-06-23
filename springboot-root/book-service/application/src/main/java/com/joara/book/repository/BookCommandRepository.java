@@ -10,10 +10,9 @@ public interface BookCommandRepository extends BaseCommandRepository<Book, Long>
     
     // Query    
  
-    Page<Book> findAll(Pageable pageable);  // Select 2번 = 데이터(.044) + 카운트를 매번 함(.071) -> (.12)
+    Page<Book> findAll(Pageable pageable);
     
     boolean existsBookByTitle(String title);
-    // List<Member> findAll(Pageable pageable);  // Select 1번 = 데이터(.044)
 
     // Command
     boolean update(String title, String description, BookStatus status, Long bookId);

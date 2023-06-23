@@ -10,9 +10,9 @@ public record BookReadModels() {
     @Builder
     public record BookListViewReadModel(
             Long id,
-            Long genreId,
+            List<Long> genreIdList,
             // added
-            String genreName,
+            List<String> genreNameList,
             String nickname,
             String title,
             String coverUrl
@@ -22,9 +22,9 @@ public record BookReadModels() {
     public record BookDetailedViewReadModel(
             Long id,
             // Added
-            List<Long> genreId,
+            List<Long> genreIdList,
             // added
-            List<String> genreName,
+            List<String> genreNameList,
             String nickname,
             String title,
             String description,
