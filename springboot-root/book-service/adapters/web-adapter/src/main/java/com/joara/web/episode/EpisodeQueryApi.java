@@ -2,6 +2,7 @@ package com.joara.web.episode;
 
 import com.joara.episode.usecase.EpisodeReadUseCase;
 import com.joara.episode.usecase.dto.EpisodeQueryDto.EpisodeListResponseDto;
+import com.joara.episode.usecase.dto.EpisodeQueryDto.EpisodeViewResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -10,6 +11,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
@@ -24,6 +27,11 @@ public class EpisodeQueryApi {
     ){
         pageable = pageable.previousOrFirst(); // 0, 1 <--
         return episodeReadUseCase.findEpisodesByBookId(bid, pageable);
+    }
+
+    @GetMapping("/{eid}")
+    public EpisodeViewResponseDto findEpisodeById(@PathVariable Long bid, @PathVariable UUID eid){
+        return episodeReadUseCase.findEpisodeByID(eid);
     }
 
 }
