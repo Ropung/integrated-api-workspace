@@ -5,5 +5,5 @@ import com.joara.episode.usecase.dto.EpisodeQueryDto.EpisodeListResponseDto;
 import org.springframework.data.domain.Pageable;
 
 public interface EpisodeReadUseCase {
-    EpisodeListResponseDto findEpisodesByBookId(Long bid, Pageable pageable, SearchType searchType, String keyword);
+    EpisodeListResponseDto findEpisodesByBookId(Long bid, Pageable pageable);
 }
