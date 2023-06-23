@@ -11,7 +11,8 @@ public record BookQueryProjections() {
             Long id,
             String nickname,
             String title,
-            String coverUrl
+            String coverUrl,
+            Double score
     ) {}
 
     @Builder
@@ -27,6 +28,7 @@ public record BookQueryProjections() {
             Long favorCount,
             OffsetDateTime createdAt,
             OffsetDateTime updatedAt,
-            OffsetDateTime deletedAt
+            OffsetDateTime deletedAt,
+            Double score
     ) {}
 }

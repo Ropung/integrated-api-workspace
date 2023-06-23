@@ -15,13 +15,13 @@ public record BookReadModels() {
             List<String> genreNameList,
             String nickname,
             String title,
-            String coverUrl
+            String coverUrl,
+            Double score
     ) {}
 
     @Builder
     public record BookDetailedViewReadModel(
             Long id,
-            // Added
             List<Long> genreIdList,
             // added
             List<String> genreNameList,
@@ -35,7 +35,8 @@ public record BookReadModels() {
             Long favorCount,
             OffsetDateTime createdAt,
             OffsetDateTime updatedAt,
-            OffsetDateTime deletedAt
+            OffsetDateTime deletedAt,
+            Double score
     ) {
     }
 }

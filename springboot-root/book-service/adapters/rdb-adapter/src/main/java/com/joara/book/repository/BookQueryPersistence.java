@@ -4,7 +4,6 @@ import com.joara.book.domain.model.BookReadModels.BookDetailedViewReadModel;
 import com.joara.book.domain.model.BookReadModels.BookListViewReadModel;
 import com.joara.book.domain.model.book.Book;
 import com.joara.book.entity.BookEntity;
-import com.joara.book.entity.BookGenreMapEntity;
 import com.joara.book.mapper.BookEntityMapper;
 import com.joara.book.projection.BookQueryProjections.BookDetailedViewProjection;
 import com.joara.book.projection.BookQueryProjections.BookListViewProjection;
@@ -114,12 +113,11 @@ public class BookQueryPersistence implements BookQueryRepository {
     }
 
     private BookGenreMappedInfo findBookGenreMapByBookId(Long bookId) {
-        List<BookGenreMapEntity> genreIdResultSet = bookGenreMapQueryJpaRepository.findByBookId(bookId);
-        List<GenreEntity> genreResultSet = genreQueryJpaRepository.findAllByIdIn(genreIdResultSet);
-
-        List<Long> genreIds = genreIdResultSet.stream()
+        List<Long> genreIds = bookGenreMapQueryJpaRepository.findByBookId(bookId).stream()
                 .map((genre) -> genre.genreId)
-                .toList();
+                .toList();;
+        List<GenreEntity> genreResultSet = genreQueryJpaRepository.findAllByIdIn(genreIds);
+
         List<String> genreNames = genreResultSet.stream()
                 .map((genre) -> genre.kor)
                 .toList();

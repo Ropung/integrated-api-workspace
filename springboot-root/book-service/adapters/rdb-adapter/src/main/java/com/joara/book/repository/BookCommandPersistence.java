@@ -4,6 +4,7 @@ package com.joara.book.repository;
 import com.joara.book.domain.model.book.Book;
 import com.joara.book.domain.model.book.type.BookStatus;
 import com.joara.book.entity.BookEntity;
+import com.joara.book.entity.BookGenreMapEntity;
 import com.joara.book.exception.BookErrorCode;
 import com.joara.book.mapper.BookEntityMapper;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -20,16 +22,29 @@ import java.util.Optional;
 public class BookCommandPersistence implements BookCommandRepository {
     // Delegation
      private final BookCommandJpaRepository bookCommandJpaRepository;
+     private final BookGenreMapQueryJpaRepository bookGenreMapQueryJpaRepository;
      private final BookEntityMapper mapper;
 
     @Override
     public Book save(Book domain) {
-        // use mapper: Member -> MemberEntity
-        // use mapper: MemberEntity -> Member
         BookEntity entity = mapper.toEntity(domain);
-
         BookEntity savedEntity = bookCommandJpaRepository.save(entity);
-        return mapper.toDomain(savedEntity);
+
+        List<BookGenreMapEntity> genreList = domain.genreIdList.stream()
+                .map((genreId) -> BookGenreMapEntity.builder()
+                        .bookId(savedEntity.getId())
+                        .genreId(genreId)
+                        .build()
+                )
+                .toList();
+
+        bookGenreMapQueryJpaRepository.saveAllAndFlush(genreList);
+//        List<Long> genreIdList = bookGenreMapQueryJpaRepository
+//                .saveAll(genreList).stream()
+//                .map((genreMap) -> genreMap.genreId)
+//                .toList();
+
+        return mapper.toDomain(savedEntity, domain.genreIdList);
     }
 
     @Override
