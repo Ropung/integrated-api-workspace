@@ -7,9 +7,7 @@ import com.joara.util.time.ServerTime;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -19,8 +17,6 @@ import java.time.OffsetDateTime;
 import java.util.UUID;
 
 @Entity
-@Getter
-@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
@@ -30,8 +26,6 @@ import java.util.UUID;
 )
 public class BookEntity extends BaseEntity {
     public UUID memberId;
-    public Long genreId;
-    public String genreKor;
     public String nickname;
     public String title;
     public String description;
