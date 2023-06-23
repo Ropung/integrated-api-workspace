@@ -8,6 +8,7 @@ import java.util.UUID;
 
 public record EpisodeCommandDto() {
     public record EpisodeCreateRequestDto(
+            Long epiNum,
             String epiTitle,
             String content,
             String quote,

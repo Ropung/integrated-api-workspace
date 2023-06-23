@@ -2,6 +2,7 @@
 CREATE TABLE IF NOT EXISTS joara_basic.episode (
     id                  UUID                                PRIMARY KEY     DEFAULT uuid_generate_v4(),
     book_id             BIGINT                              NOT NULL,
+    epi_num             BIGINT                              ,
     member_id           UUID                                NOT NULL,
     book_title          VARCHAR(255)                        ,
     nickname            VARCHAR(255)                        ,

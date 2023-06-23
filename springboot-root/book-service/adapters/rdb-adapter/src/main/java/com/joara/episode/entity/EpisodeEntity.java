@@ -32,6 +32,7 @@ import java.util.UUID;
 public class EpisodeEntity extends UuidBaseEntity {
 	public Long bookId;
 	public UUID memberId;
+	public Long epiNum;
 	public String bookTitle;
 	public String nickname;
 	public String epiTitle;

@@ -8,6 +8,7 @@ public record EpisodeReadModel() {
     @Builder
     public record EpisodeListViewReadModel(
             Long bookId,
+            Long epiNum,
             String epiTitle,
             Long viewCount,
             Long heartCount,
