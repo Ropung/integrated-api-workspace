@@ -7,6 +7,7 @@ import com.joara.book.entity.BookEntity;
 import com.joara.book.entity.BookGenreMapEntity;
 import com.joara.book.exception.BookErrorCode;
 import com.joara.book.mapper.BookEntityMapper;
+import com.joara.util.time.ServerTime;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -29,6 +30,9 @@ public class BookCommandPersistence implements BookCommandRepository {
     public Book save(Book domain) {
         BookEntity entity = mapper.toEntity(domain);
         BookEntity savedEntity = bookCommandJpaRepository.save(entity);
+        savedEntity.totalViewCount = 0L;
+        savedEntity.totalHeartCount = 0L;
+        savedEntity.favorCount = 0L;
 
         List<BookGenreMapEntity> genreList = domain.genreIdList.stream()
                 .map((genreId) -> BookGenreMapEntity.builder()
@@ -78,17 +82,19 @@ public class BookCommandPersistence implements BookCommandRepository {
         BookEntity bookEntity = bookCommandJpaRepository.findById(bookId)
                 .orElseThrow(BookErrorCode.BOOK_NOT_FOUND::defaultException);
 
-        if (title != null && !"".equals(title)) {
+        if (title != null || !"".equals(title)) {
             bookEntity.title = title;
         }
 
-        if (description != null && !"".equals(description)) {
+        if (description != null || !"".equals(description)) {
             bookEntity.description = description;
         }
 
         if (status != null) {
             bookEntity.status = status;
         }
+
+        bookEntity.updatedAt = ServerTime.now();
 
         return true;
     }
