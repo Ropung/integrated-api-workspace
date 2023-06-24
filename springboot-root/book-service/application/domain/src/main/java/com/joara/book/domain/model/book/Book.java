@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import java.time.OffsetDateTime;
+import java.util.List;
 import java.util.UUID;
 
 
@@ -20,20 +21,17 @@ import java.util.UUID;
 public class Book {
 	public Long id;
 	public UUID memberId;
-	public Long genreId; // list view -> genre name
-	public String genreKor;
-	public String nickname; // list view
-	public String title; // list view
-	public String description; // list view
-	public String coverUrl; // list view
-	public BookStatus status; // list view
-	public Long totalViewCount; // list view
-	public Long totalHeartCount; // list view
-	public Long favorCount; // list view
-	public OffsetDateTime createdAt; // list view
-	public OffsetDateTime updatedAt; // list view
-	public OffsetDateTime deletedAt; // list view
+	public List<Long> genreIdList;
+	public String nickname;
+	public String title;
+	public String description;
+	public String coverUrl;
+	public BookStatus status;
+	public Long totalViewCount;
+	public Long totalHeartCount;
+	public Long favorCount;
+	public OffsetDateTime createdAt;
+	public OffsetDateTime updatedAt;
+	public OffsetDateTime deletedAt;
 	public Double score;
-
 }
-

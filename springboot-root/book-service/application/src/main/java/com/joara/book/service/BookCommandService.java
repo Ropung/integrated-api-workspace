@@ -25,6 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.time.OffsetDateTime;
 
 
 @Service
@@ -39,9 +40,9 @@ public class BookCommandService
 	private final JwtParser jwtParser;
 
 	@Override
-	public BookCreateResponseDto create(BookCreateRequestDto dto, MultipartFile file, HttpServletRequest request) {
-
-		Book book = mapper.from(dto);
+	public BookCreateResponseDto create(BookCreateRequestDto dto, MultipartFile file, BookStatus status, HttpServletRequest request) {
+		OffsetDateTime now = ServerTime.now();
+		Book book = mapper.from(dto, status, now);
 
 		return BookCreateResponseDto.builder()
 				.success(create(book, file, request))
@@ -73,14 +74,6 @@ public class BookCommandService
 				.id();
 		book.nickname = nickname;
 		book.coverUrl = coverUrl;
-		book.status = BookStatus.ACTIVE;
-
-		book.genreKor = switch ((int) book.genreId.longValue()) {
-			case 1 -> "액션";
-			case 2 -> "로맨스";
-			case 3 -> "판타지";
-			default -> throw BookErrorCode.NO_GENRE_SELECTED.defaultException();
-		};
 
 		if (book.createdAt == null) {
 			book.createdAt = ServerTime.now();

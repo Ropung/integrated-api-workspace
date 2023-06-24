@@ -1,7 +1,7 @@
 package com.joara.book.usecase.dto;
 
+import com.joara.book.domain.model.BookReadModels.BookDetailedViewReadModel;
 import com.joara.book.domain.model.BookReadModels.BookListViewReadModel;
-import com.joara.book.domain.model.book.Book;
 import lombok.Builder;
 
 import java.util.List;
@@ -15,7 +15,7 @@ public record BookQueryDto() {
 
     @Builder
     public record BookReadByOneResponseDto(
-            Book book
+            BookDetailedViewReadModel book
     ){}
 
     @Builder
