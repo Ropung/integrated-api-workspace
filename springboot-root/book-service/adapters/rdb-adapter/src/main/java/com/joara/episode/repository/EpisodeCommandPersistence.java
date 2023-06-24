@@ -56,8 +56,6 @@ public class EpisodeCommandPersistence implements EpisodeCommandRepository {
     @Override
     public void deleteById(UUID eid) {
 
-
-
         episodeCommandJpaRepo.deleteById(eid);
     }
 }
