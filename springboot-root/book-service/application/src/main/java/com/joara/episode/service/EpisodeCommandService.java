@@ -3,6 +3,7 @@ package com.joara.episode.service;
 import com.joara.book.domain.model.episode.Episode;
 import com.joara.book.domain.model.episode.type.EpisodeStatus;
 import com.joara.book.exception.BookErrorCode;
+import com.joara.book.repository.BookCommandRepository;
 import com.joara.book.repository.BookQueryRepository;
 import com.joara.clients.MemberQueryPort;
 import com.joara.episode.repository.EpisodeCommandRepository;
@@ -36,8 +37,9 @@ public class EpisodeCommandService implements EpisodeCreateUseCase, EpisodeUpdat
 	private final EpisodeCommandRepository episodeCommandRepository;
 	private final EpisodeQueryRepository episodeQueryRepository;
 	private final BookQueryRepository bookQueryRepository;
-	private final EpisodeDtoMapper mapper;
+	private final BookCommandRepository bookCommandRepository;
 	private final MemberQueryPort memberQueryPort;
+	private final EpisodeDtoMapper mapper;
 	private final UploadImageService uploadImageService;
 	private final JwtParser jwtParser;
 
@@ -83,24 +85,26 @@ public class EpisodeCommandService implements EpisodeCreateUseCase, EpisodeUpdat
 
 	@Override
 	public EpisodeUpdateResponseDto update(Long bid, UUID eid, EpisodeUpdateRequestDto dto, HttpServletRequest request) {
+
+		//jwt 토큰 가져와서 유효성 작업
+		JwtPayloadParser parser = jwtParser.withRequest(request);
+		String nickname = parser.claims()
+				.get("nickname", String.class);
+		boolean isNickname = bookCommandRepository.existsNicknameByNickname(nickname);
+		if(!isNickname) throw BookErrorCode.FORBIDDEN.defaultException();
+
 		// 책에 에피소드 존재 여부 확인
 		boolean isBook = episodeQueryRepository.existsByIdAndBookId(bid, eid);
-		if (!isBook) {
-			throw BookErrorCode.BOOK_NOT_FOUND.defaultException();
-		}
+		if (!isBook) throw BookErrorCode.BOOK_NOT_FOUND.defaultException();
 
 		// 에피소드 존재 여부
 		boolean isEpi = episodeQueryRepository.existsById(eid);
-		if(!isEpi){
-			throw BookErrorCode.EPISODE_NOT_FOUND.defaultException();
-		}
+		if(!isEpi) throw BookErrorCode.EPISODE_NOT_FOUND.defaultException();
 
-		boolean result = episodeCommandRepository.update(
-				bid, eid, dto.epiTitle(), dto.content(), dto.quote()
-		);
+		episodeCommandRepository.update(bid, eid, dto.epiTitle(), dto.content(), dto.quote());
 
 		return EpisodeUpdateResponseDto.builder()
-				.success(result)
+				.success(true)
 				.build();
 	}
 
@@ -108,15 +112,11 @@ public class EpisodeCommandService implements EpisodeCreateUseCase, EpisodeUpdat
 	public EpisodeDeleteResponseDto delete(Long bid, UUID eid) {
 		// 책 존재 여부
 		boolean isBook = bookQueryRepository.existsById(bid);
-		if(!isBook){
-			throw BookErrorCode.BOOK_NOT_FOUND.defaultException();
-		}
+		if(!isBook) throw BookErrorCode.BOOK_NOT_FOUND.defaultException();
 
 		// 에피소드 존재 여부
 		boolean isEpi = episodeQueryRepository.existsById(eid);
-		if(!isEpi){
-			throw BookErrorCode.EPISODE_NOT_FOUND.defaultException();
-		}
+		if(!isEpi) throw BookErrorCode.EPISODE_NOT_FOUND.defaultException();
 
 		episodeCommandRepository.deleteById(eid);
 

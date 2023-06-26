@@ -8,4 +8,7 @@ import java.util.List;
 
 public interface BookCommandJpaRepository extends JpaRepository<BookEntity, Long> {
     List<BookEntity> findAllBy(Pageable pageable);
+
+
+    boolean existsNicknameByNickname( String nickname);
 }

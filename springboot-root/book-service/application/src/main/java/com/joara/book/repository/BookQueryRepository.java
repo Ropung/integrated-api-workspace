@@ -1,13 +1,17 @@
 package com.joara.book.repository;
 
+import com.joara.book.domain.model.BookReadModels.BookDetailedViewReadModel;
 import com.joara.book.domain.model.BookReadModels.BookListViewReadModel;
 import com.joara.book.domain.model.book.Book;
 import com.joara.support.repository.BaseCommandRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.Optional;
+
 public interface BookQueryRepository extends BaseCommandRepository<Book, Long> {
     String findTitleByBookId(Long bookId);
+    Optional<BookDetailedViewReadModel> findDetailedViewById(Long bookId);
 
     boolean existsById(Long id);
 

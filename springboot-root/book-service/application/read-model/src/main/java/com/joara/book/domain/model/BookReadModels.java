@@ -4,25 +4,27 @@ import com.joara.book.domain.model.book.type.BookStatus;
 import lombok.Builder;
 
 import java.time.OffsetDateTime;
+import java.util.List;
 
 public record BookReadModels() {
     @Builder
     public record BookListViewReadModel(
             Long id,
-            Long genreId,
+            List<Long> genreIdList,
             // added
-            String genreName,
+            List<String> genreNameList,
             String nickname,
             String title,
-            String coverUrl
+            String coverUrl,
+            Double score
     ) {}
 
     @Builder
     public record BookDetailedViewReadModel(
             Long id,
-            Long genreId,
+            List<Long> genreIdList,
             // added
-            String genreName,
+            List<String> genreNameList,
             String nickname,
             String title,
             String description,
@@ -33,7 +35,8 @@ public record BookReadModels() {
             Long favorCount,
             OffsetDateTime createdAt,
             OffsetDateTime updatedAt,
-            OffsetDateTime deletedAt
+            OffsetDateTime deletedAt,
+            Double score
     ) {
     }
 }

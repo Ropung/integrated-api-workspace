@@ -1,7 +1,7 @@
 package com.joara.book.service;
 
+import com.joara.book.domain.model.BookReadModels.BookDetailedViewReadModel;
 import com.joara.book.domain.model.BookReadModels.BookListViewReadModel;
-import com.joara.book.domain.model.book.Book;
 import com.joara.book.domain.model.book.type.SearchType;
 import com.joara.book.exception.BookErrorCode;
 import com.joara.book.repository.BookQueryRepository;
@@ -9,13 +9,14 @@ import com.joara.book.usecase.BookQueryUseCase;
 import com.joara.book.usecase.dto.BookQueryDto.BookReadByGenreResponseDto;
 import com.joara.book.usecase.dto.BookQueryDto.BookReadByOneResponseDto;
 import com.joara.book.usecase.mapper.BookDtoMapper;
+import com.joara.exception.status2xx.NoContentException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -24,18 +25,15 @@ public class BookQueryService implements BookQueryUseCase {
     private final BookDtoMapper mapper;
 
     @Override
-    public Optional<Book> findById(Long id) {
-        return bookQueryRepository.findById(id);
+    public BookDetailedViewReadModel findById(Long bookId) {
+        return bookQueryRepository.findDetailedViewById(bookId)
+                .orElseThrow(BookErrorCode.BOOK_NOT_FOUND::defaultException);
     }
 
     @Override
-    public BookReadByOneResponseDto findBookById(Long id) {
-        Book book =
-                findById(id)
-                .orElseThrow(BookErrorCode.BOOK_NOT_FOUND::defaultException);
-
+    public BookReadByOneResponseDto findBookById(Long bookId) {
         return BookReadByOneResponseDto.builder()
-                .book(book)
+                .book(findById(bookId))
                 .build();
     }
 
@@ -54,8 +52,11 @@ public class BookQueryService implements BookQueryUseCase {
         };
 
         long lastPageNumber = bookSearchResult.getTotalPages();
-        if (pageable.getPageNumber() >= lastPageNumber) {
-            throw BookErrorCode.PAGE_OUT_OF_RANGE.defaultException();
+//        if (pageable.getPageNumber() >= lastPageNumber) {
+//            throw BookErrorCode.PAGE_OUT_OF_RANGE.defaultException();
+//        }
+        if (bookSearchResult.isEmpty()) {
+            throw new NoContentException();
         }
 
         List<BookListViewReadModel> bookList = bookSearchResult.toList();
@@ -69,5 +70,15 @@ public class BookQueryService implements BookQueryUseCase {
                 .genreId(genreId)
                 .lastPage(lastPageNumber)
                 .build();
+    }
+
+    @Override
+    public boolean verityAuthorAndOwnBook(UUID memberId, Long bookId) {
+        UUID bookMemberId = bookQueryRepository
+                .findById(bookId)
+                .orElseThrow(BookErrorCode.BOOK_NOT_FOUND::defaultException)
+                .memberId;
+
+        return memberId == bookMemberId;
     }
 }

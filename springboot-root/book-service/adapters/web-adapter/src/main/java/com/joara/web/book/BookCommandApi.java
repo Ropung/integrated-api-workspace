@@ -1,5 +1,6 @@
 package com.joara.web.book;
 
+import com.joara.book.domain.model.book.type.BookStatus;
 import com.joara.book.exception.BookErrorCode;
 import com.joara.book.usecase.BookCreateUseCase;
 import com.joara.book.usecase.BookEditUseCase;
@@ -48,7 +49,7 @@ public final class BookCommandApi {
 			MultipartFile file,
 			HttpServletRequest request
 	){
-		return bookCreateUseCase.create(dto, file, request);
+		return bookCreateUseCase.create(dto, file, BookStatus.PENDING, request);
 	}
 
 	@PutMapping("")

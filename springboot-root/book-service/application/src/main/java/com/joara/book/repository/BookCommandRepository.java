@@ -7,12 +7,17 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface BookCommandRepository extends BaseCommandRepository<Book, Long> {
-    Page<Book> findAll(Pageable pageable);  // Select 2번 = 데이터(.044) + 카운트를 매번 함(.071) -> (.12)
+    
+    // Query    
+ 
+    Page<Book> findAll(Pageable pageable);
     
     boolean existsBookByTitle(String title);
-    // List<Member> findAll(Pageable pageable);  // Select 1번 = 데이터(.044)
 
+    // Command
     boolean update(String title, String description, BookStatus status, Long bookId);
 
     void deleteById(Long id);
+
+    boolean existsNicknameByNickname(String nickname);
 }

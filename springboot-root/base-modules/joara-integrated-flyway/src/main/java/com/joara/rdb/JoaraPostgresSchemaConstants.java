@@ -13,6 +13,7 @@ public final class JoaraPostgresSchemaConstants {
 	public static final String TB_EPISODE_COMMENT = "episode_comment";
 	public static final String TB_EPISODE_REPLY = "episode_reply";
 	public static final String TB_EPISODE_HEART = "episode_heart";
+	public static final String TB_BOOK_GENRE_MAP = "book_genre_map";
 	private JoaraPostgresSchemaConstants() {
 	
 	}

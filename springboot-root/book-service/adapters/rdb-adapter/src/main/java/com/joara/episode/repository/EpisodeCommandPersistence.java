@@ -32,32 +32,30 @@ public class EpisodeCommandPersistence implements EpisodeCommandRepository {
     }
 
     @Override
-    public boolean update(Long bid, UUID eid, String title, String content, String quote) {
+    public void update(Long bid, UUID eid, String title, String content, String quote) {
+
         boolean isBook = episodeQueryJpaRepo.existsByBookIdAndId(bid, eid);
-        if (!isBook) {
-            throw BookErrorCode.BOOK_NOT_FOUND.defaultException();
-        }
+
+        if (!isBook) throw BookErrorCode.BOOK_NOT_FOUND.defaultException();
+
         EpisodeEntity episodeEntity = episodeCommandJpaRepo.findById(eid)
                 .orElseThrow(BookErrorCode.EPISODE_NOT_FOUND::defaultException);
 
-        if (title != null && !title.isEmpty()) {
+        if (title == null && title.isEmpty()) throw BookErrorCode.EPISODE_TITLE_NOT_FOUND.defaultException();
             episodeEntity.epiTitle = title;
-        }
 
-        if (content != null && !content.isEmpty()) {
+        if (content == null && content.isEmpty()) throw BookErrorCode.EPISODE_CONTENT_NOT_FOUND.defaultException();
             episodeEntity.content = content;
-        }
 
-        if (quote != null && !quote.isEmpty()) {
-            episodeEntity.quote = quote;
-        }
+        // 작가의 한마디는 null 가능
+        episodeEntity.quote = quote;
 
         episodeCommandJpaRepo.save(episodeEntity);
-        return true;
     }
 
     @Override
     public void deleteById(UUID eid) {
+
         episodeCommandJpaRepo.deleteById(eid);
     }
 }

@@ -46,7 +46,8 @@ public class EpisodeCommandApi {
 
     @PutMapping("/{eid}")
     public EpisodeUpdateResponseDto update(
-            @PathVariable Long bid, @PathVariable UUID eid,
+            @PathVariable Long bid,
+            @PathVariable UUID eid,
             @RequestBody @Valid EpisodeUpdateRequestDto dto,
             HttpServletRequest request){
 
