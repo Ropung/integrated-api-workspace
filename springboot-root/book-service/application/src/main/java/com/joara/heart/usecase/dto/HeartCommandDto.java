@@ -2,6 +2,7 @@ package com.joara.heart.usecase.dto;
 
 import lombok.Builder;
 
+import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
 public record HeartCommandDto() {
@@ -12,5 +13,13 @@ public record HeartCommandDto() {
     @Builder
     public record HeartCreateResponseDto(
        boolean success
+    ){}
+    public record HeartRemoveRequestDto(
+            @NotNull
+            UUID memberId
+    ){}
+    @Builder
+    public record HeartRemoveResponseDto(
+            boolean success
     ){}
 }

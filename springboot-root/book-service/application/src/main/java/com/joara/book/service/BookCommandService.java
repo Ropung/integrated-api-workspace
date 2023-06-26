@@ -52,7 +52,7 @@ public class BookCommandService
 	@Override
 	public boolean create(Book book, MultipartFile file, HttpServletRequest request) {
 		boolean isTitle = bookCommandRepository.existsBookByTitle(book.title);
-		if (isTitle) throw BookErrorCode.BOOK_NOT_FOUND.defaultException();
+		if (isTitle) throw BookErrorCode.DUPLICATED_BOOK_TITLE.defaultException();
 
 		String coverUrl= null;
 		String middlePath = "books";

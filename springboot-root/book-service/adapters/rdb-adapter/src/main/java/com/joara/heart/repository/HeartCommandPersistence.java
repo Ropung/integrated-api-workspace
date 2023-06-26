@@ -15,6 +15,12 @@ import java.util.UUID;
 public class HeartCommandPersistence implements HeartCommandRepository{
     private final HeartCommandJpaRepository heartCommandJpaRepository;
     private final EpisodeHeartEntityMapper mapper;
+
+    @Override
+    public void deleteByMemberId(UUID memberId) {
+        heartCommandJpaRepository.deleteByMemberId(memberId);
+    }
+
     @Override
     public EpisodeHeart save(EpisodeHeart domain) {
         EpisodeHeartEntity entity = mapper.toEntity(domain);
@@ -26,5 +32,6 @@ public class HeartCommandPersistence implements HeartCommandRepository{
     public Optional<EpisodeHeart> findById(UUID uuid) {
         return Optional.empty();
     }
+
 
 }
