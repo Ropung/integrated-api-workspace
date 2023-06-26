@@ -4,6 +4,7 @@ import com.joara.book.domain.model.episode.Episode;
 import com.joara.book.exception.BookErrorCode;
 import com.joara.episode.entity.EpisodeEntity;
 import com.joara.episode.mapper.EpisodeEntityMapper;
+import com.joara.util.time.ServerTime;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -49,13 +50,13 @@ public class EpisodeCommandPersistence implements EpisodeCommandRepository {
 
         // 작가의 한마디는 null 가능
         episodeEntity.quote = quote;
+        episodeEntity.updatedAt = ServerTime.now();
 
         episodeCommandJpaRepo.save(episodeEntity);
     }
 
     @Override
     public void deleteById(UUID eid) {
-
         episodeCommandJpaRepo.deleteById(eid);
     }
 }

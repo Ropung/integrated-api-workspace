@@ -36,9 +36,10 @@ public class EpisodeQueryPersistence implements EpisodeQueryRepository {
                 .findAllByBookId(bookId, pageable);
         return episodeEntities.map(mapper::toReadModel);
     }
+
     @Override
-    public Optional<Episode> findById(UUID uuid) {
-        Optional<EpisodeEntity> episodeEntity = episodeQueryJpaRepo.findById(uuid);
+    public Optional<Episode> findById(UUID eid) {
+        Optional<EpisodeEntity> episodeEntity = episodeQueryJpaRepo.findById(eid);
         return episodeEntity.map(mapper::toDomain);
     }
 

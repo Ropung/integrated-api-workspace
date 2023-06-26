@@ -17,6 +17,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Repository
 @RequiredArgsConstructor
@@ -112,6 +113,13 @@ public class BookQueryPersistence implements BookQueryRepository {
         return bookEntities.map(this::mapToBookListViewModel);
     }
 
+    @Override
+    public Page<BookListViewReadModel> findBooksByMemberId(UUID memberId, Pageable pageable) {
+        return bookQueryJpaRepository
+                .findBooksByMemberId(memberId, pageable)
+                .map(this::mapToBookListViewModel); // for -- 하나하나 변환
+    }
+
     private BookGenreMappedInfo findBookGenreMapByBookId(Long bookId) {
         List<Long> genreIds = bookGenreMapQueryJpaRepository.findByBookId(bookId).stream()
                 .map((genre) -> genre.genreId)
@@ -128,6 +136,11 @@ public class BookQueryPersistence implements BookQueryRepository {
                 .build();
     }
 
+    /**
+     * 리스트뷰 프로젝션 넣으면 장르 등을 포함해서 리스트뷰 리드모델로 변환
+     * @param projection
+     * @return
+     */
     private BookListViewReadModel mapToBookListViewModel(BookListViewProjection projection) {
 
         // TODO refactor: 지금은 작품마다 매번 장르 DB 조회 -> 미리 필요한 장르 목록 다 조회해 놓고 사용.
@@ -146,3 +159,4 @@ public class BookQueryPersistence implements BookQueryRepository {
             List<String> genreNames
     ) {}
 }
+

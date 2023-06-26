@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.Optional;
+import java.util.UUID;
 
 public interface BookQueryRepository extends BaseCommandRepository<Book, Long> {
     String findTitleByBookId(Long bookId);
@@ -23,4 +24,6 @@ public interface BookQueryRepository extends BaseCommandRepository<Book, Long> {
     Page<BookListViewReadModel> findAllByGenreIdAndDescriptionContainsIgnoreCase(Long id, String keyword, Pageable pageable);
     Page<BookListViewReadModel> findAllByGenreIdAndNicknameContainsIgnoreCase(Long id, String keyword, Pageable pageable);
     Page<BookListViewReadModel> findAllByGenreId(Long id, Pageable pageable);
+
+    Page<BookListViewReadModel> findBooksByMemberId(UUID memberId, Pageable pageable);
 }

@@ -15,7 +15,7 @@ import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/books/{bid}/episode/{eid}/comment/{cid}")
+@RequestMapping("/books/{bid}/episode/{eid}/comment/{cid}/reply")
 public class ReplyQueryApi {
 
     private final ReplyReadUseCase replyReadUseCase;

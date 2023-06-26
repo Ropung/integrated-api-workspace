@@ -24,4 +24,10 @@ public record BookQueryDto() {
             Long genreId,
             Long lastPage
     ){}
+
+    @Builder
+    public record MyBookListRespnseDto(
+            List<BookListViewReadModel> bookList,
+            Long lastPage
+    ){}
 }
