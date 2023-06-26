@@ -2,6 +2,7 @@ package com.joara.episode.repository;
 
 import com.joara.book.domain.model.episode.Episode;
 import com.joara.episode.domain.model.EpisodeReadModel.EpisodeListViewReadModel;
+import com.joara.episode.entity.EpisodeEntity;
 import com.joara.episode.mapper.EpisodeEntityMapper;
 import com.joara.episode.projection.EpisodeQueryProjections.EpisodeListViewProjection;
 import lombok.RequiredArgsConstructor;
@@ -35,6 +36,11 @@ public class EpisodeQueryPersistence implements EpisodeQueryRepository {
                 .findAllByBookId(bookId, pageable);
         return episodeEntities.map(mapper::toReadModel);
     }
+    @Override
+    public Optional<Episode> findById(UUID uuid) {
+        Optional<EpisodeEntity> episodeEntity = episodeQueryJpaRepo.findById(uuid);
+        return episodeEntity.map(mapper::toDomain);
+    }
 
     // Base
     @Override
@@ -42,9 +48,4 @@ public class EpisodeQueryPersistence implements EpisodeQueryRepository {
         return null;
     }
 
-    // Base
-    @Override
-    public Optional<Episode> findById(UUID uuid) {
-        return Optional.empty();
-    }
 }

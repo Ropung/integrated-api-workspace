@@ -1,16 +1,19 @@
 package com.joara.episode.service;
 
+import com.joara.book.domain.model.episode.Episode;
 import com.joara.book.exception.BookErrorCode;
 import com.joara.episode.domain.model.EpisodeReadModel.EpisodeListViewReadModel;
 import com.joara.episode.repository.EpisodeQueryRepository;
 import com.joara.episode.usecase.EpisodeReadUseCase;
 import com.joara.episode.usecase.dto.EpisodeQueryDto.EpisodeListResponseDto;
+import com.joara.episode.usecase.dto.EpisodeQueryDto.EpisodeViewResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 
 @Service
@@ -42,4 +45,19 @@ public class EpisodeQueryService implements EpisodeReadUseCase {
 				.build();
 	}
 
+	@Override
+	public EpisodeViewResponseDto findEpisodeByID(UUID eid) {
+		Episode episodeOptional = episodeQueryRepository.findById(eid)
+				.orElseThrow(BookErrorCode.EPISODE_NOT_FOUND::defaultException);
+
+		String bookTitle = episodeOptional.bookTitle;
+		String epiTitle = episodeOptional.epiTitle;
+		String content = episodeOptional.content;
+
+		return EpisodeViewResponseDto.builder()
+				.bookTitle(bookTitle)
+				.epiTitle(epiTitle)
+				.content(content)
+				.build();
 	}
+}

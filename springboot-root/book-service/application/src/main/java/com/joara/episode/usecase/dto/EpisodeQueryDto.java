@@ -1,6 +1,5 @@
 package com.joara.episode.usecase.dto;
 
-import com.joara.book.domain.model.episode.Episode;
 import com.joara.episode.domain.model.EpisodeReadModel.EpisodeListViewReadModel;
 import lombok.Builder;
 
@@ -12,6 +11,12 @@ public record EpisodeQueryDto() {
    public record EpisodeListResponseDto(
            List<EpisodeListViewReadModel> episodeList,
            Long lastPage
+   ){}
 
+   @Builder
+   public record EpisodeViewResponseDto(
+           String bookTitle,
+           String epiTitle,
+           String content
    ){}
 }

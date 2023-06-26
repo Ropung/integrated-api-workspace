@@ -19,6 +19,7 @@ import java.util.UUID;
 public class Episode {
 	public UUID id;
 	public Long bookId;
+	public Long epiNum;
 	public UUID memberId;
 	public String bookTitle;
 	public String nickname;
