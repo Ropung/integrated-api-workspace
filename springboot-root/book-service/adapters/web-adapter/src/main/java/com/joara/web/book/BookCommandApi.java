@@ -4,16 +4,13 @@ import com.joara.book.domain.model.book.type.BookStatus;
 import com.joara.book.exception.BookErrorCode;
 import com.joara.book.usecase.BookCreateUseCase;
 import com.joara.book.usecase.BookEditUseCase;
-import com.joara.book.usecase.BookQueryUseCase;
 import com.joara.book.usecase.BookRemoveUseCase;
-import com.joara.book.usecase.dto.BookCommandDto;
+import com.joara.book.usecase.dto.BookCommandDto.BookCreateRequestDto;
 import com.joara.book.usecase.dto.BookCommandDto.BookCreateResponseDto;
 import com.joara.book.usecase.dto.BookCommandDto.BookModifyRequestDto;
 import com.joara.book.usecase.dto.BookCommandDto.BookModifyResponseDto;
 import com.joara.book.usecase.dto.BookCommandDto.BookRemoveRequestDto;
 import com.joara.book.usecase.dto.BookCommandDto.BookRemoveResponseDto;
-import com.joara.clients.MemberQueryPort;
-import com.joara.jwt.util.JwtParser;
 import com.joara.web.util.AuthorVerifier;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -37,19 +34,16 @@ public final class BookCommandApi {
 	private final BookCreateUseCase bookCreateUseCase;
 	private final BookEditUseCase bookEditUseCase;
 	private final BookRemoveUseCase bookRemoveUseCase;
-	private final BookQueryUseCase bookQueryUseCase;
-	private final MemberQueryPort memberQueryPort;
-	private final JwtParser jwtParser;
 	private final AuthorVerifier authorVerifier;
 
 	@PostMapping("")
 	public BookCreateResponseDto create(
-			@ModelAttribute @Valid BookCommandDto.BookCreateRequestDto dto,
+			@ModelAttribute @Valid BookCreateRequestDto dto,
 			@RequestPart(value = "coverImage", required = false)
 			MultipartFile file,
 			HttpServletRequest request
 	){
-		return bookCreateUseCase.create(dto, file, BookStatus.PENDING, request);
+		return bookCreateUseCase.create(dto, file, BookStatus.ACTIVE, request);
 	}
 
 	@PutMapping("")

@@ -21,7 +21,7 @@ public final class BookQueryApi {
 
     private final BookQueryUseCase bookQueryUseCase;
 
-    @GetMapping("/{bookId}") //  ~/books/1
+    @GetMapping("/{bookId}")
     public BookReadByOneResponseDto findBookById(@PathVariable Long bookId){
         return bookQueryUseCase.findBookById(bookId);
     }
