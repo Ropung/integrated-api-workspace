@@ -13,6 +13,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+import java.security.SecureRandom;
+
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
@@ -41,5 +43,11 @@ public class SecurityConfig {
 	public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration)
 			throws Exception {
 		return authenticationConfiguration.getAuthenticationManager();
+	}
+
+	@Bean
+	public SecureRandom secureRandom() {
+		// create with default algorithm
+		return new SecureRandom();
 	}
 }
