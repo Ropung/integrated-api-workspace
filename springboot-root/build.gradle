@@ -118,6 +118,8 @@ project(':authentication-service') {
 		implementation project(':base-modules:joara-global-exception-handler')
 		implementation project(':base-modules:joara-integrated-flyway')
 
+		implementation project(':authentication-service:driven:refresh-token-redis')
+
 		implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 		runtimeOnly 'org.postgresql:postgresql'
 	}
@@ -162,10 +164,14 @@ project(':authentication-service:application') {
 		implementation project(':common')
 		api project(':authentication-service:application:domain')
 		api project(':authentication-service:application:read-models')
+		implementation project(':base-modules:joara-jwt-parser')
 		api 'org.springframework.data:spring-data-commons' // 여기에 있는 Page 등의 기능을 ...
 
 		implementation 'org.springframework.boot:spring-boot-starter-security'
 		testImplementation 'org.springframework.security:spring-security-test'
+
+		// Redis
+		implementation project(':base-modules:joara-redis-base')
 
 		// Map Struct
 		implementation 'org.mapstruct:mapstruct:1.5.3.Final'
@@ -189,6 +195,15 @@ project(':authentication-service:application:read-models') {
 	dependencies {
 		implementation project(':common')
 		implementation project(':authentication-service:application:domain')
+	}
+}
+
+project(':authentication-service:driven:refresh-token-redis') {
+	dependencies {
+		implementation project(':common')
+		implementation project(':authentication-service:application')
+
+		implementation project(':base-modules:joara-redis-base')
 	}
 }
 
@@ -318,5 +333,12 @@ project(':base-modules:joara-integrated-flyway') { // 초창기 전략: 통합 D
 project(':base-modules:joara-server-communication-core') {
 	dependencies {
 
+	}
+}
+
+project(':base-modules:joara-redis-base') {
+	dependencies {
+		// Redis
+		api 'org.springframework.boot:spring-boot-starter-data-redis'
 	}
 }

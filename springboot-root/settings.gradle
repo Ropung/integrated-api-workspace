@@ -62,4 +62,8 @@ findProject(':book-service:application:read-model')?.name = 'read-model'
 
 // common
 include 'common'
+include 'authentication-service:driven:refresh-token-redis'
+findProject(':authentication-service:driven:refresh-token-redis')?.name = 'refresh-token-redis'
+include 'base-modules:joara-redis-base'
+findProject(':base-modules:joara-redis-base')?.name = 'joara-redis-base'
 
