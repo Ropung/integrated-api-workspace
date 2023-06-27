@@ -59,6 +59,22 @@ public class EpisodeCommandApi {
             @RequestBody @Valid EpisodeUpdateRequestDto dto,
             HttpServletRequest request){
 
+        String email = jwtParser.withRequest(request)
+                .subject();
+        UUID tokenMemberId = memberQueryPort
+                .findIdByEmail(email)
+                .orElseThrow(BookErrorCode.SERVICE_UNAVAILABLE::defaultException)
+                .id();
+        // find Member Id by EpisodeId
+        UUID episodeMemberId = episodeReadUseCase
+                .findMemberIdByEpisodeId(eid)
+                .orElseThrow(BookErrorCode.SERVICE_UNAVAILABLE::defaultException);
+
+        Preconditions.validate(
+                tokenMemberId == episodeMemberId,
+                BookErrorCode.FORBIDDEN
+        );
+
         return episodeUpdateUseCase.update(bid, eid, dto, request);
     }
 

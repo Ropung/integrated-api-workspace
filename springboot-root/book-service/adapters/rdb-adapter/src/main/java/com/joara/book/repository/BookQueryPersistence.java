@@ -123,7 +123,7 @@ public class BookQueryPersistence implements BookQueryRepository {
     private BookGenreMappedInfo findBookGenreMapByBookId(Long bookId) {
         List<Long> genreIds = bookGenreMapQueryJpaRepository.findByBookId(bookId).stream()
                 .map((genre) -> genre.genreId)
-                .toList();;
+                .toList();
         List<GenreEntity> genreResultSet = genreQueryJpaRepository.findAllByIdIn(genreIds);
 
         List<String> genreNames = genreResultSet.stream()
