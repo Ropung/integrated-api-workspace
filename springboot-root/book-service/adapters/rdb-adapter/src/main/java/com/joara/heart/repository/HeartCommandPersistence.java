@@ -22,6 +22,11 @@ public class HeartCommandPersistence implements HeartCommandRepository{
     }
 
     @Override
+    public boolean existsByMemberIdAndEpiId(UUID memberId, UUID epiId) {
+        return heartCommandJpaRepository.existsByMemberIdAndEpiId(memberId,epiId);
+    }
+
+    @Override
     public EpisodeHeart save(EpisodeHeart domain) {
         EpisodeHeartEntity entity = mapper.toEntity(domain);
         EpisodeHeartEntity saveEntity = heartCommandJpaRepository.save(entity);
