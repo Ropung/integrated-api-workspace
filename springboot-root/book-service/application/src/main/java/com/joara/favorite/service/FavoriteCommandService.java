@@ -32,10 +32,9 @@ public class FavoriteCommandService implements FavoriteCreateUseCase {
     @Override
     public FavoriteCreateResponseDto create(FavoriteCreateRequestDto dto, HttpServletRequest request) {
         OffsetDateTime now = ServerTime.now();
+
         MemberFavorBook memberFavorBook = mapper.from(dto,now);
-        //todo mapper에서 dto로 받은 bookId를 인식하지 못함!
-        System.out.println("DDBBUUGG");
-        System.out.println(memberFavorBook.BookId);
+
         return FavoriteCreateResponseDto.builder()
                 .success(create(memberFavorBook, request))
                 .build();
@@ -51,9 +50,9 @@ public class FavoriteCommandService implements FavoriteCreateUseCase {
                 .orElseThrow(BookErrorCode.SERVICE_UNAVAILABLE::defaultException)
                 .id();
 
-        Book book = bookQueryRepository.findById(memberFavorBook.BookId)
+        Book book = bookQueryRepository.findById(memberFavorBook.bookId)
                 .orElseThrow(BookErrorCode.BOOK_NOT_FOUND::defaultException);
-
+        System.out.println(book);
         memberFavorBook.genreIdList = book.genreIdList;
         memberFavorBook.bookTitle = book.title;
         memberFavorBook.memberId = memberId;

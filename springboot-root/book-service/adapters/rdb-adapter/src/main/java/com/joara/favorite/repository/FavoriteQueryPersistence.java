@@ -16,44 +16,16 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Repository
 @RequiredArgsConstructor
-public class FavoriteQueryPersistence implements FavoriteQueryRepository, FavoriteCommandRepository {
+public class FavoriteQueryPersistence implements FavoriteQueryRepository {
 
     private final FavoriteQueryJpaRepository favoriteQueryJpaRepository;
-    private final FavoriteCommandJpaRepository favoriteCommandJpaRepository;
     private final BookGenreMapQueryJpaRepository bookGenreMapQueryJpaRepository;
     private final GenreQueryJpaRepository genreQueryJpaRepository;
     private final FavoriteEntityMapper mapper;
-
-
-    @Override
-    public MemberFavorBook save(MemberFavorBook domain) {
-        MemberFavorBookEntity entity = mapper.toEntity(domain);
-        MemberFavorBookEntity savedEntity = favoriteCommandJpaRepository.save(entity);
-//        List<BookGenreMapEntity> genreList = domain.genreIdList.stream()
-//                .map((genreId) -> BookGenreMapEntity.builder()
-//                        .bookId(savedEntity.getId())
-//                        .genreId(genreId)
-//                        .build()
-//                ).toList();
-//        bookGenreMapQueryJpaRepository.saveAllAndFlush(genreList);
-
-//        List<Long> genreIdList = bookGenreMapQueryJpaRepository
-//                .saveAll(genreList).stream()
-//                .map((genreMap) -> genreMap.genreId)
-//                .toList();
-
-        return mapper.toDomain(savedEntity);
-    }
-
-    @Override
-    public Optional<MemberFavorBook> findById(UUID uuid) {
-        return Optional.empty();
-    }
 
     @Override
     public Page<MemberFavorBook> findByMemberId(UUID memberId, Pageable pageable) {
