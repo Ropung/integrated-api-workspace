@@ -1,6 +1,7 @@
 package com.joara.book.usecase;
 
 import com.joara.book.domain.model.BookReadModels.BookDetailedViewReadModel;
+import com.joara.book.domain.model.BookReadModels.BookListViewReadModel;
 import com.joara.book.domain.model.book.type.SearchType;
 import com.joara.book.usecase.dto.BookQueryDto.BookReadByGenreResponseDto;
 import com.joara.book.usecase.dto.BookQueryDto.BookReadByOneResponseDto;
@@ -13,6 +14,7 @@ import java.util.UUID;
 
 public interface BookQueryUseCase {
     BookDetailedViewReadModel findById(Long id);
+    BookListViewReadModel findListViewItemById(Long id);
 
     BookReadByOneResponseDto findBookById(Long id);
 

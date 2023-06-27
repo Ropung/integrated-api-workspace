@@ -14,6 +14,7 @@ import java.util.UUID;
 public interface BookQueryRepository extends BaseCommandRepository<Book, Long> {
     String findTitleByBookId(Long bookId);
     Optional<BookDetailedViewReadModel> findDetailedViewById(Long bookId);
+    Optional<BookListViewReadModel> findListViewItemById(Long bookId);
 
     boolean existsById(Long id);
 

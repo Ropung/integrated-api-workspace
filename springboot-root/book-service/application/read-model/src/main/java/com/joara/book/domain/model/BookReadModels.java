@@ -39,6 +39,7 @@ public record BookReadModels() {
             Double score
     ) {}
 
+    // FIXME remove if not used
     @Builder
     public record AnalyzedBookReadModel(
             Long id,

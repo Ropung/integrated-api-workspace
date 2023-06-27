@@ -124,4 +124,11 @@ public class BookQueryService implements BookQueryUseCase {
                 .analyzedBook(bookReadModel)
                 .build();
     }
+
+    @Override
+    public BookListViewReadModel findListViewItemById(Long id) {
+        return bookQueryRepository.findListViewItemById(id)
+                // 하나라도 없으면 예외처리 중. ->
+                .orElse(null);
+    }
 }

@@ -16,6 +16,7 @@ public interface BookQueryJpaRepository extends JpaRepository<BookEntity, Long> 
     BookEntity findBookEntityById(Long bookId);
     Optional<BookDetailedViewProjection> findDetailedProjectionById(Long bookId);
     boolean existsByMemberIdAndTitle(UUID memberId, String title);
+    Optional<BookListViewProjection> findListViewItemById(Long id);
 
     Page<BookListViewProjection> findAllByTitleContainsIgnoreCase(String keyword, Pageable pageable);
     Page<BookListViewProjection> findAllByDescriptionContainsIgnoreCase(String keyword, Pageable pageable);

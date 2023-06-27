@@ -150,6 +150,12 @@ public class BookQueryPersistence implements BookQueryRepository {
                 .map(this::mapToBookListViewModel); // for -- 하나하나 변환
     }
 
+    @Override
+    public Optional<BookListViewReadModel> findListViewItemById(Long bookId) {
+        return bookQueryJpaRepository.findListViewItemById(bookId)
+                .map(this::mapToBookListViewModel);
+    }
+
     private BookGenreMappedInfo findBookGenreMapByBookId(Long bookId) {
         List<Long> genreIds = bookGenreMapQueryJpaRepository.findByBookId(bookId).stream()
                 .map((genre) -> genre.genreId)
@@ -189,6 +195,5 @@ public class BookQueryPersistence implements BookQueryRepository {
             List<Long> genreIds,
             List<String> genreNames
     ) {}
-
 }
 
