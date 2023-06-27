@@ -18,7 +18,6 @@ public record EpisodeReadModel() {
             OffsetDateTime createdAt,
             OffsetDateTime updatedAt,
             OffsetDateTime deletedAt
-
     ){}
 }
 
