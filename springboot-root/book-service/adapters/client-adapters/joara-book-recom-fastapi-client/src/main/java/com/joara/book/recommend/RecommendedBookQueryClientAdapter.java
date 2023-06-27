@@ -1,17 +1,15 @@
 package com.joara.book.recommend;
 
-import com.joara.book.recommend.RecomBookFastApiDto.RecomBooksQueryRequestDto;
-import com.joara.book.recommend.RecomBookFastApiDto.RecomBooksQueryResponseDto;
+import com.joara.book.recommend.dto.RecomBookFastApiDto.RecomBooksQueryRequestDto;
+import com.joara.book.recommend.dto.RecomBookFastApiDto.RecomBooksQueryResponseDto;
 import com.joara.clients.RecommendedBookQueryPort;
-import com.joara.member.MemberReadModels.MemberIdReadModel;
+import com.joara.exception.status2xx.NoContentException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -40,7 +38,7 @@ public class RecommendedBookQueryClientAdapter implements RecommendedBookQueryPo
         }
 
         if (recomBooksIdResponse.getBody() == null) {
-            return List.of();
+            throw new NoContentException();
         }
 
         return recomBooksIdResponse

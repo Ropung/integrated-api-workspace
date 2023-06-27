@@ -1,4 +1,4 @@
-package com.joara.book.recommend;
+package com.joara.book.recommend.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
