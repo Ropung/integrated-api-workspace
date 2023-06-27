@@ -5,6 +5,7 @@ import com.joara.book.domain.model.book.type.SearchType;
 import com.joara.book.usecase.dto.BookQueryDto.BookReadByGenreResponseDto;
 import com.joara.book.usecase.dto.BookQueryDto.BookReadByOneResponseDto;
 import com.joara.book.usecase.dto.BookQueryDto.MyBookListRespnseDto;
+import com.joara.book.usecase.dto.BookQueryDto.AnalyzedBookResponseDto;
 import org.springframework.data.domain.Pageable;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,4 +21,6 @@ public interface BookQueryUseCase {
     boolean verityAuthorAndOwnBook(UUID memberId, Long bookId);
 
     MyBookListRespnseDto findBookByMemberId(HttpServletRequest request, Pageable pageable);
+
+    AnalyzedBookResponseDto analyzedBook(Long bookId);
 }

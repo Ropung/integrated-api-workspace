@@ -1,9 +1,11 @@
 package com.joara.book.mapper;
 
+import com.joara.book.domain.model.BookReadModels.AnalyzedBookReadModel;
 import com.joara.book.domain.model.BookReadModels.BookDetailedViewReadModel;
 import com.joara.book.domain.model.BookReadModels.BookListViewReadModel;
 import com.joara.book.domain.model.book.Book;
 import com.joara.book.entity.BookEntity;
+import com.joara.book.projection.BookQueryProjections.AnalyzedBookProjection;
 import com.joara.book.projection.BookQueryProjections.BookDetailedViewProjection;
 import com.joara.book.projection.BookQueryProjections.BookListViewProjection;
 import com.joara.support.mapper.BaseEntityMapper;
@@ -32,5 +34,11 @@ public interface BookEntityMapper extends BaseEntityMapper<Book, BookEntity> {
             BookDetailedViewProjection projection,
             List<Long> genreIdList,
             List<String> genreNameList
+    );
+
+    AnalyzedBookReadModel toReadModel(
+            AnalyzedBookProjection projection,
+            List<Long> genreIds,
+            List<String> genreNames
     );
 }
