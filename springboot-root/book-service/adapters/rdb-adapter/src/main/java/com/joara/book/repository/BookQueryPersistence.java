@@ -9,6 +9,7 @@ import com.joara.book.mapper.BookEntityMapper;
 import com.joara.book.projection.BookQueryProjections.AnalyzedBookProjection;
 import com.joara.book.projection.BookQueryProjections.BookDetailedViewProjection;
 import com.joara.book.projection.BookQueryProjections.BookListViewProjection;
+import com.joara.episode.repository.EpisodeQueryJpaRepo;
 import com.joara.genre.entity.GenreEntity;
 import com.joara.genre.repository.GenreQueryJpaRepository;
 import lombok.Builder;
@@ -26,6 +27,7 @@ import java.util.UUID;
 public class BookQueryPersistence implements BookQueryRepository {
     private final BookQueryJpaRepository bookQueryJpaRepository;
     private final BookGenreMapQueryJpaRepository bookGenreMapQueryJpaRepository;
+    private final EpisodeQueryJpaRepo episodeQueryJpaRepo;
     private final GenreQueryJpaRepository genreQueryJpaRepository;
     private final BookEntityMapper mapper;
 
@@ -67,11 +69,14 @@ public class BookQueryPersistence implements BookQueryRepository {
         Optional<BookDetailedViewProjection> optionalBook =
                 bookQueryJpaRepository.findDetailedProjectionById(bookId);
 
+        Integer episodeSize = episodeQueryJpaRepo.countByBookId(bookId);
+
         return optionalBook.map((book) -> {
             BookGenreMappedInfo genreInfo = findBookGenreMapByBookId(book.id());
 
             return mapper.toReadModel(
                     book,
+                    episodeSize,
                     genreInfo.genreIds,
                     genreInfo.genreNames
             );

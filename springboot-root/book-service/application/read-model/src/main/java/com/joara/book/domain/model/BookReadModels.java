@@ -13,6 +13,7 @@ public record BookReadModels() {
             List<Long> genreIdList,
             // added
             List<String> genreNameList,
+            Integer episodeSize,
             String nickname,
             String title,
             String coverUrl,
@@ -25,6 +26,7 @@ public record BookReadModels() {
             List<Long> genreIdList,
             // added
             List<String> genreNameList,
+            Integer episodeSize,
             String nickname,
             String title,
             String description,

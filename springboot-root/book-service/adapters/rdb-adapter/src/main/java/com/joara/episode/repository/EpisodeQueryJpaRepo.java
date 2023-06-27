@@ -20,4 +20,6 @@ public interface EpisodeQueryJpaRepo extends JpaRepository<EpisodeEntity, UUID> 
     Page<EpisodeListViewProjection> findAllByBookId(Long bookId, Pageable pageable);
 
     Optional<EpisodeEntity> findByEpiNum(Long epiNum);
+
+    Integer countByBookId(Long bookId);
 }
