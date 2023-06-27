@@ -5,6 +5,7 @@ import com.joara.book.usecase.BookQueryUseCase;
 import com.joara.book.usecase.dto.BookQueryDto.BookReadByGenreResponseDto;
 import com.joara.book.usecase.dto.BookQueryDto.BookReadByOneResponseDto;
 import com.joara.book.usecase.dto.BookQueryDto.MyBookListRespnseDto;
+import com.joara.book.usecase.dto.BookQueryDto.AnalyzedBookResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -16,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
-import java.net.http.HttpRequest;
 
 @RestController
 @RequiredArgsConstructor // final, not null
@@ -49,6 +49,11 @@ public final class BookQueryApi {
         pageable = pageable.previousOrFirst();
         return bookQueryUseCase.findBookByMemberId(request, pageable);
     };
+
+    @GetMapping("/{bookId}/analyzed")
+    public AnalyzedBookResponseDto analyzedBookList(@PathVariable Long bookId){
+        return bookQueryUseCase.analyzedBook(bookId);
+    }
 
 //	private final BookQueryService bookQueryService;
 //	@GetMapping(path = "/genre/{genreEng}")

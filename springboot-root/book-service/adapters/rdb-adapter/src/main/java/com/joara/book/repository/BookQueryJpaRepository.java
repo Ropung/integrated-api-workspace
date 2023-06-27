@@ -1,6 +1,7 @@
 package com.joara.book.repository;
 
 import com.joara.book.entity.BookEntity;
+import com.joara.book.projection.BookQueryProjections.AnalyzedBookProjection;
 import com.joara.book.projection.BookQueryProjections.BookDetailedViewProjection;
 import com.joara.book.projection.BookQueryProjections.BookListViewProjection;
 import org.springframework.data.domain.Page;
@@ -22,4 +23,6 @@ public interface BookQueryJpaRepository extends JpaRepository<BookEntity, Long> 
     Page<BookListViewProjection> findAllByIdIn(List<Long> bookIdList, Pageable pageable);
 
     Page<BookListViewProjection> findBooksByMemberId(UUID memberId, Pageable pageable);
+
+    AnalyzedBookProjection findAnalyzedBookById(Long bookId);
 }

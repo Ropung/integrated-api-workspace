@@ -37,6 +37,16 @@ public record BookReadModels() {
             OffsetDateTime updatedAt,
             OffsetDateTime deletedAt,
             Double score
+    ) {}
+
+    @Builder
+    public record AnalyzedBookReadModel(
+            Long id,
+            List<Long> genreIdList,
+            // added
+            List<String> genreNameList,
+            String title,
+            String coverUrl
     ) {
     }
 }
