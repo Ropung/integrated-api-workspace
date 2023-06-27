@@ -26,7 +26,7 @@ public class Episode {
 	public String epiTitle;
 	public String content;
 	public String quote;
-	public String cover;
+	public String coverUrl;
 	public Long heartCount;
 	public Long viewCount;
 	public Long commentCount;

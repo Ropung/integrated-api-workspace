@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS joara_basic.episode (
     epi_title           VARCHAR(255)                        ,
     content             TEXT                                ,
     quote               VARCHAR(255)                        ,
-    cover               VARCHAR(255)                        ,
+    cover_url           VARCHAR(255)                        ,
     view_count          BIGINT                              DEFAULT 0,
     heart_count         BIGINT                              DEFAULT 0,
     comment_count       BIGINT                              DEFAULT 0,

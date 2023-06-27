@@ -76,7 +76,7 @@ public class EpisodeCommandService implements EpisodeCreateUseCase, EpisodeUpdat
 				.orElseThrow(BookErrorCode.SERVICE_UNAVAILABLE::defaultException)
 				.id();
 		episode.nickname = nickname;
-		episode.cover = coverUrl;
+		episode.coverUrl = coverUrl;
 		episode.status = EpisodeStatus.ACTIVE;
 		episode.viewCount = 0L;
 		episode.heartCount = 0L;
