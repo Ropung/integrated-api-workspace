@@ -6,7 +6,7 @@ import com.joara.heart.entity.EpisodeHeartEntity;
 import com.joara.heart.mapper.EpisodeHeartEntityMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
-
+import javax.transaction.Transactional;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -17,13 +17,19 @@ public class HeartCommandPersistence implements HeartCommandRepository{
     private final EpisodeHeartEntityMapper mapper;
 
     @Override
-    public void deleteByMemberId(UUID memberId) {
-        heartCommandJpaRepository.deleteByMemberId(memberId);
+    @Transactional
+    public void deleteByMemberIdAndEpiId(UUID memberId,UUID epiId) {
+        heartCommandJpaRepository.deleteByMemberIdAndEpiId(memberId,epiId);
     }
 
     @Override
     public boolean existsByMemberIdAndEpiId(UUID memberId, UUID epiId) {
         return heartCommandJpaRepository.existsByMemberIdAndEpiId(memberId,epiId);
+    }
+
+    @Override
+    public UUID findByMemberIdAndEpiId(UUID memberId, UUID epiId) {
+        return heartCommandJpaRepository.findByMemberIdAndEpiId(memberId,epiId);
     }
 
     @Override

@@ -14,10 +14,6 @@ public record HeartCommandDto() {
     public record HeartCreateResponseDto(
        boolean success
     ){}
-    public record HeartRemoveRequestDto(
-            @NotNull
-            UUID memberId
-    ){}
     @Builder
     public record HeartRemoveResponseDto(
             boolean success
