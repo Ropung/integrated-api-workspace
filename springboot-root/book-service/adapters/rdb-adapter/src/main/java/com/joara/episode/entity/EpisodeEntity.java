@@ -7,9 +7,7 @@ import com.joara.util.time.ServerTime;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.Entity;
@@ -38,7 +36,7 @@ public class EpisodeEntity extends UuidBaseEntity {
 	public String epiTitle;
 	public String content;
 	public String quote;
-	public String cover;
+	public String coverUrl;
 	@Builder.Default
 	public Long viewCount = 0L;
 	@Builder.Default

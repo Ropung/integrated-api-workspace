@@ -3,9 +3,9 @@ package com.joara.web.episode;
 import com.joara.book.exception.BookErrorCode;
 import com.joara.clients.MemberQueryPort;
 import com.joara.episode.usecase.EpisodeCreateUseCase;
+import com.joara.episode.usecase.EpisodeDeleteUseCase;
 import com.joara.episode.usecase.EpisodeReadUseCase;
 import com.joara.episode.usecase.EpisodeUpdateUseCase;
-import com.joara.episode.usecase.EpisodeDeleteUseCase;
 import com.joara.episode.usecase.dto.EpisodeCommandDto.EpisodeCreateRequestDto;
 import com.joara.episode.usecase.dto.EpisodeCommandDto.EpisodeCreateResponseDto;
 import com.joara.episode.usecase.dto.EpisodeCommandDto.EpisodeDeleteResponseDto;
@@ -41,7 +41,7 @@ public class EpisodeCommandApi {
     private final MemberQueryPort memberQueryPort;
     private final JwtParser jwtParser;
 
-    @PostMapping("")
+    @PostMapping()
     public EpisodeCreateResponseDto create(
             @PathVariable Long bid,
             @ModelAttribute @Valid EpisodeCreateRequestDto dto,
