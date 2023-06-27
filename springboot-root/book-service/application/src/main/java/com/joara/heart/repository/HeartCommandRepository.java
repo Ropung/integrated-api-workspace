@@ -8,4 +8,6 @@ import java.util.UUID;
 
 public interface HeartCommandRepository extends BaseCommandRepository<EpisodeHeart, UUID> {
     void deleteByMemberId(UUID memberId);
+
+    boolean existsByMemberIdAndEpiId(UUID memberId, UUID epiId);
 }

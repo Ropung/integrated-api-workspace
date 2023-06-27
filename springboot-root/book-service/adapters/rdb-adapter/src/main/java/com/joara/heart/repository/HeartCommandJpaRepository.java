@@ -7,4 +7,6 @@ import java.util.UUID;
 
 public interface HeartCommandJpaRepository extends JpaRepository<EpisodeHeartEntity, UUID> {
     void deleteByMemberId(UUID memberId);
+
+    boolean existsByMemberIdAndEpiId(UUID memberId, UUID epiId);
 }
