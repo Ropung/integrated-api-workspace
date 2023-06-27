@@ -1,4 +1,4 @@
-package com.joara.episode.entity;
+package com.joara.heart.entity;
 
 import com.joara.base.jpa.entity.UuidBaseEntity;
 import com.joara.rdb.JoaraPostgresSchemaConstants;
@@ -27,7 +27,8 @@ import java.util.UUID;
 )
 public class EpisodeHeartEntity extends UuidBaseEntity {
 	public UUID memberId;
-	public UUID eipId;
+	public Long bookId;
+	public UUID epiId;
 	public String nickname;
 
 }
