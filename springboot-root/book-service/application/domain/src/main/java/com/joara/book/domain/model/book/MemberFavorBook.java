@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import java.time.OffsetDateTime;
+import java.util.List;
 import java.util.UUID;
 
 
@@ -18,8 +19,11 @@ import java.util.UUID;
 @Builder
 public class MemberFavorBook {
 	public UUID id;
+	public List<Long> genreIdList;
 	public UUID memberId;
-	public UUID bookId;
-	public String favorBookName;
+	public String nickname;
+	public String bookTitle;
 	public OffsetDateTime createdAt;
+	public OffsetDateTime updatedAt;
+	public OffsetDateTime deletedAt;
 }
