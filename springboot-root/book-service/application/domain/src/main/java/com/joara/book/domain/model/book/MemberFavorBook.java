@@ -10,8 +10,6 @@ import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.UUID;
 
-
-
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
@@ -19,6 +17,7 @@ import java.util.UUID;
 @Builder
 public class MemberFavorBook {
 	public UUID id;
+	public Long BookId;
 	public List<Long> genreIdList;
 	public UUID memberId;
 	public String nickname;
