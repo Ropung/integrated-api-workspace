@@ -1,7 +1,7 @@
-package com.joara.web.reply;
+package com.joara.web.comment;
 
-import com.joara.reply.usecase.ReplyReadUseCase;
-import com.joara.reply.usecase.dto.ReplyQueryDto.ReplyListResponseDto;
+import com.joara.comment.usecase.CommentReadUseCase;
+import com.joara.comment.usecase.dto.CommentQueryDto.CommentListResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -15,17 +15,17 @@ import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/books/{bid}/episode/{eid}/comment/{cid}/reply")
-public class ReplyQueryApi {
+@RequestMapping("/books/{bookId}/episode/{episodeId}/comment")
+public class CommentQueryApi {
 
-    private final ReplyReadUseCase replyReadUseCase;
+    private final CommentReadUseCase commentReadUseCase;
 
     @GetMapping()
-    public ReplyListResponseDto replyListResponseDto(
-            @PathVariable UUID cid,
+    public CommentListResponseDto commentListResponseDto(
+            @PathVariable UUID episodeId,
             @PageableDefault(size=10, sort="createdAt", direction = Sort.Direction.DESC) Pageable pageable
     ){
         pageable = pageable.previousOrFirst();
-        return replyReadUseCase.findAllByCommentId(cid, pageable);
+        return commentReadUseCase.findAllByEpiId(episodeId, pageable);
     }
 }

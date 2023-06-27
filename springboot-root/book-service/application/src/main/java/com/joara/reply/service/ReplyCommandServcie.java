@@ -5,6 +5,8 @@ import com.joara.book.domain.model.reply.type.ReplyStatus;
 import com.joara.book.exception.BookErrorCode;
 import com.joara.book.repository.BookQueryRepository;
 import com.joara.clients.MemberQueryPort;
+import com.joara.comment.exception.CommentErrorCode;
+import com.joara.comment.repository.CommentQueryRepository;
 import com.joara.episode.repository.EpisodeQueryRepository;
 import com.joara.jwt.util.JwtParser;
 import com.joara.jwt.util.JwtParser.JwtPayloadParser;
@@ -29,6 +31,7 @@ import java.util.UUID;
 public class ReplyCommandServcie implements ReplyCreateUsecase, ReplyUpdateUsecase, ReplyDeleteUsecase {
 
     private final ReplyCommandRepository replyCommandRepository;
+    private final CommentQueryRepository commentQueryRepository;
     private final BookQueryRepository bookQueryRepository;
     private final EpisodeQueryRepository episodeQueryRepository;
     private final ReplyDtoMapper mapper;
@@ -57,9 +60,8 @@ public class ReplyCommandServcie implements ReplyCreateUsecase, ReplyUpdateUseca
         boolean isEpisode = episodeQueryRepository.existsById(eid);
         if(!isEpisode) throw BookErrorCode.EPISODE_NOT_FOUND.defaultException();
 
-        // comment가 아직 안만들어짐
-//        boolean isComment = commpentQueryRespositoty.existById(cid);
-//        if(!isEpisode) throw BookErrorCode.COMMENT_NOT_FOUND.defaultException();
+        boolean isComment = commentQueryRepository.existById(cid);
+        if(!isComment) throw CommentErrorCode.COMMENT_NOT_FOUND.defaultException();
 
         reply.commentId = cid;
         reply.memberId = memberQueryPort.findIdByEmail(email)

@@ -8,13 +8,18 @@ import com.joara.book.repository.BookQueryRepository;
 import com.joara.book.usecase.BookQueryUseCase;
 import com.joara.book.usecase.dto.BookQueryDto.BookReadByGenreResponseDto;
 import com.joara.book.usecase.dto.BookQueryDto.BookReadByOneResponseDto;
+import com.joara.book.usecase.dto.BookQueryDto.MyBookListRespnseDto;
 import com.joara.book.usecase.mapper.BookDtoMapper;
+import com.joara.clients.MemberQueryPort;
 import com.joara.exception.status2xx.NoContentException;
+import com.joara.jwt.util.JwtParser;
+import com.joara.jwt.util.JwtParser.JwtPayloadParser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.UUID;
 
@@ -23,6 +28,8 @@ import java.util.UUID;
 public class BookQueryService implements BookQueryUseCase {
     private final BookQueryRepository bookQueryRepository;
     private final BookDtoMapper mapper;
+    private final JwtParser jwtParser;
+    private final MemberQueryPort memberQueryPort;
 
     @Override
     public BookDetailedViewReadModel findById(Long bookId) {
@@ -80,5 +87,30 @@ public class BookQueryService implements BookQueryUseCase {
                 .memberId;
 
         return memberId == bookMemberId;
+    }
+
+    @Override
+    public MyBookListRespnseDto findBookByMemberId(HttpServletRequest request, Pageable pageable) {
+        JwtPayloadParser parser = jwtParser.withRequest(request);
+        String email = parser.claims().getSubject();
+        UUID memberId = memberQueryPort.findIdByEmail(email)
+                .orElseThrow(BookErrorCode.SERVICE_UNAVAILABLE::defaultException)
+                .id();
+
+        Page<BookListViewReadModel> bookSearchResult = bookQueryRepository.findBooksByMemberId(memberId, pageable);
+        long lastPageNumber = bookSearchResult.getTotalPages();
+        if (bookSearchResult.isEmpty()) {
+            throw new NoContentException();
+        }
+
+        List<BookListViewReadModel> bookList = bookSearchResult.getContent();
+        if (bookList.isEmpty()) {
+            throw new NoContentException(); // 204 No Content
+        }
+
+        return MyBookListRespnseDto.builder()
+                .bookList(bookList)
+                .lastPage(lastPageNumber)
+                .build();
     }
 }

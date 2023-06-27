@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 
@@ -36,7 +37,7 @@ public class EpisodeQueryService implements EpisodeReadUseCase {
 		List<EpisodeListViewReadModel> episodeList = episodeSearchResult.getContent();
 
 		if (episodeList.isEmpty()) {
-			throw BookErrorCode.BOOK_NOT_FOUND.defaultException();
+			throw BookErrorCode.EPISODE_NOT_FOUND.defaultException();
 		}
 
 		return EpisodeListResponseDto.builder()
@@ -59,5 +60,14 @@ public class EpisodeQueryService implements EpisodeReadUseCase {
 				.epiTitle(epiTitle)
 				.content(content)
 				.build();
+	}
+
+	@Override
+	public Optional<UUID> findMemberIdByEpisodeId(UUID episodeId) {
+		return episodeQueryRepository
+				.findById(episodeId)
+				.map((episode) -> {
+					return episode.memberId;
+				}); // map to member id
 	}
 }

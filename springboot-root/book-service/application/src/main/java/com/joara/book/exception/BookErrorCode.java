@@ -16,7 +16,6 @@ public enum BookErrorCode implements ErrorCode {
 	EPISODE_CONTENT_NOT_FOUND("회차내용이 비어있습니다.", HttpStatus.NOT_FOUND),
 	EPISODE_NOT_FOUND("회차정보를 찾을 수 없습니다.", HttpStatus.NOT_FOUND),
 	PAGE_OUT_OF_RANGE("페이지를 찾을 수 없습니다.", HttpStatus.NOT_FOUND),
-
 	DEFAULT("", HttpStatus.INTERNAL_SERVER_ERROR);
 	
 	public final String message;

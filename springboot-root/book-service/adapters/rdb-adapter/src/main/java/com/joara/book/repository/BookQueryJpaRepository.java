@@ -20,4 +20,6 @@ public interface BookQueryJpaRepository extends JpaRepository<BookEntity, Long> 
     Page<BookListViewProjection> findAllByDescriptionContainsIgnoreCase(String keyword, Pageable pageable);
     Page<BookListViewProjection> findAllByNicknameContainsIgnoreCase(String keyword, Pageable pageable);
     Page<BookListViewProjection> findAllByIdIn(List<Long> bookIdList, Pageable pageable);
+
+    Page<BookListViewProjection> findBooksByMemberId(UUID memberId, Pageable pageable);
 }
