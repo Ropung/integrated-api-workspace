@@ -47,11 +47,8 @@ public class HeartCommandService implements HeartCreateUseCase, HeartDeleteUseCa
             episodeHeart.memberId = memberId;
             episodeHeart.nickname = nickname;
             heartCommandRepository.save(episodeHeart);
+        }
         return true;
-        }
-        else{
-            return false;
-        }
     }
     @Override
     public HeartRemoveResponseDto delete(Long bookId, UUID epiId, HttpServletRequest request) {
@@ -60,8 +57,9 @@ public class HeartCommandService implements HeartCreateUseCase, HeartDeleteUseCa
         UUID memberId = memberQueryPort.findIdByEmail(email)
                 .orElseThrow(BookErrorCode.SERVICE_UNAVAILABLE::defaultException)
                 .id();
-
-        heartCommandRepository.deleteByMemberId(memberId);
+//        UUID epiHeartId = heartCommandRepository.findByMemberIdAndEpiId(memberId,epiId);
+//        System.out.println(epiHeartId);
+        heartCommandRepository.deleteByMemberIdAndEpiId(memberId,epiId);
 
         return HeartRemoveResponseDto.builder()
                 .success(true)

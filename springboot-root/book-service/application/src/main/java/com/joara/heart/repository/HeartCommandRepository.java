@@ -7,7 +7,9 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface HeartCommandRepository extends BaseCommandRepository<EpisodeHeart, UUID> {
-    void deleteByMemberId(UUID memberId);
+    void deleteByMemberIdAndEpiId(UUID memberId,UUID epiId);
 
     boolean existsByMemberIdAndEpiId(UUID memberId, UUID epiId);
+
+    UUID findByMemberIdAndEpiId(UUID memberId, UUID epiId);
 }
