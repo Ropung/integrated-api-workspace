@@ -2,5 +2,5 @@ app:
   upload:
     files:
       target: local
-      upload-url: ../
+      upload-url: C:\Workspace
 #      upload-url: ${upload.url:/Users/Shared/upload-image}
