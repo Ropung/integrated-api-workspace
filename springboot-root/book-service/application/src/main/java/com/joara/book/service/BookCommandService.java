@@ -88,10 +88,13 @@ public class BookCommandService
 	public BookModifyResponseDto modify(BookModifyRequestDto dto) {
 		boolean result = bookCommandRepository.update(
 				dto.title(),
+				dto.genreIdList(),
 				dto.description(),
 				dto.status(),
 				dto.bookId()
 		);
+
+
 
 		return BookModifyResponseDto.builder()
 				.success(result)

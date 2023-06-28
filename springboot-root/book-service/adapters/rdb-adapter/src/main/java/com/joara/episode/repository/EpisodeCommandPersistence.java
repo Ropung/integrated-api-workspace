@@ -2,6 +2,7 @@ package com.joara.episode.repository;
 
 import com.joara.book.domain.model.episode.Episode;
 import com.joara.book.exception.BookErrorCode;
+import com.joara.book.repository.BookQueryJpaRepository;
 import com.joara.episode.entity.EpisodeEntity;
 import com.joara.episode.exception.EpisodeErrorCode;
 import com.joara.episode.mapper.EpisodeEntityMapper;
@@ -22,6 +23,9 @@ public class EpisodeCommandPersistence implements EpisodeCommandRepository {
 
     @Override
     public Episode save(Episode domain) {
+        int episodeSize = episodeQueryJpaRepo.countByBookId(domain.bookId);
+        domain.epiNum = (long) (episodeSize + 1);
+
         EpisodeEntity entity = mapper.toEntity(domain);
         EpisodeEntity savedEntity = episodeCommandJpaRepo.save(entity);
         return mapper.toDomain(savedEntity);

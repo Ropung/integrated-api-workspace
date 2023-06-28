@@ -6,6 +6,8 @@ import com.joara.support.repository.BaseCommandRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
+
 public interface BookCommandRepository extends BaseCommandRepository<Book, Long> {
     
     // Query    
@@ -15,7 +17,7 @@ public interface BookCommandRepository extends BaseCommandRepository<Book, Long>
     boolean existsBookByTitle(String title);
 
     // Command
-    boolean update(String title, String description, BookStatus status, Long bookId);
+    boolean update(String title, List<Long> genreIdList, String description, BookStatus status, Long bookId);
     boolean update(Long bookId, BookStatus status);
 
     void deleteById(Long id);
