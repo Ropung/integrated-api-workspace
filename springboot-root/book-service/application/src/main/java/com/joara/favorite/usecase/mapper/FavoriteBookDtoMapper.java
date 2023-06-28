@@ -8,5 +8,5 @@ import java.time.OffsetDateTime;
 
 @Mapper(componentModel = "spring")
 public interface FavoriteBookDtoMapper {
-    MemberFavorBook from(FavoriteCreateRequestDto dto, OffsetDateTime now);
+    MemberFavorBook from(FavoriteCreateRequestDto dto);
 }

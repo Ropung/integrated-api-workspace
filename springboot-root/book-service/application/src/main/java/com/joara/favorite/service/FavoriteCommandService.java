@@ -10,6 +10,7 @@ import com.joara.favorite.usecase.FavoriteCreateUseCase;
 import com.joara.favorite.usecase.dto.FavoriteCommandDto.FavoriteCreateRequestDto;
 import com.joara.favorite.usecase.dto.FavoriteCommandDto.FavoriteCreateResponseDto;
 import com.joara.favorite.usecase.mapper.FavoriteBookDtoMapper;
+import com.joara.genre.service.GenreQueryService;
 import com.joara.jwt.util.JwtParser;
 import com.joara.jwt.util.JwtParser.JwtPayloadParser;
 import com.joara.util.time.ServerTime;
@@ -27,13 +28,11 @@ public class FavoriteCommandService implements FavoriteCreateUseCase {
     private final FavoriteBookDtoMapper mapper;
     private final JwtParser jwtParser;
     private final MemberQueryPort memberQueryPort;
-
+    private final GenreQueryService genreQueryService;
 
     @Override
     public FavoriteCreateResponseDto create(FavoriteCreateRequestDto dto, HttpServletRequest request) {
-        OffsetDateTime now = ServerTime.now();
-
-        MemberFavorBook memberFavorBook = mapper.from(dto,now);
+        MemberFavorBook memberFavorBook = mapper.from(dto);
 
         return FavoriteCreateResponseDto.builder()
                 .success(create(memberFavorBook, request))
@@ -52,11 +51,12 @@ public class FavoriteCommandService implements FavoriteCreateUseCase {
 
         Book book = bookQueryRepository.findById(memberFavorBook.bookId)
                 .orElseThrow(BookErrorCode.BOOK_NOT_FOUND::defaultException);
-        System.out.println(book);
+
         memberFavorBook.genreIdList = book.genreIdList;
         memberFavorBook.bookTitle = book.title;
         memberFavorBook.memberId = memberId;
         memberFavorBook.nickname = nickname;
+        memberFavorBook.createdAt = ServerTime.now();
 
         favoriteCommandRepository.save(memberFavorBook);
         return true;
