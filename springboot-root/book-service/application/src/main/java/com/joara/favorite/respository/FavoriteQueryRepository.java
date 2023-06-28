@@ -8,4 +8,6 @@ import java.util.UUID;
 
 public interface FavoriteQueryRepository {
     Page<MemberFavorBook> findByMemberId(UUID memberId, Pageable pageable);
+
+    UUID findByBookIdAndMemberId(Long bookId, UUID memberId);
 }

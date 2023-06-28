@@ -33,6 +33,11 @@ public class FavoriteQueryPersistence implements FavoriteQueryRepository {
                 .map(this::mapToMemberFavorBook);
     }
 
+    @Override
+    public UUID findByBookIdAndMemberId(Long bookId, UUID memberId) {
+        return favoriteQueryJpaRepository.findByBookIdAndMemberId(bookId,memberId);
+    }
+
     private FavoriteGenreMappedInfo findBookGenreMapByBookId(Long bookId) {
         List<Long> genreIds = bookGenreMapQueryJpaRepository.findByBookId(bookId).stream()
                 .map((genre) -> genre.genreId)

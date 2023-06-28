@@ -7,4 +7,8 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface FavoriteCommandRepository extends BaseCommandRepository<MemberFavorBook, UUID> {
+
+    void deleteByMemberIdAndBookId(UUID memberId, Long bookId);
+
+    boolean existsByMemberIdAndBookId(UUID memberId, Long bookId);
 }
