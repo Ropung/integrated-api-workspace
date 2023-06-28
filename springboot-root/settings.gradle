@@ -50,14 +50,16 @@ findProject(':book-service:adapters:rdb-adapter')?.name = 'rdb-adapter'
 
 include 'book-service:adapters:client-adapters'
 include 'book-service:adapters:client-adapters:joara-member-client'
+include 'book-service:adapters:client-adapters:joara-book-recom-fastapi-client'
 findProject(':book-service:adapters:client-adapters')?.name = 'client-adapters'
 findProject(':book-service:adapters:client-adapters:joara-member-client')?.name = 'joara-member-client'
+findProject(':book-service:adapters:client-adapters:joara-book-recom-fastapi-client')?.name = 'joara-book-recom-fastapi-client'
 
 include 'book-service:application'
 include 'book-service:application:domain'
+include 'book-service:application:read-model'
 findProject(':book-service:application')?.name = 'application'
 findProject(':book-service:application:domain')?.name = 'domain'
-include 'book-service:application:read-model'
 findProject(':book-service:application:read-model')?.name = 'read-model'
 
 // common
@@ -66,4 +68,3 @@ include 'authentication-service:driven:refresh-token-redis'
 findProject(':authentication-service:driven:refresh-token-redis')?.name = 'refresh-token-redis'
 include 'base-modules:joara-redis-base'
 findProject(':base-modules:joara-redis-base')?.name = 'joara-redis-base'
-

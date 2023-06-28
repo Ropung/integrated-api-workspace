@@ -22,6 +22,7 @@ public class Book {
 	public Long id;
 	public UUID memberId;
 	public List<Long> genreIdList;
+	public Integer episodeSize;
 	public String nickname;
 	public String title;
 	public String description;

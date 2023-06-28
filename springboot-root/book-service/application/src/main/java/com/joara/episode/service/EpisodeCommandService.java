@@ -76,10 +76,11 @@ public class EpisodeCommandService implements EpisodeCreateUseCase, EpisodeUpdat
 				.orElseThrow(BookErrorCode.SERVICE_UNAVAILABLE::defaultException)
 				.id();
 		episode.nickname = nickname;
-		episode.cover = coverUrl;
+		episode.coverUrl = coverUrl;
 		episode.status = EpisodeStatus.ACTIVE;
 		episode.viewCount = 0L;
 		episode.heartCount = 0L;
+		episode.commentCount = 0L;
 		episode.createdAt = ServerTime.now(); // 디폴트인데 안들어가서 추가..
 		episodeCommandRepository.save(episode);
 		return true;

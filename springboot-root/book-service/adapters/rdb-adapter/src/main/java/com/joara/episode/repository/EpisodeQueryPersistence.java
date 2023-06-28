@@ -20,9 +20,16 @@ public class EpisodeQueryPersistence implements EpisodeQueryRepository {
     private final EpisodeQueryJpaRepo episodeQueryJpaRepo;
     private final EpisodeEntityMapper mapper;
 
+
+
     @Override
     public boolean existsById(UUID eid) {
         return episodeQueryJpaRepo.existsById(eid);
+    }
+    @Override
+    public Optional<Episode> findByEpiNum(Long epiNum) {
+        Optional<EpisodeEntity> episodeEntity = episodeQueryJpaRepo.findByEpiNum(epiNum);
+        return episodeEntity.map(mapper::toDomain);
     }
 
     @Override
@@ -37,16 +44,18 @@ public class EpisodeQueryPersistence implements EpisodeQueryRepository {
         return episodeEntities.map(mapper::toReadModel);
     }
 
-    @Override
-    public Optional<Episode> findById(UUID eid) {
-        Optional<EpisodeEntity> episodeEntity = episodeQueryJpaRepo.findById(eid);
-        return episodeEntity.map(mapper::toDomain);
-    }
+
 
     // Base
     @Override
     public Episode save(Episode domain) {
         return null;
     }
+
+    @Override
+    public Optional<Episode> findById(UUID uuid) {
+        return Optional.empty();
+    }
+
 
 }

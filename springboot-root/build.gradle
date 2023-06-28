@@ -216,6 +216,7 @@ project(':book-service') {
 		implementation project(':book-service:adapters:rdb-adapter')
 		implementation project(':book-service:adapters:web-adapter')
 		implementation project(':book-service:adapters:client-adapters:joara-member-client')
+		implementation project(':book-service:adapters:client-adapters:joara-book-recom-fastapi-client')
 
 		implementation project(':base-modules:joara-global-exception-handler')
 		implementation project(':base-modules:joara-integrated-flyway')
@@ -254,6 +255,15 @@ project(':book-service:adapters:rdb-adapter') {
 }
 
 project(':book-service:adapters:client-adapters:joara-member-client') {
+	dependencies {
+		implementation project(':common')
+		implementation project(':book-service:application')
+		implementation project(':authentication-service:application:read-models')
+		implementation project(':base-modules:joara-server-communication-core')
+	}
+}
+
+project(':book-service:adapters:client-adapters:joara-book-recom-fastapi-client') {
 	dependencies {
 		implementation project(':common')
 		implementation project(':book-service:application')
