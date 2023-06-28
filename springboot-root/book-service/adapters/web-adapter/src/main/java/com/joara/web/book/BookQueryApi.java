@@ -6,7 +6,6 @@ import com.joara.book.usecase.RecommendedBookQueryUseCase;
 import com.joara.book.usecase.dto.BookQueryDto.BookReadByGenreResponseDto;
 import com.joara.book.usecase.dto.BookQueryDto.BookReadByOneResponseDto;
 import com.joara.book.usecase.dto.BookQueryDto.MyBookListRespnseDto;
-import com.joara.book.usecase.dto.BookQueryDto.AnalyzedBookResponseDto;
 import com.joara.book.usecase.dto.RecommendedBookQueryDto.RecommendedBooksQueryResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -14,7 +13,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -63,12 +61,6 @@ public final class BookQueryApi {
                 .books(recommendedBookQueryUseCase.findRecommendedBooksByBookId(bookId))
                 .build();
     }
-
-    // FIXME remove if not required
-//    @GetMapping("/{bookId}/analyzed")
-//    public AnalyzedBookResponseDto analyzedBookList(@PathVariable Long bookId){
-//        return bookQueryUseCase.analyzedBook(bookId);
-//    }
 
 //	private final BookQueryService bookQueryService;
 //	@GetMapping(path = "/genre/{genreEng}")

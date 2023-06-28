@@ -1,12 +1,10 @@
 package com.joara.book.repository;
 
-import com.joara.book.domain.model.BookReadModels.AnalyzedBookReadModel;
 import com.joara.book.domain.model.BookReadModels.BookDetailedViewReadModel;
 import com.joara.book.domain.model.BookReadModels.BookListViewReadModel;
 import com.joara.book.domain.model.book.Book;
 import com.joara.book.entity.BookEntity;
 import com.joara.book.mapper.BookEntityMapper;
-import com.joara.book.projection.BookQueryProjections.AnalyzedBookProjection;
 import com.joara.book.projection.BookQueryProjections.BookDetailedViewProjection;
 import com.joara.book.projection.BookQueryProjections.BookListViewProjection;
 import com.joara.episode.repository.EpisodeQueryJpaRepo;
@@ -121,38 +119,10 @@ public class BookQueryPersistence implements BookQueryRepository {
     }
 
     @Override
-    public AnalyzedBookReadModel findAnalyzedBookById(Long bookId) {
-        List<Long> bookIdList = bookGenreMapQueryJpaRepository
-                .findByBookId(bookId).stream()
-                .map((genre) -> genre.genreId)
-                .toList();
-//        List<Long> bookIdList = bookGenreMapQueryJpaRepository
-//                .findByBookId(bookId).stream()
-//                .map((item) -> item.bookId)
-//                .toList();
-        List<GenreEntity> genreResultSet = genreQueryJpaRepository.findAllByIdIn(bookIdList);
-
-        List<String> genreNames = genreResultSet.stream()
-                .map((genre) -> genre.kor)
-                .toList();
-
-        AnalyzedBookProjection bookEntities = bookQueryJpaRepository
-                .findAnalyzedBookById(bookId);
-
-        return AnalyzedBookReadModel.builder()
-                .id(bookId)
-                .genreIdList(bookIdList)
-                .genreNameList(genreNames)
-                .title(bookEntities.title())
-                .coverUrl(bookEntities.coverUrl())
-                .build();
-    }
-
-    @Override
-    public Page<BookListViewReadModel> findBooksByMemberId(UUID memberId, Pageable pageable) {
+    public Page<BookDetailedViewReadModel> findBooksByMemberId(UUID memberId, Pageable pageable) {
         return bookQueryJpaRepository
                 .findBooksByMemberId(memberId, pageable)
-                .map(this::mapToBookListViewModel); // for -- 하나하나 변환
+                .map(this::mapToBookDetailedListViewModel); // for -- 하나하나 변환
     }
 
     @Override
@@ -183,11 +153,22 @@ public class BookQueryPersistence implements BookQueryRepository {
      * @return
      */
 
-    private BookListViewReadModel mapToBookListViewModel(BookListViewProjection projection) {
+    private BookDetailedViewReadModel mapToBookDetailedListViewModel(BookDetailedViewProjection projection) {
 
         // TODO refactor: 지금은 작품마다 매번 장르 DB 조회 -> 미리 필요한 장르 목록 다 조회해 놓고 사용.
         BookGenreMappedInfo genreInfo = findBookGenreMapByBookId(projection.id());
 
+        return mapper.toReadModel(
+                projection,
+                genreInfo.genreIds,
+                genreInfo.genreNames
+        );
+    }
+
+    private BookListViewReadModel mapToBookListViewModel(BookListViewProjection projection) {
+
+        // TODO refactor: 지금은 작품마다 매번 장르 DB 조회 -> 미리 필요한 장르 목록 다 조회해 놓고 사용.
+        BookGenreMappedInfo genreInfo = findBookGenreMapByBookId(projection.id());
         return mapper.toReadModel(
                 projection,
                 genreInfo.genreIds,
