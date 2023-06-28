@@ -3,7 +3,6 @@ package com.joara.book.repository;
 import com.joara.book.domain.model.BookReadModels.BookDetailedViewReadModel;
 import com.joara.book.domain.model.BookReadModels.BookListViewReadModel;
 import com.joara.book.domain.model.book.Book;
-import com.joara.book.entity.BookEntity;
 import com.joara.book.mapper.BookEntityMapper;
 import com.joara.book.projection.BookQueryProjections.BookDetailedViewProjection;
 import com.joara.book.projection.BookQueryProjections.BookListViewProjection;
@@ -30,12 +29,9 @@ public class BookQueryPersistence implements BookQueryRepository {
     private final BookEntityMapper mapper;
 
     @Override
-    public String findTitleByBookId(Long bookId) {
-        BookEntity bookEntity = bookQueryJpaRepository.findBookEntityById(bookId);
-        if (bookEntity != null) {
-            return bookEntity.title;
-        }
-        return null;
+    public Optional<String> findTitleById(Long bookId) {
+        Optional<String> optionalBookTitle = bookQueryJpaRepository.findBookEntityById(bookId);
+        return optionalBookTitle;
     }
 
     @Override
