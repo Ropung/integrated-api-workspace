@@ -23,24 +23,8 @@ public class FavoriteCommandPersistence implements FavoriteCommandRepository {
 
         MemberFavorBookEntity entity = mapper.toEntity(domain);
         MemberFavorBookEntity savedEntity = favoriteCommandJpaRepository.save(entity);
-        List<BookGenreMapEntity> genreList = domain.genreIdList.stream()
-                .map((genreId) -> BookGenreMapEntity.builder()
-                        .bookId(savedEntity.getBookId())
-                        .genreId(genreId)
-                        .build()
-                ).toList();
-        bookGenreMapQueryJpaRepository.saveAllAndFlush(genreList);
 
-        List<Long> genreIdList = bookGenreMapQueryJpaRepository
-                .saveAll(genreList).stream()
-                .map((genreMap) -> genreMap.genreId)
-                .toList();
-
-
-        return   MemberFavorBook.builder()
-                .genreIdList(genreIdList)
-                .build();
-
+        return mapper.toDomain(savedEntity);
     }
 
 

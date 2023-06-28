@@ -33,7 +33,6 @@ public class BookCommandPersistence implements BookCommandRepository {
         savedEntity.totalViewCount = 0L;
         savedEntity.totalHeartCount = 0L;
         savedEntity.favorCount = 0L;
-
         List<BookGenreMapEntity> genreList = domain.genreIdList.stream()
                 .map((genreId) -> BookGenreMapEntity.builder()
                         .bookId(savedEntity.getId())

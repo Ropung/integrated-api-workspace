@@ -27,7 +27,6 @@ import java.util.UUID;
 )
 public class MemberFavorBookEntity extends UuidBaseEntity {
     public Long bookId;
-    public Long genreId;
     public UUID memberId;
     public String nickname;
     public String bookTitle;
