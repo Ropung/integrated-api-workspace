@@ -51,9 +51,9 @@ public final class BookCommandApi {
 			@RequestBody @Valid BookModifyRequestDto body,
 			HttpServletRequest request) {
 		// BOOK DB에 있는 member ID랑 이 요청을 보낸 member ID가 일치하는지:
-		if (!authorVerifier.verify(request, body.bookId())) {
-			throw BookErrorCode.FORBIDDEN.defaultException();
-		}
+//		if (!authorVerifier.verify(request, body.bookId())) {
+//			throw BookErrorCode.FORBIDDEN.defaultException();
+//		}
 
 		return bookEditUseCase.modify(body);
 	}
@@ -63,9 +63,9 @@ public final class BookCommandApi {
 			@RequestBody @Valid BookRemoveRequestDto body,
 			HttpServletRequest request) {
 		// 본인 책이 맞는지.
-		if (!authorVerifier.verify(request, body.bookId())) {
-			throw BookErrorCode.FORBIDDEN.defaultException();
-		}
+//		if (!authorVerifier.verify(request, body.bookId())) {
+//			throw BookErrorCode.FORBIDDEN.defaultException();
+//		}
 
 		return bookRemoveUseCase.remove(body);
 	}
