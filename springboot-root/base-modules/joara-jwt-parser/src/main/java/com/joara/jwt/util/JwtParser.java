@@ -1,5 +1,6 @@
 package com.joara.jwt.util;
 
+import com.joara.jwt.exception.JwtParsingErrorCode;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Header;
@@ -46,8 +47,12 @@ public class JwtParser {
 		return delegator.parsePlaintextJws(plaintextJws);
 	}
 	
-	public Jws<Claims> parseClaimsJws(String claimsJws) throws ExpiredJwtException, UnsupportedJwtException, MalformedJwtException, SignatureException, IllegalArgumentException {
-		return delegator.parseClaimsJws(claimsJws);
+	public Jws<Claims> parseClaimsJws(String claimsJws) throws UnsupportedJwtException, MalformedJwtException, SignatureException, IllegalArgumentException {
+		try {
+			return delegator.parseClaimsJws(claimsJws);
+		} catch (ExpiredJwtException e) {
+			throw JwtParsingErrorCode.ACCESS_TOKEN_EXPIRED.defaultException(e);
+		}
 	}
 
 	public JwtPayloadParser withRequest(HttpServletRequest request) {

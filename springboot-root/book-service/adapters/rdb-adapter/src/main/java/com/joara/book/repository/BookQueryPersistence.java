@@ -6,6 +6,7 @@ import com.joara.book.domain.model.book.Book;
 import com.joara.book.mapper.BookEntityMapper;
 import com.joara.book.projection.BookQueryProjections.BookDetailedViewProjection;
 import com.joara.book.projection.BookQueryProjections.BookListViewProjection;
+import com.joara.book.projection.BookQueryProjections.BookTitleProjection;
 import com.joara.episode.repository.EpisodeQueryJpaRepo;
 import com.joara.genre.entity.GenreEntity;
 import com.joara.genre.repository.GenreQueryJpaRepository;
@@ -30,8 +31,8 @@ public class BookQueryPersistence implements BookQueryRepository {
 
     @Override
     public Optional<String> findTitleById(Long bookId) {
-        Optional<String> optionalBookTitle = bookQueryJpaRepository.findBookEntityById(bookId);
-        return optionalBookTitle;
+        return bookQueryJpaRepository.findBookEntityById(bookId)
+                .map(BookTitleProjection::title);
     }
 
     @Override
@@ -115,10 +116,10 @@ public class BookQueryPersistence implements BookQueryRepository {
     }
 
     @Override
-    public Page<BookDetailedViewReadModel> findBooksByMemberId(UUID memberId, Pageable pageable) {
+    public Page<BookListViewReadModel> findBooksByMemberId(UUID memberId, Pageable pageable) {
         return bookQueryJpaRepository
                 .findBooksByMemberId(memberId, pageable)
-                .map(this::mapToBookDetailedListViewModel); // for -- 하나하나 변환
+                .map(this::mapToBookListViewModel); // for -- 하나하나 변환
     }
 
     @Override
@@ -150,23 +151,30 @@ public class BookQueryPersistence implements BookQueryRepository {
      */
 
     private BookDetailedViewReadModel mapToBookDetailedListViewModel(BookDetailedViewProjection projection) {
+        Long bookId = projection.id();
 
         // TODO refactor: 지금은 작품마다 매번 장르 DB 조회 -> 미리 필요한 장르 목록 다 조회해 놓고 사용.
-        BookGenreMappedInfo genreInfo = findBookGenreMapByBookId(projection.id());
+        BookGenreMappedInfo genreInfo = findBookGenreMapByBookId(bookId);
+        Integer episodeSize = episodeQueryJpaRepo.countByBookId(bookId);
 
         return mapper.toReadModel(
                 projection,
+                episodeSize,
                 genreInfo.genreIds,
                 genreInfo.genreNames
         );
     }
 
     private BookListViewReadModel mapToBookListViewModel(BookListViewProjection projection) {
+        Long bookId = projection.id();
 
         // TODO refactor: 지금은 작품마다 매번 장르 DB 조회 -> 미리 필요한 장르 목록 다 조회해 놓고 사용.
-        BookGenreMappedInfo genreInfo = findBookGenreMapByBookId(projection.id());
+        BookGenreMappedInfo genreInfo = findBookGenreMapByBookId(bookId);
+        Integer episodeSize = episodeQueryJpaRepo.countByBookId(bookId);
+
         return mapper.toReadModel(
                 projection,
+                episodeSize,
                 genreInfo.genreIds,
                 genreInfo.genreNames
         );

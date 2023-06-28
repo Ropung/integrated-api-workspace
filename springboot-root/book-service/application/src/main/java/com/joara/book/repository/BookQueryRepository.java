@@ -26,5 +26,5 @@ public interface BookQueryRepository extends BaseCommandRepository<Book, Long> {
     Page<BookListViewReadModel> findAllByGenreIdAndNicknameContainsIgnoreCase(Long id, String keyword, Pageable pageable);
     Page<BookListViewReadModel> findAllByGenreId(Long id, Pageable pageable);
 
-    Page<BookDetailedViewReadModel> findBooksByMemberId(UUID memberId, Pageable pageable);
+    Page<BookListViewReadModel> findBooksByMemberId(UUID memberId, Pageable pageable);
 }

@@ -27,7 +27,7 @@ public record BookQueryDto() {
 
     @Builder
     public record MyBookListRespnseDto(
-            List<BookDetailedViewReadModel> bookList,
+            List<BookListViewReadModel> bookList,
             Long lastPage
     ){}
 }

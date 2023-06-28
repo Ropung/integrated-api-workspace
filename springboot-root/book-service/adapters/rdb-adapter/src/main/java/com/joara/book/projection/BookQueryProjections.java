@@ -12,7 +12,8 @@ public record BookQueryProjections() {
             String nickname,
             String title,
             String coverUrl,
-            Double score
+            Double score,
+            BookStatus status
     ) {}
 
     @Builder
@@ -30,5 +31,10 @@ public record BookQueryProjections() {
             OffsetDateTime updatedAt,
             OffsetDateTime deletedAt,
             Double score
+    ) {}
+
+    @Builder
+    public record BookTitleProjection(
+            String title
     ) {}
 }

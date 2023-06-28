@@ -2,7 +2,9 @@ package com.joara.episode.repository;
 
 import com.joara.book.domain.model.episode.Episode;
 import com.joara.book.exception.BookErrorCode;
+import com.joara.book.repository.BookQueryJpaRepository;
 import com.joara.episode.entity.EpisodeEntity;
+import com.joara.episode.exception.EpisodeErrorCode;
 import com.joara.episode.mapper.EpisodeEntityMapper;
 import com.joara.util.time.ServerTime;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +23,9 @@ public class EpisodeCommandPersistence implements EpisodeCommandRepository {
 
     @Override
     public Episode save(Episode domain) {
+        int episodeSize = episodeQueryJpaRepo.countByBookId(domain.bookId);
+        domain.epiNum = (long) (episodeSize + 1);
+
         EpisodeEntity entity = mapper.toEntity(domain);
         EpisodeEntity savedEntity = episodeCommandJpaRepo.save(entity);
         return mapper.toDomain(savedEntity);
@@ -57,6 +62,9 @@ public class EpisodeCommandPersistence implements EpisodeCommandRepository {
 
     @Override
     public void deleteById(UUID eid) {
+        EpisodeEntity episode = episodeCommandJpaRepo.findById(eid)
+                .orElseThrow(EpisodeErrorCode.EPISODE_ID_NOT_FOUND::defaultException);
         episodeCommandJpaRepo.deleteById(eid);
+        episodeCommandJpaRepo.fixEpiNumAfterRemovedEpiNum(episode.epiNum);
     }
 }

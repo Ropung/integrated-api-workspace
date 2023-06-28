@@ -5,7 +5,7 @@ import com.joara.book.domain.model.book.type.BookStatus;
 import com.joara.book.exception.BookErrorCode;
 import com.joara.book.repository.BookCommandRepository;
 import com.joara.book.usecase.BookCreateUseCase;
-import com.joara.book.usecase.BookEditUseCase;
+import com.joara.book.usecase.BookUpdateUseCase;
 import com.joara.book.usecase.BookRemoveUseCase;
 import com.joara.book.usecase.dto.BookCommandDto.BookCreateRequestDto;
 import com.joara.book.usecase.dto.BookCommandDto.BookCreateResponseDto;
@@ -31,7 +31,7 @@ import java.time.OffsetDateTime;
 @Service
 @RequiredArgsConstructor
 public class BookCommandService
-		implements BookCreateUseCase, BookEditUseCase, BookRemoveUseCase {
+		implements BookCreateUseCase, BookUpdateUseCase, BookRemoveUseCase {
 
 	private final BookCommandRepository bookCommandRepository;
 	private final BookDtoMapper mapper;
@@ -88,14 +88,22 @@ public class BookCommandService
 	public BookModifyResponseDto modify(BookModifyRequestDto dto) {
 		boolean result = bookCommandRepository.update(
 				dto.title(),
+				dto.genreIdList(),
 				dto.description(),
 				dto.status(),
 				dto.bookId()
 		);
 
+
+
 		return BookModifyResponseDto.builder()
 				.success(result)
 				.build();
+	}
+
+	@Override
+	public boolean modifyStatus(Long bookId, BookStatus status) {
+		return bookCommandRepository.update(bookId, status);
 	}
 
 	@Override

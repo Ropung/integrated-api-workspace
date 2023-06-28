@@ -33,19 +33,8 @@ public class BookCommandPersistence implements BookCommandRepository {
         savedEntity.totalViewCount = 0L;
         savedEntity.totalHeartCount = 0L;
         savedEntity.favorCount = 0L;
-        List<BookGenreMapEntity> genreList = domain.genreIdList.stream()
-                .map((genreId) -> BookGenreMapEntity.builder()
-                        .bookId(savedEntity.getId())
-                        .genreId(genreId)
-                        .build()
-                )
-                .toList();
 
-        bookGenreMapQueryJpaRepository.saveAllAndFlush(genreList);
-//        List<Long> genreIdList = bookGenreMapQueryJpaRepository
-//                .saveAll(genreList).stream()
-//                .map((genreMap) -> genreMap.genreId)
-//                .toList();
+        replaceBookGenreMaps(savedEntity.getId(), domain.genreIdList);
 
         return mapper.toDomain(savedEntity, domain.genreIdList);
     }
@@ -76,8 +65,7 @@ public class BookCommandPersistence implements BookCommandRepository {
     }
 
     @Override
-    @Transactional
-    public boolean update(String title, String description, BookStatus status, Long bookId) {
+    public boolean update(String title, List<Long> genreIdList,String description, BookStatus status, Long bookId) {
         BookEntity bookEntity = bookCommandJpaRepository.findById(bookId)
                 .orElseThrow(BookErrorCode.BOOK_NOT_FOUND::defaultException);
 
@@ -93,9 +81,19 @@ public class BookCommandPersistence implements BookCommandRepository {
             bookEntity.status = status;
         }
 
+        if (genreIdList != null || !genreIdList.isEmpty()) {
+
+            replaceBookGenreMaps(bookId, genreIdList);
+        }
+
         bookEntity.updatedAt = ServerTime.now();
 
         return true;
+    }
+
+    @Override
+    public boolean update(Long bookId, BookStatus status) {
+        return bookCommandJpaRepository.updateStatus(bookId, status) > 0;
     }
 
     @Override
@@ -106,5 +104,18 @@ public class BookCommandPersistence implements BookCommandRepository {
     @Override
     public boolean existsNicknameByNickname(String nickname) {
         return bookCommandJpaRepository.existsNicknameByNickname(nickname);
+    }
+
+    private void replaceBookGenreMaps(Long bookId, List<Long> genreIdList) {
+        List<BookGenreMapEntity> genreList = genreIdList.stream()
+                .map((genreId) -> BookGenreMapEntity.builder()
+                        .bookId(bookId)
+                        .genreId(genreId)
+                        .build()
+                )
+                .toList();
+
+        bookGenreMapQueryJpaRepository.deleteAllByBookId(bookId);
+        bookGenreMapQueryJpaRepository.saveAllAndFlush(genreList);
     }
 }

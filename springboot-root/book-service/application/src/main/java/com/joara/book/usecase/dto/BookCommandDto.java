@@ -20,6 +20,7 @@ public record BookCommandDto() {
 	public record BookModifyRequestDto(
 			@NotNull
 			Long bookId,
+			List<Long> genreIdList,
 			String title,
 			String description,
 			// TODO file,

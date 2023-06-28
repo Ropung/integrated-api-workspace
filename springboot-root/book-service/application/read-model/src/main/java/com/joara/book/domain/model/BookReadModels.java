@@ -17,7 +17,8 @@ public record BookReadModels() {
             String nickname,
             String title,
             String coverUrl,
-            Double score
+            Double score,
+            BookStatus status
     ) {}
 
     @Builder
