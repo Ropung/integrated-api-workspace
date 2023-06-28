@@ -16,6 +16,7 @@ public interface BookCommandRepository extends BaseCommandRepository<Book, Long>
 
     // Command
     boolean update(String title, String description, BookStatus status, Long bookId);
+    boolean update(Long bookId, BookStatus status);
 
     void deleteById(Long id);
 

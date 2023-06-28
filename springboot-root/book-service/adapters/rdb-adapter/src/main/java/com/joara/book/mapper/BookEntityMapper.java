@@ -26,6 +26,7 @@ public interface BookEntityMapper extends BaseEntityMapper<Book, BookEntity> {
 
     BookListViewReadModel toReadModel(
             BookListViewProjection projection,
+            Integer episodeSize,
             List<Long> genreIdList,
             List<String> genreNameList
     );
@@ -35,12 +36,5 @@ public interface BookEntityMapper extends BaseEntityMapper<Book, BookEntity> {
             Integer episodeSize,
             List<Long> genreIdList,
             List<String> genreNameList
-    );
-
-    BookDetailedViewReadModel toReadModel(
-            BookDetailedViewProjection projection,
-            List<Long> genreIdList,
-            List<String> genreNameList
-
     );
 }

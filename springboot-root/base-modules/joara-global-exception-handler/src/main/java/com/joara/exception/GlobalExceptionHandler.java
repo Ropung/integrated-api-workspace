@@ -17,6 +17,7 @@ import java.util.List;
 public final class GlobalExceptionHandler {
     @ExceptionHandler(CustomException.class) // 하위 클래스도 포함됨.
     public ResponseEntity<ResponseError> handleCustomException(CustomException exception) {
+        exception.printStackTrace();
         ErrorCode errorCode = exception.getErrorCode();
 
         HttpStatus httpStatus = errorCode.defaultHttpStatus();

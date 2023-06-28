@@ -97,13 +97,13 @@ public class BookQueryService implements BookQueryUseCase {
                 .orElseThrow(BookErrorCode.SERVICE_UNAVAILABLE::defaultException)
                 .id();
 
-        Page<BookDetailedViewReadModel> bookSearchResult = bookQueryRepository.findBooksByMemberId(memberId, pageable);
+        Page<BookListViewReadModel> bookSearchResult = bookQueryRepository.findBooksByMemberId(memberId, pageable);
         long lastPageNumber = bookSearchResult.getTotalPages();
         if (bookSearchResult.isEmpty()) {
             throw new NoContentException();
         }
 
-        List<BookDetailedViewReadModel> bookList = bookSearchResult.getContent();
+        List<BookListViewReadModel> bookList = bookSearchResult.getContent();
         if (bookList.isEmpty()) {
             throw new NoContentException(); // 204 No Content
         }

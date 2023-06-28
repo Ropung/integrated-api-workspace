@@ -1,7 +1,12 @@
 package com.joara.web.episode;
 
+import com.joara.book.domain.model.BookReadModels.BookDetailedViewReadModel;
+import com.joara.book.domain.model.book.type.BookStatus;
 import com.joara.book.exception.BookErrorCode;
+import com.joara.book.usecase.BookQueryUseCase;
+import com.joara.book.usecase.BookUpdateUseCase;
 import com.joara.clients.MemberQueryPort;
+import com.joara.episode.exception.EpisodeErrorCode;
 import com.joara.episode.usecase.EpisodeCreateUseCase;
 import com.joara.episode.usecase.EpisodeDeleteUseCase;
 import com.joara.episode.usecase.EpisodeReadUseCase;
@@ -12,7 +17,6 @@ import com.joara.episode.usecase.dto.EpisodeCommandDto.EpisodeDeleteResponseDto;
 import com.joara.episode.usecase.dto.EpisodeCommandDto.EpisodeUpdateRequestDto;
 import com.joara.episode.usecase.dto.EpisodeCommandDto.EpisodeUpdateResponseDto;
 import com.joara.jwt.util.JwtParser;
-import com.joara.util.validation.Preconditions;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -29,6 +33,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.UUID;
 
+import static com.joara.util.validation.Preconditions.validate;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/books/{bid}/episode")
@@ -38,6 +44,8 @@ public class EpisodeCommandApi {
     private final EpisodeUpdateUseCase episodeUpdateUseCase;
     private final EpisodeDeleteUseCase episodeDeleteUseCase;
     private final EpisodeReadUseCase episodeReadUseCase;
+    private final BookQueryUseCase bookQueryUseCase;
+    private final BookUpdateUseCase bookUpdateUseCase;
     private final MemberQueryPort memberQueryPort;
     private final JwtParser jwtParser;
 
@@ -49,7 +57,14 @@ public class EpisodeCommandApi {
             MultipartFile file,
             HttpServletRequest request
     ){
-        return episodeCreateUseCase.create(bid, dto, file, request);
+        BookDetailedViewReadModel book = bookQueryUseCase.findBookById(bid).book();
+        validate(book.status().writable, EpisodeErrorCode.BOOK_NOT_WRITABLE);
+
+        EpisodeCreateResponseDto responseDto =
+                episodeCreateUseCase.create(bid, dto, file, request);
+        // TODO episode size 비정규화하면 첫 에피소드 삽입때만 실행으로 변경
+        bookUpdateUseCase.modifyStatus(bid, BookStatus.ACTIVE);
+        return responseDto;
     }
 
     @PutMapping("/{eid}")

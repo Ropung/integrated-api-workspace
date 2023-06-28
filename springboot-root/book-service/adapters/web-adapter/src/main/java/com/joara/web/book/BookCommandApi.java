@@ -1,9 +1,8 @@
 package com.joara.web.book;
 
 import com.joara.book.domain.model.book.type.BookStatus;
-import com.joara.book.exception.BookErrorCode;
 import com.joara.book.usecase.BookCreateUseCase;
-import com.joara.book.usecase.BookEditUseCase;
+import com.joara.book.usecase.BookUpdateUseCase;
 import com.joara.book.usecase.BookRemoveUseCase;
 import com.joara.book.usecase.dto.BookCommandDto.BookCreateRequestDto;
 import com.joara.book.usecase.dto.BookCommandDto.BookCreateResponseDto;
@@ -32,7 +31,7 @@ import javax.validation.Valid;
 public final class BookCommandApi {
 
 	private final BookCreateUseCase bookCreateUseCase;
-	private final BookEditUseCase bookEditUseCase;
+	private final BookUpdateUseCase bookUpdateUseCase;
 	private final BookRemoveUseCase bookRemoveUseCase;
 	private final AuthorVerifier authorVerifier;
 
@@ -43,7 +42,7 @@ public final class BookCommandApi {
 			MultipartFile file,
 			HttpServletRequest request
 	){
-		return bookCreateUseCase.create(dto, file, BookStatus.ACTIVE, request);
+		return bookCreateUseCase.create(dto, file, BookStatus.PENDING, request);
 	}
 
 	@PutMapping("")
@@ -55,7 +54,7 @@ public final class BookCommandApi {
 //			throw BookErrorCode.FORBIDDEN.defaultException();
 //		}
 
-		return bookEditUseCase.modify(body);
+		return bookUpdateUseCase.modify(body);
 	}
 
 	@DeleteMapping("")

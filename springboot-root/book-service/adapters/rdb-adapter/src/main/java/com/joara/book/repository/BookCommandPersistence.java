@@ -99,6 +99,11 @@ public class BookCommandPersistence implements BookCommandRepository {
     }
 
     @Override
+    public boolean update(Long bookId, BookStatus status) {
+        return bookCommandJpaRepository.updateStatus(bookId, status) > 0;
+    }
+
+    @Override
     public void deleteById(Long id) {
         bookCommandJpaRepository.deleteById(id);
     }
