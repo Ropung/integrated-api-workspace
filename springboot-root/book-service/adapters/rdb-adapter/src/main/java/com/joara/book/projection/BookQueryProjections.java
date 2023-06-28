@@ -31,4 +31,12 @@ public record BookQueryProjections() {
             OffsetDateTime deletedAt,
             Double score
     ) {}
+
+    @Builder
+    public record AnalyzedBookProjection(
+            Long id,
+            String title,
+            String coverUrl
+    ) {}
+
 }

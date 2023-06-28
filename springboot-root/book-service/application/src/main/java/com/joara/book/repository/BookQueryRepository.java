@@ -1,5 +1,6 @@
 package com.joara.book.repository;
 
+import com.joara.book.domain.model.BookReadModels.AnalyzedBookReadModel;
 import com.joara.book.domain.model.BookReadModels.BookDetailedViewReadModel;
 import com.joara.book.domain.model.BookReadModels.BookListViewReadModel;
 import com.joara.book.domain.model.book.Book;
@@ -13,6 +14,7 @@ import java.util.UUID;
 public interface BookQueryRepository extends BaseCommandRepository<Book, Long> {
     String findTitleByBookId(Long bookId);
     Optional<BookDetailedViewReadModel> findDetailedViewById(Long bookId);
+    Optional<BookListViewReadModel> findListViewItemById(Long bookId);
 
     boolean existsById(Long id);
 
@@ -26,4 +28,6 @@ public interface BookQueryRepository extends BaseCommandRepository<Book, Long> {
     Page<BookListViewReadModel> findAllByGenreId(Long id, Pageable pageable);
 
     Page<BookListViewReadModel> findBooksByMemberId(UUID memberId, Pageable pageable);
+
+    AnalyzedBookReadModel findAnalyzedBookById(Long bookId);
 }

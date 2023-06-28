@@ -1,11 +1,13 @@
 package com.joara.book.service;
 
+import com.joara.book.domain.model.BookReadModels.AnalyzedBookReadModel;
 import com.joara.book.domain.model.BookReadModels.BookDetailedViewReadModel;
 import com.joara.book.domain.model.BookReadModels.BookListViewReadModel;
 import com.joara.book.domain.model.book.type.SearchType;
 import com.joara.book.exception.BookErrorCode;
 import com.joara.book.repository.BookQueryRepository;
 import com.joara.book.usecase.BookQueryUseCase;
+import com.joara.book.usecase.dto.BookQueryDto.AnalyzedBookResponseDto;
 import com.joara.book.usecase.dto.BookQueryDto.BookReadByGenreResponseDto;
 import com.joara.book.usecase.dto.BookQueryDto.BookReadByOneResponseDto;
 import com.joara.book.usecase.dto.BookQueryDto.MyBookListRespnseDto;
@@ -112,5 +114,21 @@ public class BookQueryService implements BookQueryUseCase {
                 .bookList(bookList)
                 .lastPage(lastPageNumber)
                 .build();
+    }
+
+    @Override
+    public AnalyzedBookResponseDto analyzedBook(Long bookId) {
+        AnalyzedBookReadModel bookReadModel = bookQueryRepository.findAnalyzedBookById(bookId);
+
+        return AnalyzedBookResponseDto.builder()
+                .analyzedBook(bookReadModel)
+                .build();
+    }
+
+    @Override
+    public BookListViewReadModel findListViewItemById(Long id) {
+        return bookQueryRepository.findListViewItemById(id)
+                // 하나라도 없으면 예외처리 중. ->
+                .orElse(null);
     }
 }

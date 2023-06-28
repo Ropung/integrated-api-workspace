@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.UUID;
-
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/books/{bid}/episode")
@@ -29,9 +27,9 @@ public class EpisodeQueryApi {
         return episodeReadUseCase.findEpisodesByBookId(bid, pageable);
     }
 
-    @GetMapping("/{eid}")
-    public EpisodeViewResponseDto findEpisodeById(@PathVariable Long bid, @PathVariable UUID eid){
-        return episodeReadUseCase.findEpisodeByID(eid);
+    @GetMapping("/{epiNum}")
+    public EpisodeViewResponseDto findEpisodeByEpiNum(@PathVariable Long epiNum){
+        return episodeReadUseCase.findEpisodeByEpiNum(epiNum);
     }
 
 }

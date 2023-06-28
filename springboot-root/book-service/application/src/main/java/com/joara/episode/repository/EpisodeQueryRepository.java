@@ -6,6 +6,7 @@ import com.joara.support.repository.BaseCommandRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.Optional;
 import java.util.UUID;
 
 public interface EpisodeQueryRepository extends BaseCommandRepository<Episode, UUID> {
@@ -15,4 +16,6 @@ public interface EpisodeQueryRepository extends BaseCommandRepository<Episode, U
     boolean existsByIdAndBookId(Long bid, UUID eid);
 
     Page<EpisodeListViewReadModel> findAllByBookId(Long bookId, Pageable pageable);
+
+    Optional<Episode> findByEpiNum(Long epiNum);
 }
