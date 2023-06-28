@@ -74,6 +74,7 @@ public class BookCommandService
 				.id();
 		book.nickname = nickname;
 		book.coverUrl = coverUrl;
+		book.score = 0.0;
 
 		if (book.createdAt == null) {
 			book.createdAt = ServerTime.now();
