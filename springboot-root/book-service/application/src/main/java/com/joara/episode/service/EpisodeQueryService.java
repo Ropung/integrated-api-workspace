@@ -52,6 +52,7 @@ public class EpisodeQueryService implements EpisodeReadUseCase {
 				.orElseThrow(BookErrorCode.EPISODE_NOT_FOUND::defaultException);
 
 		String bookTitle = episodeOptional.bookTitle;
+		System.out.println(bookTitle);
 		String epiTitle = episodeOptional.epiTitle;
 		String content = episodeOptional.content;
 

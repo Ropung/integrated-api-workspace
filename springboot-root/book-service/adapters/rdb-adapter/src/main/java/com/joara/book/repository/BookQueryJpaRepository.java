@@ -12,7 +12,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface BookQueryJpaRepository extends JpaRepository<BookEntity, Long> {
-    BookEntity findBookEntityById(Long bookId);
+    Optional<String> findBookEntityById(Long bookId);
     Optional<BookDetailedViewProjection> findDetailedProjectionById(Long bookId);
     boolean existsByMemberIdAndTitle(UUID memberId, String title);
     Optional<BookListViewProjection> findListViewItemById(Long id);

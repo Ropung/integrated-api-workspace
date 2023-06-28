@@ -70,8 +70,12 @@ public class EpisodeCommandService implements EpisodeCreateUseCase, EpisodeUpdat
 			}
 		}
 
+		String bookTitle = bookQueryRepository.findTitleById(bookId)
+				.orElseThrow(BookErrorCode.BOOK_NOT_FOUND::defaultException);
+
+
 		episode.bookId = bookId;
-		episode.bookTitle = bookQueryRepository.findTitleByBookId(bookId);
+		episode.bookTitle = bookTitle;
 		episode.memberId = memberQueryPort.findIdByEmail(email)
 				.orElseThrow(BookErrorCode.SERVICE_UNAVAILABLE::defaultException)
 				.id();
