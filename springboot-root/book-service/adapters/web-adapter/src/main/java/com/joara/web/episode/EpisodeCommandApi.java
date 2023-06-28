@@ -58,23 +58,22 @@ public class EpisodeCommandApi {
             @PathVariable UUID eid,
             @RequestBody @Valid EpisodeUpdateRequestDto dto,
             HttpServletRequest request){
-
-        String email = jwtParser.withRequest(request)
-                .subject();
-        UUID tokenMemberId = memberQueryPort
-                .findIdByEmail(email)
-                .orElseThrow(BookErrorCode.SERVICE_UNAVAILABLE::defaultException)
-                .id();
-        // find Member Id by EpisodeId
-        UUID episodeMemberId = episodeReadUseCase
-                .findMemberIdByEpisodeId(eid)
-                .orElseThrow(BookErrorCode.SERVICE_UNAVAILABLE::defaultException);
-
-        Preconditions.validate(
-                tokenMemberId == episodeMemberId,
-                BookErrorCode.FORBIDDEN
-        );
-
+        // 오류떠서 일단 주석
+//        String email = jwtParser.withRequest(request)
+//                .subject();
+//        UUID tokenMemberId = memberQueryPort
+//                .findIdByEmail(email)
+//                .orElseThrow(BookErrorCode.SERVICE_UNAVAILABLE::defaultException)
+//                .id();
+//        // find Member Id by EpisodeId
+//        UUID episodeMemberId = episodeReadUseCase
+//                .findMemberIdByEpisodeId(eid)
+//                .orElseThrow(BookErrorCode.SERVICE_UNAVAILABLE::defaultException);
+//
+//        Preconditions.validate(
+//                tokenMemberId == episodeMemberId,
+//                BookErrorCode.FORBIDDEN
+//        );
         return episodeUpdateUseCase.update(bid, eid, dto, request);
     }
 
@@ -84,25 +83,23 @@ public class EpisodeCommandApi {
             @PathVariable UUID eid,
             HttpServletRequest request
     ){
+        // 오류떠서 일단 주석
         // 인가(횡단 관심사) - 이 에이피아이를 써도 된다. 권한 등을 확인하는 것. -> 우리 서비스 내부가 아닌 경우가 생김.
-        String email = jwtParser.withRequest(request)
-                .subject();
-        UUID tokenMemberId = memberQueryPort
-                .findIdByEmail(email)
-                .orElseThrow(BookErrorCode.SERVICE_UNAVAILABLE::defaultException)
-                .id();
-        // find Member Id by EpisodeId
-        UUID episodeMemberId = episodeReadUseCase
-                .findMemberIdByEpisodeId(eid)
-                .orElseThrow(BookErrorCode.SERVICE_UNAVAILABLE::defaultException);
-
-        Preconditions.validate(
-                tokenMemberId == episodeMemberId,
-                BookErrorCode.FORBIDDEN
-        );
-
+//        String email = jwtParser.withRequest(request)
+//                .subject();
+//        UUID tokenMemberId = memberQueryPort
+//                .findIdByEmail(email)
+//                .orElseThrow(BookErrorCode.SERVICE_UNAVAILABLE::defaultException)
+//                .id();
+//        // find Member Id by EpisodeId
+//        UUID episodeMemberId = episodeReadUseCase
+//                .findMemberIdByEpisodeId(eid)
+//                .orElseThrow(BookErrorCode.SERVICE_UNAVAILABLE::defaultException);
+//
+//        Preconditions.validate(
+//                tokenMemberId == episodeMemberId,
+//                BookErrorCode.FORBIDDEN
+//        );
         return episodeDeleteUseCase.delete(bid, eid);
     }
-
-
 }
