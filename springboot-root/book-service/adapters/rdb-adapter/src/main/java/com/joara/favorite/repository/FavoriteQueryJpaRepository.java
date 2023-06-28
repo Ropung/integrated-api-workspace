@@ -9,4 +9,6 @@ import java.util.UUID;
 
 public interface FavoriteQueryJpaRepository extends JpaRepository<MemberFavorBookEntity, UUID> {
     Page<MemberFavorBookEntity> findByMemberId(UUID memberId, Pageable pageable);
+
+    UUID findByBookIdAndMemberId(Long bookId, UUID memberId);
 }

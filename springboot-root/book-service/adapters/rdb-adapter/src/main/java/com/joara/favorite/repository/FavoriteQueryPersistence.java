@@ -1,9 +1,11 @@
 package com.joara.favorite.repository;
 
 import com.joara.book.domain.model.book.MemberFavorBook;
+import com.joara.book.entity.BookGenreMapEntity;
 import com.joara.book.repository.BookGenreMapQueryJpaRepository;
 import com.joara.favorite.entity.MemberFavorBookEntity;
 import com.joara.favorite.mapper.FavoriteEntityMapper;
+import com.joara.favorite.respository.FavoriteCommandRepository;
 import com.joara.favorite.respository.FavoriteQueryRepository;
 import com.joara.genre.entity.GenreEntity;
 import com.joara.genre.repository.GenreQueryJpaRepository;
@@ -25,11 +27,15 @@ public class FavoriteQueryPersistence implements FavoriteQueryRepository {
     private final GenreQueryJpaRepository genreQueryJpaRepository;
     private final FavoriteEntityMapper mapper;
 
-
     @Override
     public Page<MemberFavorBook> findByMemberId(UUID memberId, Pageable pageable) {
         return favoriteQueryJpaRepository.findByMemberId(memberId, pageable)
                 .map(this::mapToMemberFavorBook);
+    }
+
+    @Override
+    public UUID findByBookIdAndMemberId(Long bookId, UUID memberId) {
+        return favoriteQueryJpaRepository.findByBookIdAndMemberId(bookId,memberId);
     }
 
     private FavoriteGenreMappedInfo findBookGenreMapByBookId(Long bookId) {

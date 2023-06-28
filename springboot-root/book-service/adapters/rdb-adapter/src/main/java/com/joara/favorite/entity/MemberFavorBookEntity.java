@@ -2,6 +2,7 @@ package com.joara.favorite.entity;
 
 import com.joara.base.jpa.entity.UuidBaseEntity;
 import com.joara.rdb.JoaraPostgresSchemaConstants;
+import com.joara.util.time.ServerTime;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,11 +27,11 @@ import java.util.UUID;
 )
 public class MemberFavorBookEntity extends UuidBaseEntity {
     public Long bookId;
-    public Long genreId;
     public UUID memberId;
     public String nickname;
     public String bookTitle;
-    public OffsetDateTime createdAt;
+    @Builder.Default
+    public OffsetDateTime createdAt = ServerTime.now();
     public OffsetDateTime updatedAt;
     public OffsetDateTime deletedAt;
 }
