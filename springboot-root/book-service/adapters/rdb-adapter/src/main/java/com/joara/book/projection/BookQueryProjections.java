@@ -11,6 +11,7 @@ public record BookQueryProjections() {
             Long id,
             String nickname,
             String title,
+            String description,
             String coverUrl,
             Double score,
             BookStatus status
