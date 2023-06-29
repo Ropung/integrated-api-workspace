@@ -10,6 +10,7 @@ import com.joara.util.time.ServerTime;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -62,12 +63,26 @@ public class EpisodeCommandPersistence implements EpisodeCommandRepository {
     }
 
     @Override
-    public boolean updateAllStatusAndDeletedAtByIdAndInTargetStatusList(Long bookId, EpisodeStatus status) {
+    public boolean updateAllStatusByIdAndInTargetStatusList(Long bookId, EpisodeStatus status) {
         return 0 < episodeCommandJpaRepo
                 .updateAllStatusAndDeletedAtByIdAndInTargetStatusList(
                         bookId,
                         status,
                         List.of(EpisodeStatus.ACTIVE)
+                );
+    }
+
+    @Override
+    public boolean updateStatusAndDeletedAtByIdAndInTargetStatusList(
+            UUID episodeId,
+            EpisodeStatus status,
+            OffsetDateTime deletedAt
+    ) {
+        return 0 < episodeCommandJpaRepo
+                .updateStatusAndDeletedAtById(
+                        episodeId,
+                        status,
+                        deletedAt
                 );
     }
 

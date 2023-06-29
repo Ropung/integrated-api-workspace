@@ -108,7 +108,7 @@ public class BookCommandService
 	@Override
 	public boolean remove(Long bookId) {
 		bookCommandRepository.updateStatusAndDeletedAt(bookId, BookStatus.REMOVED, ServerTime.now());
-		episodeCommandRepository.updateAllStatusAndDeletedAtByIdAndInTargetStatusList(
+		episodeCommandRepository.updateAllStatusByIdAndInTargetStatusList(
 				bookId,
 				EpisodeStatus.DISABLED
 		);
