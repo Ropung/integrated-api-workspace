@@ -47,8 +47,8 @@ public class EpisodeQueryService implements EpisodeReadUseCase {
 	}
 
 	@Override
-	public EpisodeViewResponseDto findEpisodeByEpiNum(Long epiNum) {
-		Episode episodeOptional = episodeQueryRepository.findByEpiNum(epiNum)
+	public EpisodeViewResponseDto findEpisodeByEpiNum(Long bookId, Long epiNum) {
+		Episode episodeOptional = episodeQueryRepository.findByBookIdAndEpiNum(bookId, epiNum)
 				.orElseThrow(BookErrorCode.EPISODE_NOT_FOUND::defaultException);
 
 		String bookTitle = episodeOptional.bookTitle;

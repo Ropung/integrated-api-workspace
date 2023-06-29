@@ -10,6 +10,6 @@ import java.util.UUID;
 public interface EpisodeReadUseCase {
     EpisodeListResponseDto findEpisodesByBookId(Long bid, Pageable pageable);
     // 단건조회
-    EpisodeViewResponseDto findEpisodeByEpiNum(Long epiNum);
+    EpisodeViewResponseDto findEpisodeByEpiNum(Long bookId, Long epiNum);
     Optional<UUID> findMemberIdByEpisodeId(UUID episodeId);
 }

@@ -22,4 +22,6 @@ public interface EpisodeQueryJpaRepo extends JpaRepository<EpisodeEntity, UUID> 
     Optional<EpisodeEntity> findByEpiNum(Long epiNum);
 
     Integer countByBookId(Long bookId);
+
+    Optional<EpisodeEntity> findByBookIdAndEpiNum(Long bookId, Long epiNum);
 }

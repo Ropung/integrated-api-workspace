@@ -17,5 +17,6 @@ public interface EpisodeQueryRepository extends BaseCommandRepository<Episode, U
 
     Page<EpisodeListViewReadModel> findAllByBookId(Long bookId, Pageable pageable);
 
-    Optional<Episode> findByEpiNum(Long epiNum);
+    // 단건 조회
+    Optional<Episode> findByBookIdAndEpiNum(Long bookId, Long epiNum);
 }
