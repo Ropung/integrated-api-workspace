@@ -7,6 +7,7 @@ import com.joara.comment.usecase.dto.CommentCommandDto;
 import com.joara.comment.usecase.dto.CommentCommandDto.CommentCreateResponseDto;
 import com.joara.comment.usecase.dto.CommentCommandDto.CommentDeleteResponseDto;
 import com.joara.comment.usecase.dto.CommentCommandDto.CommentUpdateResponseDto;
+import com.joara.reply.usecase.ReplyReadUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,6 +29,7 @@ public class CommentCommandApi {
     private final CommentCreateUsecase commentCreateUsecase;
     private final CommentUpdateUsecase commentUpdateUsecase;
     private final CommentDeleteUsecase commentDeleteUsecase;
+    private final ReplyReadUseCase replyQueryUseCase;
 
     @PostMapping()
     public CommentCreateResponseDto create(
@@ -53,6 +55,11 @@ public class CommentCommandApi {
             @PathVariable Long bookId, @PathVariable UUID episodeId, @PathVariable UUID commentId,
             HttpServletRequest request
     ){
+        boolean isReply = replyQueryUseCase.existsByCommentId(commentId);
+        if(isReply) {
+            commentUpdateUsecase.updateStatus(commentId);
+            return null;
+        }
 
         return commentDeleteUsecase.delete(bookId, episodeId, commentId, request);
     }

@@ -10,4 +10,6 @@ import java.util.UUID;
 public interface ReplyQueryRepository extends BaseCommandRepository<Reply, UUID> {
 
     Page<Reply> findAllByCommentId(UUID cid, Pageable pageable);
+
+    boolean existsByCommentId(UUID commentId);
 }

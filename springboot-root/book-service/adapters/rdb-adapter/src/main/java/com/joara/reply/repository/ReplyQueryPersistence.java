@@ -27,6 +27,11 @@ public class ReplyQueryPersistence implements ReplyQueryRepository {
     }
 
     @Override
+    public boolean existsByCommentId(UUID commentId) {
+        return replyQueryJapRepository.existsByCommentId(commentId);
+    }
+
+    @Override
     public Reply save(Reply domain) {
         return null;
     }

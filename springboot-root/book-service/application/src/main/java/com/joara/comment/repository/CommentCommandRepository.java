@@ -9,4 +9,5 @@ public interface CommentCommandRepository extends BaseCommandRepository<Comment,
     boolean existsNicknameByNickname(String nickname);
     void update(UUID episodeId, UUID commentId, String content);
     void delete(UUID commentId);
+    void updateStatus(UUID commentId);
 }
