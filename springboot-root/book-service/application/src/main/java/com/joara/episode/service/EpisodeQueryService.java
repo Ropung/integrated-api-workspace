@@ -57,15 +57,18 @@ public class EpisodeQueryService implements EpisodeReadUseCase {
 		Episode episodeOptional = episodeQueryRepository.findByBookIdAndEpiNum(bookId, epiNum)
 				.orElseThrow(BookErrorCode.EPISODE_NOT_FOUND::defaultException);
 
+		UUID episodeId = episodeOptional.id;
 		String bookTitle = episodeOptional.bookTitle;
-		System.out.println(bookTitle);
 		String epiTitle = episodeOptional.epiTitle;
 		String content = episodeOptional.content;
+		String quote = episodeOptional.quote;
 
 		return EpisodeViewResponseDto.builder()
+				.id(episodeId)
 				.bookTitle(bookTitle)
 				.epiTitle(epiTitle)
 				.content(content)
+				.quote(quote)
 				.build();
 	}
 
