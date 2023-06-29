@@ -6,7 +6,7 @@
     - [작품 서버](./springboot-root/book-service)
         - 작품/회차 CRUD
 - [Fast API]()
-    - ...
+    - uvicorn main:app --reload
     - ...
 
 ---
