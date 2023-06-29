@@ -1,11 +1,11 @@
 package com.joara.favorite.repository;
 
 import com.joara.book.domain.model.book.MemberFavorBook;
-import com.joara.book.entity.BookGenreMapEntity;
+import com.joara.book.exception.BookErrorCode;
 import com.joara.book.repository.BookGenreMapQueryJpaRepository;
+import com.joara.book.repository.BookQueryRepository;
 import com.joara.favorite.entity.MemberFavorBookEntity;
 import com.joara.favorite.mapper.FavoriteEntityMapper;
-import com.joara.favorite.respository.FavoriteCommandRepository;
 import com.joara.favorite.respository.FavoriteQueryRepository;
 import com.joara.genre.entity.GenreEntity;
 import com.joara.genre.repository.GenreQueryJpaRepository;
@@ -23,6 +23,7 @@ import java.util.UUID;
 public class FavoriteQueryPersistence implements FavoriteQueryRepository {
 
     private final FavoriteQueryJpaRepository favoriteQueryJpaRepository;
+    private final BookQueryRepository bookQueryRepository;
     private final BookGenreMapQueryJpaRepository bookGenreMapQueryJpaRepository;
     private final GenreQueryJpaRepository genreQueryJpaRepository;
     private final FavoriteEntityMapper mapper;
@@ -56,12 +57,14 @@ public class FavoriteQueryPersistence implements FavoriteQueryRepository {
 
     private MemberFavorBook mapToMemberFavorBook(MemberFavorBookEntity entity) {
         FavoriteGenreMappedInfo genreInfo = findBookGenreMapByBookId(entity.bookId);
+        String coverUrl = bookQueryRepository.findById(entity.bookId)
+                .orElseThrow(BookErrorCode.BOOK_NOT_FOUND::defaultException).coverUrl;
 
         return mapper.toReadModel(
                 entity,
+                coverUrl,
                 genreInfo.genreIds,
                 genreInfo.genreNames
-
         );
 
     }
