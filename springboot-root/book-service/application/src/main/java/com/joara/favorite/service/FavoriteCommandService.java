@@ -61,7 +61,7 @@ public class FavoriteCommandService implements FavoriteCreateUseCase , FavoriteD
             memberFavorBook.genreIdList = book.genreIdList;
             memberFavorBook.bookTitle = book.title;
             memberFavorBook.memberId = memberId;
-            memberFavorBook.nickname = nickname;
+            memberFavorBook.nickname = book.nickname;
             memberFavorBook.createdAt = ServerTime.now();
 
             favoriteCommandRepository.save(memberFavorBook);

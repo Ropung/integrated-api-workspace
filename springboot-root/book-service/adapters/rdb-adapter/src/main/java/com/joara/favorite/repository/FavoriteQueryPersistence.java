@@ -30,8 +30,8 @@ public class FavoriteQueryPersistence implements FavoriteQueryRepository {
 
     @Override
     public Page<MemberFavorBook> findByMemberId(UUID memberId, Pageable pageable) {
-        return favoriteQueryJpaRepository.findByMemberId(memberId, pageable)
-                .map(this::mapToMemberFavorBook);
+            return favoriteQueryJpaRepository.findByMemberId(memberId, pageable)
+                    .map(this::mapToMemberFavorBook);
     }
 
     @Override
@@ -56,10 +56,13 @@ public class FavoriteQueryPersistence implements FavoriteQueryRepository {
     }
 
     private MemberFavorBook mapToMemberFavorBook(MemberFavorBookEntity entity) {
-        FavoriteGenreMappedInfo genreInfo = findBookGenreMapByBookId(entity.bookId);
-        String coverUrl = bookQueryRepository.findById(entity.bookId)
-                .orElseThrow(BookErrorCode.BOOK_NOT_FOUND::defaultException).coverUrl;
+        Long bookId = entity.bookId;
 
+        FavoriteGenreMappedInfo genreInfo = findBookGenreMapByBookId(bookId);
+        String coverUrl = bookQueryRepository.findById(bookId)
+                .orElseThrow(BookErrorCode.BOOK_NOT_FOUND::defaultException).coverUrl;
+        entity.nickname = bookQueryRepository.findById(bookId)
+                .orElseThrow(BookErrorCode.DEFAULT::defaultException).nickname;
         return mapper.toReadModel(
                 entity,
                 coverUrl,
