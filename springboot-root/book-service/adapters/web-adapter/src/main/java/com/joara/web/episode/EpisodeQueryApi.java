@@ -32,5 +32,6 @@ public class EpisodeQueryApi {
             @PathVariable Long bid,
             @PathVariable Long epiNum){
         return episodeReadUseCase.findEpisodeByEpiNum(bid, epiNum);
+        // <<<<<<<"똥">>>>>>>이죠
     }
 }

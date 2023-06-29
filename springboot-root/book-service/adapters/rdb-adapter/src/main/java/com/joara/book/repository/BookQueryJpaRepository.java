@@ -1,5 +1,6 @@
 package com.joara.book.repository;
 
+import com.joara.book.domain.model.book.type.BookStatus;
 import com.joara.book.entity.BookEntity;
 import com.joara.book.projection.BookQueryProjections.BookDetailedViewProjection;
 import com.joara.book.projection.BookQueryProjections.BookListViewProjection;
@@ -18,10 +19,10 @@ public interface BookQueryJpaRepository extends JpaRepository<BookEntity, Long> 
     boolean existsByMemberIdAndTitle(UUID memberId, String title);
     Optional<BookListViewProjection> findListViewItemById(Long id);
 
-    Page<BookListViewProjection> findAllByTitleContainsIgnoreCase(String keyword, Pageable pageable);
-    Page<BookListViewProjection> findAllByDescriptionContainsIgnoreCase(String keyword, Pageable pageable);
-    Page<BookListViewProjection> findAllByNicknameContainsIgnoreCase(String keyword, Pageable pageable);
-    Page<BookListViewProjection> findAllByIdIn(List<Long> bookIdList, Pageable pageable);
+    Page<BookListViewProjection> findAllByTitleContainsIgnoreCaseAndStatusIn(String keyword, List<BookStatus> readableStatus, Pageable pageable);
+    Page<BookListViewProjection> findAllByDescriptionContainsIgnoreCaseAndStatusIn(String keyword, List<BookStatus> readableStatus, Pageable pageable);
+    Page<BookListViewProjection> findAllByNicknameContainsIgnoreCaseAndStatusIn(String keyword, List<BookStatus> readableStatus, Pageable pageable);
+    Page<BookListViewProjection> findAllByIdInAndStatusIn(List<Long> bookIdList, List<BookStatus> readableStatus, Pageable pageable);
 
     Page<BookListViewProjection> findBooksByMemberId(UUID memberId, Pageable pageable);
 

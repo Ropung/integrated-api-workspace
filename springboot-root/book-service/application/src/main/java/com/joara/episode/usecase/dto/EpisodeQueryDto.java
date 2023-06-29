@@ -4,6 +4,7 @@ import com.joara.episode.domain.model.EpisodeReadModel.EpisodeListViewReadModel;
 import lombok.Builder;
 
 import java.util.List;
+import java.util.UUID;
 
 
 public record EpisodeQueryDto() {
@@ -15,8 +16,10 @@ public record EpisodeQueryDto() {
 
    @Builder
    public record EpisodeViewResponseDto(
+           UUID id,
            String bookTitle,
            String epiTitle,
-           String content
+           String content,
+           String quote
    ){}
 }

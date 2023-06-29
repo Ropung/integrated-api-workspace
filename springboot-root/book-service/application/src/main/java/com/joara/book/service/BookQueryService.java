@@ -2,6 +2,7 @@ package com.joara.book.service;
 
 import com.joara.book.domain.model.BookReadModels.BookDetailedViewReadModel;
 import com.joara.book.domain.model.BookReadModels.BookListViewReadModel;
+import com.joara.book.domain.model.book.type.BookStatus;
 import com.joara.book.domain.model.book.type.SearchType;
 import com.joara.book.exception.BookErrorCode;
 import com.joara.book.repository.BookQueryRepository;
@@ -50,12 +51,35 @@ public class BookQueryService implements BookQueryUseCase {
         // 향상된 switch문 Java 14
         Page<BookListViewReadModel> bookSearchResult = switch (searchType) {
             case TITLE ->
-                    bookQueryRepository.findAllByGenreIdAndTitleContainsIgnoreCase(genreId, keyword, pageable);
+                    bookQueryRepository
+                            .findAllByGenreIdAndTitleContainsIgnoreCaseAndStatusIn(
+                                    genreId,
+                                    keyword,
+                                    BookStatus.readableItems(),
+                                    pageable
+                            );
             case CONTENT ->
-                    bookQueryRepository.findAllByGenreIdAndDescriptionContainsIgnoreCase(genreId, keyword, pageable);
+                    bookQueryRepository
+                            .findAllByGenreIdAndDescriptionContainsIgnoreCaseAndStatusIn(
+                                    genreId,
+                                    keyword,
+                                    BookStatus.readableItems(),
+                                    pageable
+                            );
             case MEMBER_NAME ->
-                    bookQueryRepository.findAllByGenreIdAndNicknameContainsIgnoreCase(genreId, keyword, pageable);
-            case NONE -> bookQueryRepository.findAllByGenreId(genreId, pageable);
+                    bookQueryRepository
+                            .findAllByGenreIdAndNicknameContainsIgnoreCaseAndStatusIn(
+                                    genreId,
+                                    keyword,
+                                    BookStatus.readableItems(),
+                                    pageable
+                            );
+            case NONE -> bookQueryRepository
+                    .findAllByGenreIdAndStatusIn(
+                            genreId,
+                            BookStatus.readableItems(),
+                            pageable
+                    );
         };
 
         long lastPageNumber = bookSearchResult.getTotalPages();
