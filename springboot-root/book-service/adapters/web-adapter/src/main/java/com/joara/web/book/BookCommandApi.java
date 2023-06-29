@@ -66,6 +66,8 @@ public final class BookCommandApi {
 //			throw BookErrorCode.FORBIDDEN.defaultException();
 //		}
 
-		return bookRemoveUseCase.remove(body);
+		return BookRemoveResponseDto.builder()
+				.success(bookRemoveUseCase.remove(body.bookId()))
+				.build();
 	}
 }

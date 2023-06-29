@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 import javax.transaction.Transactional;
+import java.time.OffsetDateTime;
 import java.util.List;
 
 public interface BookCommandJpaRepository extends JpaRepository<BookEntity, Long> {
@@ -22,4 +23,14 @@ public interface BookCommandJpaRepository extends JpaRepository<BookEntity, Long
     @Transactional
     @Modifying
     Integer updateStatus(Long bookId, BookStatus status);
+
+    @Query("""
+            update  BookEntity book
+            set     book.status = :status,
+                    book.deletedAt = :deletedAt
+            where   book.id = :bookId
+            """)
+    @Transactional
+    @Modifying
+    Integer updateStatusAndDeletedAt(Long bookId, BookStatus status, OffsetDateTime deletedAt);
 }
