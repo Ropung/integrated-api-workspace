@@ -20,6 +20,7 @@ public interface FavoriteEntityMapper extends BaseEntityMapper<MemberFavorBook, 
 
     MemberFavorBook toReadModel(
             MemberFavorBookEntity entity,
+            String coverUrl,
             List<Long> genreIdList,
             List<String> genreNameList
     );

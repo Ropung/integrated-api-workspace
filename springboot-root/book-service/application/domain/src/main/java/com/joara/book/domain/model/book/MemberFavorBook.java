@@ -18,6 +18,7 @@ import java.util.UUID;
 public class MemberFavorBook {
 	public UUID id;
 	public Long bookId;
+	public String coverUrl;
 	public List<Long> genreIdList;
 	public UUID memberId;
 	public String nickname;
