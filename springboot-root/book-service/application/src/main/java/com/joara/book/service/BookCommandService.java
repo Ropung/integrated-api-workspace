@@ -2,6 +2,7 @@ package com.joara.book.service;
 
 import com.joara.book.domain.model.book.Book;
 import com.joara.book.domain.model.book.type.BookStatus;
+import com.joara.book.domain.model.episode.type.EpisodeStatus;
 import com.joara.book.exception.BookErrorCode;
 import com.joara.book.repository.BookCommandRepository;
 import com.joara.book.usecase.BookCreateUseCase;
@@ -106,6 +107,11 @@ public class BookCommandService
 
 	@Override
 	public boolean remove(Long bookId) {
-		return bookCommandRepository.updateStatusAndDeletedAt(bookId, BookStatus.REMOVED, ServerTime.now());
+		bookCommandRepository.updateStatusAndDeletedAt(bookId, BookStatus.REMOVED, ServerTime.now());
+		episodeCommandRepository.updateAllStatusAndDeletedAtByIdAndInTargetStatusList(
+				bookId,
+				EpisodeStatus.DISABLED
+		);
+		return true;
 	}
 }

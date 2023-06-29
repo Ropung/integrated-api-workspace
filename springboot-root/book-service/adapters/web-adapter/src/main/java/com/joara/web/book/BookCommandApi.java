@@ -14,6 +14,7 @@ import com.joara.web.util.AuthorVerifier;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -57,9 +58,9 @@ public final class BookCommandApi {
 		return bookUpdateUseCase.modify(body);
 	}
 
-	@DeleteMapping("")
+	@DeleteMapping("/{bookId}")
 	public BookRemoveResponseDto delete(
-			@RequestBody @Valid BookRemoveRequestDto body,
+			@PathVariable Long bookId,
 			HttpServletRequest request) {
 		// 본인 책이 맞는지.
 //		if (!authorVerifier.verify(request, body.bookId())) {
@@ -67,7 +68,7 @@ public final class BookCommandApi {
 //		}
 
 		return BookRemoveResponseDto.builder()
-				.success(bookRemoveUseCase.remove(body.bookId()))
+				.success(bookRemoveUseCase.remove(bookId))
 				.build();
 	}
 }
