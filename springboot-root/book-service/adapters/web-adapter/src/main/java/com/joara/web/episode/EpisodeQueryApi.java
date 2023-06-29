@@ -28,8 +28,9 @@ public class EpisodeQueryApi {
     }
 
     @GetMapping("/{epiNum}")
-    public EpisodeViewResponseDto findEpisodeByEpiNum(@PathVariable Long epiNum){
-        return episodeReadUseCase.findEpisodeByEpiNum(epiNum);
+    public EpisodeViewResponseDto findEpisodeByEpiNum(
+            @PathVariable Long bid,
+            @PathVariable Long epiNum){
+        return episodeReadUseCase.findEpisodeByEpiNum(bid, epiNum);
     }
-
 }
