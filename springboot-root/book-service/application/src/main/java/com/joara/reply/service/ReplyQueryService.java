@@ -40,4 +40,9 @@ public class ReplyQueryService implements ReplyReadUseCase {
                 .lastPage(lastPageNumber)
                 .build();
     }
+
+    @Override
+    public boolean existsByCommentId(UUID commentId) {
+        return replyQueryRepository.existsByCommentId(commentId);
+    }
 }

@@ -7,4 +7,6 @@ import java.util.UUID;
 
 public interface ReplyReadUseCase{
     ReplyListResponseDto findAllByCommentId(UUID cid, Pageable pageable);
+
+    boolean existsByCommentId(UUID commentId);
 }

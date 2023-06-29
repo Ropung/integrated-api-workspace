@@ -15,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
+import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -47,13 +48,13 @@ public class BookCommandPersistence implements BookCommandRepository {
 
     @Override
     public Page<Book> findAll(Pageable pageable) {
-//        return memberJpaRepository.findAll(pageable) // returns Page<MemberEntity> ... -> Low Performance
-//                .map(mapper::toDomain);
+        List<Book> books = bookCommandJpaRepository
+                .findAllBy(pageable).stream()
+                .map(mapper::toDomain)
+                .toList();
+
         return new PageImpl<>(
-                bookCommandJpaRepository.findAllBy(pageable)
-                        .stream()
-                        .map(mapper::toDomain)
-                        .toList(),
+                books,
                 pageable,
                 bookCommandJpaRepository.count() // TODO use after refactor, ... if necessary
         );
@@ -65,15 +66,16 @@ public class BookCommandPersistence implements BookCommandRepository {
     }
 
     @Override
+    @Transactional
     public boolean update(String title, List<Long> genreIdList,String description, BookStatus status, Long bookId) {
         BookEntity bookEntity = bookCommandJpaRepository.findById(bookId)
                 .orElseThrow(BookErrorCode.BOOK_NOT_FOUND::defaultException);
 
-        if (title != null || !"".equals(title)) {
+        if (title != null && !"".equals(title)) {
             bookEntity.title = title;
         }
 
-        if (description != null || !"".equals(description)) {
+        if (description != null && !"".equals(description)) {
             bookEntity.description = description;
         }
 
@@ -81,19 +83,23 @@ public class BookCommandPersistence implements BookCommandRepository {
             bookEntity.status = status;
         }
 
-        if (genreIdList != null || !genreIdList.isEmpty()) {
-
+        if (genreIdList != null && !genreIdList.isEmpty()) {
             replaceBookGenreMaps(bookId, genreIdList);
         }
 
         bookEntity.updatedAt = ServerTime.now();
-
         return true;
     }
 
     @Override
     public boolean update(Long bookId, BookStatus status) {
         return bookCommandJpaRepository.updateStatus(bookId, status) > 0;
+    }
+
+    @Override
+    public boolean updateStatusAndDeletedAt(Long bookId, BookStatus status, OffsetDateTime deletedAt) {
+        return 0 < bookCommandJpaRepository
+                .updateStatusAndDeletedAt(bookId, BookStatus.REMOVED, deletedAt);
     }
 
     @Override

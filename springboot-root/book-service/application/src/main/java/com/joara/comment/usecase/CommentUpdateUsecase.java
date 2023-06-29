@@ -8,4 +8,6 @@ import java.util.UUID;
 
 public interface CommentUpdateUsecase {
     CommentUpdateResponseDto update(Long bookId, UUID episodeId, UUID commentId, CommentCreateRequestDto dto, HttpServletRequest request);
+
+    void updateStatus(UUID commentId);
 }

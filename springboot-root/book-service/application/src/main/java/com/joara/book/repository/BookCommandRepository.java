@@ -6,6 +6,7 @@ import com.joara.support.repository.BaseCommandRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.time.OffsetDateTime;
 import java.util.List;
 
 public interface BookCommandRepository extends BaseCommandRepository<Book, Long> {
@@ -19,6 +20,7 @@ public interface BookCommandRepository extends BaseCommandRepository<Book, Long>
     // Command
     boolean update(String title, List<Long> genreIdList, String description, BookStatus status, Long bookId);
     boolean update(Long bookId, BookStatus status);
+    boolean updateStatusAndDeletedAt(Long bookId, BookStatus status, OffsetDateTime deletedAt);
 
     void deleteById(Long id);
 

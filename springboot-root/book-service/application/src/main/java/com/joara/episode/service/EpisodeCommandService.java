@@ -125,7 +125,11 @@ public class EpisodeCommandService implements EpisodeCreateUseCase, EpisodeUpdat
 		boolean isEpi = episodeQueryRepository.existsById(eid);
 		if(!isEpi) throw BookErrorCode.EPISODE_NOT_FOUND.defaultException();
 
-		episodeCommandRepository.deleteById(eid);
+		episodeCommandRepository.updateStatusAndDeletedAtByIdAndInTargetStatusList(
+				eid,
+				EpisodeStatus.REMOVED,
+				ServerTime.now()
+		);
 
 		return EpisodeDeleteResponseDto.builder()
 				.success(true)
