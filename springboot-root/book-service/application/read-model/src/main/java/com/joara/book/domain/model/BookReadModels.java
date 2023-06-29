@@ -16,6 +16,7 @@ public record BookReadModels() {
             Integer episodeSize,
             String nickname,
             String title,
+            String description,
             String coverUrl,
             Double score,
             BookStatus status
