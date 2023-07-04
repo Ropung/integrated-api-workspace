@@ -207,6 +207,14 @@ project(':authentication-service:driven:refresh-token-redis') {
 	}
 }
 
+project(':authentication-service:driven:oauth-adapter') {
+	dependencies {
+		implementation project(':common')
+		implementation project(':authentication-service:application')
+		implementation project(':base-modules:joara-jwt-parser')
+	}
+}
+
 // === Book Service ====================================================================================================
 
 project(':book-service') {
@@ -352,3 +360,5 @@ project(':base-modules:joara-redis-base') {
 		api 'org.springframework.boot:spring-boot-starter-data-redis'
 	}
 }
+
+
