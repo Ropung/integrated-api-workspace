@@ -13,7 +13,8 @@
 
 # 통합 Swagger UI(독립형 프로세스)
 
-<이미지: ... >
+<img width="1221" alt="스크린샷 2023-07-24 오후 2 32 58" src="https://github.com/Ropung/integrated-api-workspace/assets/85475762/9dfe1585-c8c4-470a-9f30-bd88ea0a7bcb">
+
 
 (Purpose)
 
