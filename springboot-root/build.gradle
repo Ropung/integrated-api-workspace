@@ -5,7 +5,7 @@ plugins {
 	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
 
 	id 'org.asciidoctor.jvm.convert' version '3.3.2'
-	id 'com.epages.restdocs-api-spec' version '0.17.1'
+	id 'com.epages.restdocs-api-spec' version '0.16.4'
 }
 
 allprojects {
@@ -18,6 +18,8 @@ allprojects {
 	apply plugin: 'java-library'
 	apply plugin: 'org.springframework.boot'
 	apply plugin: 'io.spring.dependency-management'
+	apply plugin: 'org.asciidoctor.jvm.convert'
+	apply plugin: 'com.epages.restdocs-api-spec'
 
 	repositories {
 		mavenCentral()
@@ -51,10 +53,16 @@ subprojects {
 		// RestDoc as Open API
 		implementation "org.springdoc:springdoc-openapi-ui:1.6.14"
 		testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
-		testImplementation 'com.epages:restdocs-api-spec-mockmvc:0.17.1'
+		testImplementation 'com.epages:restdocs-api-spec-mockmvc:0.16.4'
 	}
 
 	// rest docs open api
+	//	1. adoc을 만들어준다.  -  by restdoc
+	//	2. adoc을 epages라는 플러그인을 통해 openapi3형식의 json으로 변환시켜준다.
+	// (1,2번의 작업은 각각의 MS가 하는거 그래서 3번이 여러 서버의 API 문서를 모아서 보여줄 수 있게 된다.)
+	//	3. 변환된 json을 swagger Ui가 요청을 보내서 가져와 뿌려준다.
+	// (.adoc 문서를 통해 - adoc의 위치는 빌드/generated-snippets/*/*)
+	// openapi3 라는 문서를 만들어서 outputDirectory("src/main/resources/static/docs") 에 넣는다
 	openapi3 {
 		println("project.rootProject.rootDir: $project.rootProject.rootDir")
 		println("project.name: ${project.name}")
@@ -97,11 +105,20 @@ subprojects {
 		options.compilerArgs += ['--enable-preview', '-Amapstruct.defaultComponentModel=spring']
 	}
 
-	// Compile Time VM Options (3)
-	test {
+	// Compile Time VM Options (3) - test 돌릴때 애가 실행됨
+//	test {
+//		useJUnitPlatform()  // 필요한갑다
+//		jvmArgs(['--enable-preview', '-Amapstruct.defaultComponentModel=spring'])
+//		finalizedBy 'openapi3' // finalizedBy 마지막에 openapi3라는 task를 실행하는 수동태(애를통해서 마무리된다)
+//	}
+
+
+	tasks.named('test') {
 		useJUnitPlatform()
-		jvmArgs(['--enable-preview', '-Amapstruct.defaultComponentModel=spring'])
+		finalizedBy 'openapi3' // added
 	}
+
+
 }
 
 // === Auth Service ====================================================================================================
@@ -204,6 +221,14 @@ project(':authentication-service:driven:refresh-token-redis') {
 		implementation project(':authentication-service:application')
 
 		implementation project(':base-modules:joara-redis-base')
+	}
+}
+
+project(':authentication-service:driven:oauth-adapter') {
+	dependencies {
+		implementation project(':common')
+		implementation project(':authentication-service:application')
+		implementation project(':base-modules:joara-jwt-parser')
 	}
 }
 
@@ -334,9 +359,11 @@ project(':base-modules:joara-jwt-parser') {
 	}
 }
 
-project(':base-modules:joara-integrated-flyway') { // 초창기 전략: 통합 DB 채택 -> ... (대신 이것을 유지하는 동안 모든 서버 재배포) -> 점진적으로 디비를 나눠 가는 선택을 할 수 있음.
+project(':base-modules:joara-integrated-flyway') {
+// 초창기 전략: 통합 DB 채택 -> ... (대신 이것을 유지하는 동안 모든 서버 재배포) -> 점진적으로 디비를 나눠 가는 선택을 할 수 있음.
 	dependencies {
-		api 'org.flywaydb:flyway-core' // api는 비권장. 그럼에도 불구하고 쓴 이유? -> 사람이 심장은 달고 다녀야 함.
+		// api는 비권장. 그럼에도 불구하고 쓴 이유? -> 사람이 심장은 달고 다녀야 함.
+		api 'org.flywaydb:flyway-core'
 	}
 }
 
@@ -352,3 +379,5 @@ project(':base-modules:joara-redis-base') {
 		api 'org.springframework.boot:spring-boot-starter-data-redis'
 	}
 }
+
+

@@ -5,13 +5,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 
 @RequiredArgsConstructor
-public enum AuthenticationErrorCode implements ErrorCode {
-	MISMATCHED("회원 정보가 일치하지 않습니다.", HttpStatus.NOT_FOUND),
-	UNAUTHORIZED("인증 유저 정보가 존재하지 않습니다.", HttpStatus.UNAUTHORIZED),
-	FORBIDDEN("올바르지 않은 권한입니다.", HttpStatus.FORBIDDEN),
-	INVALID_TOKENS("올바르지 않은 인증 정보입니다.", HttpStatus.BAD_REQUEST),
+public enum OauthErrorCode implements ErrorCode {
+
+	INVALID_EXTERNAL_TOKEN("인가되지 않은 외부토큰입니다.", HttpStatus.BAD_REQUEST),
 	DEFAULT("서버 문제로 인증을 수행하지 못했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
-	
+
 	public final String message;
 	public final HttpStatus status;
 	
