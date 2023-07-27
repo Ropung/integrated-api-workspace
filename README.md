@@ -1,13 +1,13 @@
-# API Workspace
+# API Workspace 구성
 
 - [Spring Boot API Servers (as a multi-modules project)](./springboot-root)
     - [인증 서버](./springboot-root/authentication-service): 회원가입, 로그인(JWT 발급 -
       일반/소셜로그인), 프로필 CRUD
     - [작품 서버](./springboot-root/book-service)
         - 작품/회차 CRUD
+        - 댓글/대댓글 CRUD
 - [Fast API]()
     - uvicorn main:app --reload
-    - ...
 
 ---
 

@@ -17,8 +17,6 @@ import com.joara.comment.usecase.mapper.CommentDtoMapper;
 import com.joara.episode.repository.EpisodeQueryRepository;
 import com.joara.jwt.util.JwtParser;
 import com.joara.jwt.util.JwtParser.JwtPayloadParser;
-import com.joara.reply.usecase.dto.ReplyCommandDto.ReplyCreateRequestDto;
-import com.joara.reply.usecase.dto.ReplyCommandDto.ReplyDeleteResponseDto;
 import com.joara.util.time.ServerTime;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -100,5 +98,10 @@ public class CommentCommandServcie implements CommentCreateUsecase, CommentUpdat
         return CommentDeleteResponseDto.builder()
                 .success(true)
                 .build();
+    }
+
+    @Override
+    public void updateStatus(UUID commentId) {
+        commentCommandRepository.updateStatus(commentId);
     }
 }

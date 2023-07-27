@@ -1,8 +1,8 @@
 package com.joara.episode.repository;
 
 import com.joara.book.domain.model.episode.Episode;
+import com.joara.book.domain.model.episode.type.EpisodeStatus;
 import com.joara.book.exception.BookErrorCode;
-import com.joara.book.repository.BookQueryJpaRepository;
 import com.joara.episode.entity.EpisodeEntity;
 import com.joara.episode.exception.EpisodeErrorCode;
 import com.joara.episode.mapper.EpisodeEntityMapper;
@@ -10,6 +10,8 @@ import com.joara.util.time.ServerTime;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.time.OffsetDateTime;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -58,6 +60,30 @@ public class EpisodeCommandPersistence implements EpisodeCommandRepository {
         episodeEntity.updatedAt = ServerTime.now();
 
         episodeCommandJpaRepo.save(episodeEntity);
+    }
+
+    @Override
+    public boolean updateAllStatusByIdAndInTargetStatusList(Long bookId, EpisodeStatus status) {
+        return 0 < episodeCommandJpaRepo
+                .updateAllStatusAndDeletedAtByIdAndInTargetStatusList(
+                        bookId,
+                        status,
+                        List.of(EpisodeStatus.ACTIVE)
+                );
+    }
+
+    @Override
+    public boolean updateStatusAndDeletedAtByIdAndInTargetStatusList(
+            UUID episodeId,
+            EpisodeStatus status,
+            OffsetDateTime deletedAt
+    ) {
+        return 0 < episodeCommandJpaRepo
+                .updateStatusAndDeletedAtById(
+                        episodeId,
+                        status,
+                        deletedAt
+                );
     }
 
     @Override

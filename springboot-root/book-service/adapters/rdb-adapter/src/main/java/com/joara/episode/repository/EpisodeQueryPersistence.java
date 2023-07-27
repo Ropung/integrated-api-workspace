@@ -1,6 +1,7 @@
 package com.joara.episode.repository;
 
 import com.joara.book.domain.model.episode.Episode;
+import com.joara.book.domain.model.episode.type.EpisodeStatus;
 import com.joara.episode.domain.model.EpisodeReadModel.EpisodeListViewReadModel;
 import com.joara.episode.entity.EpisodeEntity;
 import com.joara.episode.mapper.EpisodeEntityMapper;
@@ -10,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -38,9 +40,9 @@ public class EpisodeQueryPersistence implements EpisodeQueryRepository {
     }
 
     @Override
-    public Page<EpisodeListViewReadModel> findAllByBookId(Long bookId, Pageable pageable) {
+    public Page<EpisodeListViewReadModel> findAllByBookIdAndStatusInReadableStatus(Long bookId, List<EpisodeStatus> readableStatus, Pageable pageable) {
         Page<EpisodeListViewProjection> episodeEntities = episodeQueryJpaRepo
-                .findAllByBookId(bookId, pageable);
+                .findAllByBookIdAndStatusIn(bookId, readableStatus, pageable);
         return episodeEntities.map(mapper::toReadModel);
     }
 

@@ -1,12 +1,13 @@
 package com.joara.comment.entitiy;
 
 import com.joara.base.jpa.entity.UuidBaseEntity;
-import com.joara.book.domain.model.reply.type.ReplyStatus;
+import com.joara.book.domain.model.comment.type.CommentStatus;
 import com.joara.rdb.JoaraPostgresSchemaConstants;
 import com.joara.util.time.ServerTime;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Builder.Default;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
@@ -31,9 +32,9 @@ public class CommentEntity extends UuidBaseEntity {
     public UUID memberId;
     public String nickname;
     public String content;
-    @Builder.Default
+    @Default
     @Enumerated(EnumType.STRING)
-    public ReplyStatus status = ReplyStatus.PENDING;
+    public CommentStatus status = CommentStatus.PENDING;
     @Builder.Default
     public OffsetDateTime createdAt = ServerTime.now();
     public OffsetDateTime updatedAt;

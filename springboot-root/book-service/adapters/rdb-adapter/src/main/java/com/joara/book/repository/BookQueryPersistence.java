@@ -3,6 +3,7 @@ package com.joara.book.repository;
 import com.joara.book.domain.model.BookReadModels.BookDetailedViewReadModel;
 import com.joara.book.domain.model.BookReadModels.BookListViewReadModel;
 import com.joara.book.domain.model.book.Book;
+import com.joara.book.domain.model.book.type.BookStatus;
 import com.joara.book.mapper.BookEntityMapper;
 import com.joara.book.projection.BookQueryProjections.BookDetailedViewProjection;
 import com.joara.book.projection.BookQueryProjections.BookListViewProjection;
@@ -79,38 +80,57 @@ public class BookQueryPersistence implements BookQueryRepository {
     }
 
     @Override
-    public Page<BookListViewReadModel> findAllByGenreIdAndTitleContainsIgnoreCase(Long genreId, String keyword, Pageable pageable) {
+    public Page<BookListViewReadModel> findAllByGenreIdAndTitleContainsIgnoreCaseAndStatusIn(
+            Long genreId,
+            String keyword,
+            List<BookStatus> readableStatus,
+            Pageable pageable
+    ) {
         Page<BookListViewProjection> bookEntities = bookQueryJpaRepository
-                .findAllByTitleContainsIgnoreCase(keyword, pageable);
+                .findAllByTitleContainsIgnoreCaseAndStatusIn(keyword, readableStatus, pageable);
 
         return bookEntities.map(this::mapToBookListViewModel);
     }
 
     @Override
-    public Page<BookListViewReadModel> findAllByGenreIdAndDescriptionContainsIgnoreCase(Long genreId, String keyword, Pageable pageable) {
+    public Page<BookListViewReadModel> findAllByGenreIdAndDescriptionContainsIgnoreCaseAndStatusIn(
+            Long genreId,
+            String keyword,
+            List<BookStatus> readableStatus,
+            Pageable pageable
+    ) {
         Page<BookListViewProjection> bookEntities = bookQueryJpaRepository
-                .findAllByDescriptionContainsIgnoreCase(keyword, pageable);
+                .findAllByDescriptionContainsIgnoreCaseAndStatusIn(keyword, readableStatus, pageable);
 
         return bookEntities.map(this::mapToBookListViewModel);
     }
 
     @Override
-    public Page<BookListViewReadModel> findAllByGenreIdAndNicknameContainsIgnoreCase(Long genreId, String keyword, Pageable pageable) {
+    public Page<BookListViewReadModel> findAllByGenreIdAndNicknameContainsIgnoreCaseAndStatusIn(
+            Long genreId,
+            String keyword,
+            List<BookStatus> readableStatus,
+            Pageable pageable
+    ) {
         Page<BookListViewProjection> bookEntities = bookQueryJpaRepository
-                .findAllByNicknameContainsIgnoreCase(keyword, pageable);
+                .findAllByNicknameContainsIgnoreCaseAndStatusIn(keyword, readableStatus, pageable);
 
         return bookEntities.map(this::mapToBookListViewModel);
     }
 
     @Override
-    public Page<BookListViewReadModel> findAllByGenreId(Long genreId, Pageable pageable) {
+    public Page<BookListViewReadModel> findAllByGenreIdAndStatusIn(
+            Long genreId,
+            List<BookStatus> readableStatus,
+            Pageable pageable
+    ) {
         // book genre map -> by genre id -> book list
         List<Long> bookIdList = bookGenreMapQueryJpaRepository
                 .findByGenreId(genreId).stream()
                 .map((item) -> item.bookId)
                 .toList();
         Page<BookListViewProjection> bookEntities = bookQueryJpaRepository
-                .findAllByIdIn(bookIdList, pageable);
+                .findAllByIdInAndStatusIn(bookIdList, readableStatus, pageable);
 
         return bookEntities.map(this::mapToBookListViewModel);
     }

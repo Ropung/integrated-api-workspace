@@ -2,6 +2,7 @@ package com.joara.book.service;
 
 import com.joara.book.domain.model.book.Book;
 import com.joara.book.domain.model.book.type.BookStatus;
+import com.joara.book.domain.model.episode.type.EpisodeStatus;
 import com.joara.book.exception.BookErrorCode;
 import com.joara.book.repository.BookCommandRepository;
 import com.joara.book.usecase.BookCreateUseCase;
@@ -11,10 +12,9 @@ import com.joara.book.usecase.dto.BookCommandDto.BookCreateRequestDto;
 import com.joara.book.usecase.dto.BookCommandDto.BookCreateResponseDto;
 import com.joara.book.usecase.dto.BookCommandDto.BookModifyRequestDto;
 import com.joara.book.usecase.dto.BookCommandDto.BookModifyResponseDto;
-import com.joara.book.usecase.dto.BookCommandDto.BookRemoveRequestDto;
-import com.joara.book.usecase.dto.BookCommandDto.BookRemoveResponseDto;
 import com.joara.book.usecase.mapper.BookDtoMapper;
 import com.joara.clients.MemberQueryPort;
+import com.joara.episode.repository.EpisodeCommandRepository;
 import com.joara.jwt.util.JwtParser;
 import com.joara.jwt.util.JwtParser.JwtPayloadParser;
 import com.joara.upload.service.UploadImageService;
@@ -34,6 +34,7 @@ public class BookCommandService
 		implements BookCreateUseCase, BookUpdateUseCase, BookRemoveUseCase {
 
 	private final BookCommandRepository bookCommandRepository;
+	private final EpisodeCommandRepository episodeCommandRepository;
 	private final BookDtoMapper mapper;
 	private final MemberQueryPort memberQueryPort;
 	private final UploadImageService uploadImageService;
@@ -94,8 +95,6 @@ public class BookCommandService
 				dto.bookId()
 		);
 
-
-
 		return BookModifyResponseDto.builder()
 				.success(result)
 				.build();
@@ -107,11 +106,12 @@ public class BookCommandService
 	}
 
 	@Override
-	public BookRemoveResponseDto remove(BookRemoveRequestDto dto) {
-		bookCommandRepository.deleteById(dto.bookId());
-
-		return BookRemoveResponseDto.builder()
-				.success(true)
-				.build();
+	public boolean remove(Long bookId) {
+		bookCommandRepository.updateStatusAndDeletedAt(bookId, BookStatus.REMOVED, ServerTime.now());
+		episodeCommandRepository.updateAllStatusByIdAndInTargetStatusList(
+				bookId,
+				EpisodeStatus.DISABLED
+		);
+		return true;
 	}
 }

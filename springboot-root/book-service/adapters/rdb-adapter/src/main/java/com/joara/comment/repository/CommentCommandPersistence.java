@@ -1,6 +1,7 @@
 package com.joara.comment.repository;
 
 import com.joara.book.domain.model.comment.Comment;
+import com.joara.book.domain.model.comment.type.CommentStatus;
 import com.joara.comment.entitiy.CommentEntity;
 import com.joara.comment.exception.CommentErrorCode;
 import com.joara.comment.mapper.CommentEntityMapper;
@@ -41,6 +42,18 @@ public class CommentCommandPersistence implements CommentCommandRepository {
         if (content == null || content.isEmpty()) throw CommentErrorCode.COMMENT_CONTENT_NOT_FOUND.defaultException();
         commentEntity.content = content;
         commentEntity.updatedAt = ServerTime.now();
+
+        commentCommandJapRepository.save(commentEntity);
+    }
+
+    @Override
+    public void updateStatus(UUID commentId) {
+        CommentEntity commentEntity = commentCommandJapRepository.findById(commentId)
+                .orElseThrow(ReplyErrorCode.REPLY_NOT_FOUND::defaultException);
+
+//        if (content == null || content.isEmpty()) throw CommentErrorCode.COMMENT_CONTENT_NOT_FOUND.defaultException();
+        commentEntity.status = CommentStatus.REMOVED;
+        commentEntity.deletedAt = ServerTime.now();
 
         commentCommandJapRepository.save(commentEntity);
     }

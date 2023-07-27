@@ -21,7 +21,7 @@ public class EpisodeQueryApi {
     @GetMapping("")
     public EpisodeListResponseDto findEpisodesByBookId(
             @PathVariable Long bid,
-            @PageableDefault(size=20, sort="epiNum", direction = Sort.Direction.DESC) Pageable pageable
+            @PageableDefault(size=10, sort="epiNum", direction = Sort.Direction.DESC) Pageable pageable
     ){
         pageable = pageable.previousOrFirst(); // 0, 1 <--
         return episodeReadUseCase.findEpisodesByBookId(bid, pageable);
@@ -32,5 +32,6 @@ public class EpisodeQueryApi {
             @PathVariable Long bid,
             @PathVariable Long epiNum){
         return episodeReadUseCase.findEpisodeByEpiNum(bid, epiNum);
+
     }
 }

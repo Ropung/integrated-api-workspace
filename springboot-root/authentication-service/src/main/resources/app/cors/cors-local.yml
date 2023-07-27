@@ -4,6 +4,8 @@ app:
       allowed:
         origins:
           - http://localhost:3000
+          - http://localhost:2999
           - http://127.0.0.1:3000
+          - http://127.0.0.1:2999
           - https://ropung.github.io/
           - https://ropung.github.io/react-joara-front/
