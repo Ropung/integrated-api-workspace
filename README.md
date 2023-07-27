@@ -1,3 +1,6 @@
+# 웹소설 플랫폼
+![webnobel_preview](https://github.com/Ropung/integrated-api-workspace/assets/85475762/0a0c64b4-faf5-40cf-8333-4b29bdff9c0a)
+
 # API Workspace 구성
 
 - [Spring Boot API Servers (as a multi-modules project)](./springboot-root)
