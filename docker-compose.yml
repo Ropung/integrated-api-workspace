@@ -11,9 +11,7 @@ services:
       - URLS=
         [
         {url:'http://localhost:8080/docs/openapi3.authentication-service.json',name:'Authentication'},
-        {url:'http://localhost:8090/docs/openapi3.book-service.json',name:'Book'},
-        {url:'http://localhost:8000/docs/openapi3.sample-fastapi.json',name:'My Subproject A'},
-        {url:'http://localhost:5000/docs/openapi3.sample-express.json',name:'My Subproject B'}
+        {url:'http://localhost:8090/docs/openapi3.book-service.json',name:'Book'}
         ]
 
   joara_postgres14:
