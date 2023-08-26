@@ -8,6 +8,8 @@
 
 # Project Document
 
+`Detail`: 프로젝트 진행중 컨벤션 및 API 담당목록 및 프론트 담당 URL 문서
+
 https://worried-parrotfish-2f5.notion.site/Team-SES-3-8b84882ff38a4535b575e2015e3161f5?pvs=4
 
 ![webnobel_preview](https://github.com/Ropung/integrated-api-workspace/assets/85475762/0a0c64b4-faf5-40cf-8333-4b29bdff9c0a)
@@ -23,6 +25,12 @@ https://worried-parrotfish-2f5.notion.site/Team-SES-3-8b84882ff38a4535b575e2015e
 <img width="983" alt="스크린샷 2023-08-26 오후 8 18 02" src="https://github.com/Ropung/integrated-api-workspace/assets/85475762/60bfe6ad-3419-4f45-b331-25de92a101ff">
 
 <img width="947" alt="스크린샷 2023-08-26 오후 8 18 08" src="https://github.com/Ropung/integrated-api-workspace/assets/85475762/f24fbf42-7429-4b11-b683-df7741dc9103">
+
+
+## 인프라(청사진)
+
+<img width="812" alt="스크린샷 2023-08-26 오후 8 08 23" src="https://github.com/Ropung/integrated-api-workspace/assets/85475762/df109700-915b-410b-a951-967720a3c2a1">
+
 
 
 ## 프로세스 실행
