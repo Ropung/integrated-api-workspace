@@ -1,18 +1,20 @@
-# 웹소설 플랫폼
+# 조아라 웹소설 플랫폼 프로젝트
+
+# Project Document
+
+https://worried-parrotfish-2f5.notion.site/Team-SES-3-8b84882ff38a4535b575e2015e3161f5?pvs=4
+
 ![webnobel_preview](https://github.com/Ropung/integrated-api-workspace/assets/85475762/0a0c64b4-faf5-40cf-8333-4b29bdff9c0a)
 
 # API Workspace 구성
 
-- [Spring Boot API Servers (as a multi-modules project)](./springboot-root)
-    - [인증 서버](./springboot-root/authentication-service): 회원가입, 로그인(JWT 발급 -
-      일반/소셜로그인), 프로필 CRUD
-    - [작품 서버](./springboot-root/book-service)
-        - 작품/회차 CRUD
-        - 댓글/대댓글 CRUD
-- [Fast API]()
-    - uvicorn main:app --reload
+<img width="826" alt="스크린샷 2023-08-26 오후 8 11 36" src="https://github.com/Ropung/integrated-api-workspace/assets/85475762/542f3db0-a037-4094-beeb-4a00c3e1754d">
 
----
+<img width="528" alt="스크린샷 2023-08-26 오후 8 15 16" src="https://github.com/Ropung/integrated-api-workspace/assets/85475762/65e16cea-80b3-42f8-9030-ca2ef50c7268">
+
+<img width="983" alt="스크린샷 2023-08-26 오후 8 18 02" src="https://github.com/Ropung/integrated-api-workspace/assets/85475762/60bfe6ad-3419-4f45-b331-25de92a101ff">
+
+<img width="947" alt="스크린샷 2023-08-26 오후 8 18 08" src="https://github.com/Ropung/integrated-api-workspace/assets/85475762/f24fbf42-7429-4b11-b683-df7741dc9103">
 
 # 통합 Swagger UI(독립형 프로세스)
 
