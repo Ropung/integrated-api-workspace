@@ -12,11 +12,15 @@
 
 https://worried-parrotfish-2f5.notion.site/Team-SES-3-8b84882ff38a4535b575e2015e3161f5?pvs=4
 
-`미리보기`: ![webnobel_preview](https://github.com/Ropung/integrated-api-workspace/assets/85475762/0a0c64b4-faf5-40cf-8333-4b29bdff9c0a)
+`미리보기`:
+
+![webnobel_preview](https://github.com/Ropung/integrated-api-workspace/assets/85475762/0a0c64b4-faf5-40cf-8333-4b29bdff9c0a)
 
 <br/>
 
 # API Workspace 구성
+
+`모듈 구조 및 파일구조`:
 
 <img width="826" alt="스크린샷 2023-08-26 오후 8 11 36" src="https://github.com/Ropung/integrated-api-workspace/assets/85475762/542f3db0-a037-4094-beeb-4a00c3e1754d">
 
@@ -27,7 +31,7 @@ https://worried-parrotfish-2f5.notion.site/Team-SES-3-8b84882ff38a4535b575e2015e
 <img width="947" alt="스크린샷 2023-08-26 오후 8 18 08" src="https://github.com/Ropung/integrated-api-workspace/assets/85475762/f24fbf42-7429-4b11-b683-df7741dc9103">
 
 
-## 인프라(청사진)
+## 인프라 구성( 초기 청사진 )
 
 <img width="812" alt="스크린샷 2023-08-26 오후 8 08 23" src="https://github.com/Ropung/integrated-api-workspace/assets/85475762/df109700-915b-410b-a951-967720a3c2a1">
 
