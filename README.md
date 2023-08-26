@@ -47,6 +47,7 @@ https://worried-parrotfish-2f5.notion.site/Team-SES-3-8b84882ff38a4535b575e2015e
   ```
 - 도커 컴포즈를 올리고 컨테이너 실행환경에서 Auth서비스와 Book서비스를 실행한다.
 
+<br/>
 
 # 통합 Swagger UI(독립형 프로세스)
 
