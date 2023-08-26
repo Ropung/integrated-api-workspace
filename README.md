@@ -1,5 +1,11 @@
 # 조아라 웹소설 플랫폼 프로젝트
 
+### 기업 과제(요구사항)
+
+<img width="470" alt="스크린샷 2023-08-26 오후 8 22 42" src="https://github.com/Ropung/integrated-api-workspace/assets/85475762/edf07f2e-e5b3-4158-9974-6a9caad75620">
+
+
+
 # Project Document
 
 https://worried-parrotfish-2f5.notion.site/Team-SES-3-8b84882ff38a4535b575e2015e3161f5?pvs=4
@@ -18,11 +24,6 @@ https://worried-parrotfish-2f5.notion.site/Team-SES-3-8b84882ff38a4535b575e2015e
 
 <img width="947" alt="스크린샷 2023-08-26 오후 8 18 08" src="https://github.com/Ropung/integrated-api-workspace/assets/85475762/f24fbf42-7429-4b11-b683-df7741dc9103">
 
-# 통합 Swagger UI(독립형 프로세스)
-접속 정보(Local): http://localhost:2999
-
-<img width="1221" alt="스크린샷 2023-07-24 오후 2 32 58" src="https://github.com/Ropung/integrated-api-workspace/assets/85475762/9dfe1585-c8c4-470a-9f30-bd88ea0a7bcb">
-
 
 ## 프로세스 실행
 
@@ -34,6 +35,13 @@ https://worried-parrotfish-2f5.notion.site/Team-SES-3-8b84882ff38a4535b575e2015e
   ```
 - 도커 컴포즈를 올리고 컨테이너 실행환경에서 Auth서비스와 Book서비스를 실행한다.
 
-이제 각 서버가 실행되어 있다면, API 문서를 받아 올 수 있다.
+
+# 통합 Swagger UI(독립형 프로세스)
+
+접속 정보(Local): http://localhost:2999
+
+각 서버가 실행되어 있다면, RestDoc을 사용하여 json파일을 swager UI API에서 읽어 아래 그림과 같이 볼 수 있다.
+
+<img width="1221" alt="스크린샷 2023-07-24 오후 2 32 58" src="https://github.com/Ropung/integrated-api-workspace/assets/85475762/9dfe1585-c8c4-470a-9f30-bd88ea0a7bcb">
 
 
