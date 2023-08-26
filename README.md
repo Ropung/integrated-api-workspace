@@ -53,7 +53,7 @@ https://worried-parrotfish-2f5.notion.site/Team-SES-3-8b84882ff38a4535b575e2015e
 
 접속 정보(Local): http://localhost:2999
 
-각 서버가 실행되어 있다면, RestDoc을 사용하여 json파일을 swager UI API에서 읽어 아래 그림과 같이 볼 수 있다.
+각 서버가 실행되어 있다면, RestDoc을 사용하여 json파일을 swager UI API 서버(port: 2999)에서 아래 그림과 같이 읽은 json을 볼 수 있다.
 
 <img width="1221" alt="스크린샷 2023-07-24 오후 2 32 58" src="https://github.com/Ropung/integrated-api-workspace/assets/85475762/9dfe1585-c8c4-470a-9f30-bd88ea0a7bcb">
 
