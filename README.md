@@ -60,6 +60,8 @@ DOC: https://worried-parrotfish-2f5.notion.site/API-2991db75f39b4435aec0a35f73a7
 
 # API Workspace 구성
 
+<br>
+
 ### 프로젝트 모음 Workspace
 
 ```
@@ -72,6 +74,8 @@ integrated-api-workspace
     ├── redis 7
     └── swagger-ui-program
 ```
+
+<br>
 
 ### 멀티모듈: 마이크로 서비스 표현
 
@@ -90,6 +94,8 @@ springboot-root (project)
 ├── book-service            (service module)  - 8090
 └── board-service           (service module)  - 미완(8010)
 ```
+
+<br>
 
 ### 멀티 모듈: 헥사고날 아키텍처 + JPA Entity | Domain Model 구분
 - 헥사고날 아키텍처 + JPA Entity | Domain Model 구분
@@ -134,9 +140,13 @@ springboot-root (project)
     └── application.yml
 ```
 
+<br>
+
 ## DB 구성
 
 ![image](https://github.com/Ropung/integrated-api-workspace/assets/85475762/c8272c8b-1b18-4b4c-878d-c82b0d0f5391)
+
+<br>
 
 
 ## 인프라 구성( 초기 청사진 )
@@ -146,6 +156,9 @@ springboot-root (project)
 - Redis 구성 미완
 - Api Gateway 미완
 - S3 구성 미완
+
+<br>
+
 
 ## 프로세스 실행방법
 
@@ -158,7 +171,27 @@ springboot-root (project)
     - 도커 컴포즈를 올리고 컨테이너 실행환경에서 Auth서비스와 Book서비스를 실행한다.
     - 추천서비스의 경우 FastApi 환경이 필요하지만 용량이슈로 절감
 
-## Postman Json 파일
+<br>
+
+## 통합 Swagger UI(독립형 프로세스)
+
+접속 정보(Local): http://localhost:2999
+
+각 서버가 실행되어 있다면, RestDoc을 사용하여 json파일을 swager UI API 서버(port: 2999)에서 아래 그림과 같이 읽은 json을 볼 수 있다.
+
+<img width="1221" alt="스크린샷 2023-07-24 오후 2 32 58" src="https://github.com/Ropung/integrated-api-workspace/assets/85475762/9dfe1585-c8c4-470a-9f30-bd88ea0a7bcb">
+
+<br>
+
+### TestCode, CI/CD, AWS 리펙터링 (진행 예정)
+- 단위테스트 x
+- CI(GitAction) x
+- CD x
+- AWS x
+
+<br>
+
+`Postman Json 파일`
 
 <details>
 <summary> Postman.json </summary>
@@ -1406,28 +1439,5 @@ springboot-root (project)
 ```
 
 </details>
-
-
-
-
-<br>
-
-## 통합 Swagger UI(독립형 프로세스)
-
-접속 정보(Local): http://localhost:2999
-
-각 서버가 실행되어 있다면, RestDoc을 사용하여 json파일을 swager UI API 서버(port: 2999)에서 아래 그림과 같이 읽은 json을 볼 수 있다.
-
-<img width="1221" alt="스크린샷 2023-07-24 오후 2 32 58" src="https://github.com/Ropung/integrated-api-workspace/assets/85475762/9dfe1585-c8c4-470a-9f30-bd88ea0a7bcb">
-
-### TestCode, CI/CD, AWS 리펙터링 (진행 예정)
-- 단위테스트 x
-- CI(GitAction) x
-- CD x
-- AWS x
-
-<br>
-
-
 
 
