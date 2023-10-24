@@ -182,12 +182,16 @@ springboot-root (project)
 <img width="1221" alt="스크린샷 2023-07-24 오후 2 32 58" src="https://github.com/Ropung/integrated-api-workspace/assets/85475762/9dfe1585-c8c4-470a-9f30-bd88ea0a7bcb">
 
 <br>
+<br>
+<br>
 
+```
 ### TestCode, CI/CD, AWS 리펙터링 (진행 예정)
 - 단위테스트 x
 - CI(GitAction) x
 - CD x
 - AWS x
+```
 
 <br>
 
