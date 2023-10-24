@@ -157,7 +157,7 @@ springboot-root (project)
 - Api Gateway 미완
 - S3 구성 미완
 
-<br>
+<br/>
 
 
 ## 프로세스 실행방법
@@ -171,7 +171,7 @@ springboot-root (project)
     - 도커 컴포즈를 올리고 컨테이너 실행환경에서 Auth서비스와 Book서비스를 실행한다.
     - 추천서비스의 경우 FastApi 환경이 필요하지만 용량이슈로 절감
 
-<br>
+<br/>
 
 ## 통합 Swagger UI(독립형 프로세스)
 
@@ -181,19 +181,7 @@ springboot-root (project)
 
 <img width="1221" alt="스크린샷 2023-07-24 오후 2 32 58" src="https://github.com/Ropung/integrated-api-workspace/assets/85475762/9dfe1585-c8c4-470a-9f30-bd88ea0a7bcb">
 
-<br>
-<br>
-<br>
-
-```
-### TestCode, CI/CD, AWS 리펙터링 (진행 예정)
-- 단위테스트 x
-- CI(GitAction) x
-- CD x
-- AWS x
-```
-
-<br>
+<br/>
 
 `Postman Json 파일`
 
