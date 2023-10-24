@@ -1,69 +1,39 @@
 # 조아라 웹소설 플랫폼 프로젝트
 
-![image](https://github.com/Ropung/integrated-api-workspace/assets/85475762/1bd635ab-2dc0-44ef-b8a8-f9f7fb6d405c)
+<br>
+
+![webnobel_preview](https://github.com/Ropung/integrated-api-workspace/assets/85475762/0a0c64b4-faf5-40cf-8333-4b29bdff9c0a)
+
+<br>
 
 ## 소개
 프로젝트는 스프링 부트, MSA, 헥사고날 구조로 이루어져 있습니다.
 서비스는 회원 시스템, 도서 및 도서 추천 시스템 2개로 나누어져 있습니다.
 
+<br>
+
 ## 기간
 총 2개월
 1차(04.01~28) / 2차(06.01 ~30)
 
-## 프로젝트 설명
-- 헥사고날 아키텍처 적용
-    
-    **비즈니스 로직이 중심이 되어 설계되므로, 도메인 중심(코어)으로 설계 가능합니다.**
-    
-    코어영역과 외부 인터페이스(어댑터)를 분리하여 요구사항이 변경되더라도 손쉽게 교체가능 합니다. 독립적으로 어댑터를 모듈별로 나누어 변경과 확장에 용이하게 만들었습니다.
-    
-- 멀티 모듈 적용
-    
-    공통 모듈과 서비스용 Base모듈로 분리하여 명확한 책임 분배가 가능하며 단 방향으로(코어쪽으로) 설계하여 순환참조를 방지합니다.
-    
-- 마이바티스 → JPA 변경
-    
-    SQL을 작성하는 비용을 줄여 작업 속도를 향상시켰습니다.
-    
-- Domain Model과 Persistence Entity의 구분
-    
-    **데이터 아키텍처와 애플리케이션 아키텍처 간 간섭을 최소화하도록 설계하였습니다.**
-    
-    이를 위해 도메인 모델과 Persistence Entity를 구분하고, 중계 계층을 관리했습니다. 데이터베이스의 변경 사항이 중개 계층에서 완화되어 애플리케이션 아키텍처에서 모델이 안전하게 취급하도록 관리합니다.
-    
-- MSA 적용
-    
-    회원 서비스, 작품 서비스 분리하여 서비스를 각각 독립적 서버로 실행되어 각각의 서비스는 서로 영향을 주지 않습니다.
-    
-- Flyway(DataBase Migration Tool) 적용
-    
-    DDL 책임을 가져가고 Spring에서 관리하여 작업자의 편의성 증가 & 버전관리를 파악하기 쉽게 개선
-    
-- Domain 을 기준으로 계층분리
-    - 추후 DDD 적용을 위해 도메인을 기준으로 수직 수평 계층으로 나누어 관리 및 유지보수 편의성 개선
-- 휴먼에러 개선
-    
-    공유 상수는 리터럴 사용을 삼가고, 열거형과 상수관리 클래스 등을 통해 관리하였습니다.
-    협업 시 구성원의 실수를 최소화하고, 디버깅에 용이하며, 열거형은 멤버변수와 메서드를 통한 일관된 작업을 지원할 수 있습니다.
-    
-- JDK 17적용
-    
-    record 문법을 사용하여 기존 dto 클레스에 보일러 플레이트를 생략 가능하게 만들어 코드양을 줄여 가독성과 유지보수성을 증가시켰습니다. 
-    
-- 인증 인가(JWT) 적용
-    
-    로그인 시 엑세스 토큰(JWT)을 발행하며 토큰 만료 시 리프레시 토큰도 재발행합니다. 
-    
-- 조회 데이터량 감소
-    
-    클라이언트에게 응답을 할때 JPA Query Projection으로 DB단에서 프론트에서 필요한 데이터만 응답하여 트래픽을 감소 시켰습니다.
-    
-- 추천작품 기능
-    
-    장르와 제목을 기준으로 가중치를 주어 유사한(코사인 유사도 기준) 높은 유사도의 작품들을 추천하여 보여줄 수 있습니다
-    
-- Simple CQRS 적용
+<br>
 
+## 프로젝트 설명
+
+- **Docker Compose**로 모든 팀원이 쉽게 로컬 환경 통일
+- **Flyway**를 통한 DDL 형상관리
+- **도메인 모델/Persistence Entity 구분**
+- 멀티 모듈 프로젝트를 통한 **공통 모듈 관리**
+- **멀티 모듈 심화**: 어댑터를 모듈로 깔끔하게 구분
+- **JDK 17 적용**
+- **JWT 인증** 액세스 토큰은 프론트, 리프레시 토큰은 HTTP Only 쿠키와 Redis Repository에 보존
+- **JPA Repository**를 통한 영속성 데이터 관리
+- **Redis CRUD Repository**를 통한 휘발성 데이터 관리
+- **Global Exception Handler**를 통한 예외 처리
+- **유지보수 친화**적인 **ErrorCode / Exception** 확장
+(복잡도를 낮추면서도 확장성을 높이기 위한 노력)
+
+<br>
 
 # Project Document
 
@@ -71,23 +41,83 @@
 
 https://worried-parrotfish-2f5.notion.site/Team-SES-3-8b84882ff38a4535b575e2015e3161f5?pvs=4
 
-`미리보기`:
-
-![webnobel_preview](https://github.com/Ropung/integrated-api-workspace/assets/85475762/0a0c64b4-faf5-40cf-8333-4b29bdff9c0a)
-
-<br/>
+<br>
 
 # API Workspace 구성
 
-`모듈 구조 및 파일구조`:
+## 프로젝트 모음 Workspace
+```
+integrated-api-workspace
+├── fast-api-server (project) 
+├── springboot-root (project) 
+├── ...
+└── docker-compose.yml
+    ├── postgresql 14
+    ├── redis 7
+    └── swagger-ui-program
+```
 
-<img width="826" alt="스크린샷 2023-08-26 오후 8 11 36" src="https://github.com/Ropung/integrated-api-workspace/assets/85475762/542f3db0-a037-4094-beeb-4a00c3e1754d">
+## 멀티모듈: 마이크로 서비스 표현
 
-<img width="528" alt="스크린샷 2023-08-26 오후 8 15 16" src="https://github.com/Ropung/integrated-api-workspace/assets/85475762/65e16cea-80b3-42f8-9030-ca2ef50c7268">
+```
+springboot-root (project)
+├── common
+├── base-modules
+│   ├── joara-jwt-parser                (utility module)
+│   ├── joara-file-uploader             (utility module)
+│   │
+│   ├── joara-global-exception-handler  (AOP module)        - for each service modules(using spring web)
+│   ├── joara-integrated-flyway-core    (core module)       - for each service modules(using DB)
+│   └── joara-jpa-base                  (support module)    - for jpa modules(jpa adapter)
+│
+├── authentication-service  (service module)  - 8080
+├── book-service            (service module)  - 8090
+└── board-service           (service module)  - 미완(8010)
+```
 
-<img width="983" alt="스크린샷 2023-08-26 오후 8 18 02" src="https://github.com/Ropung/integrated-api-workspace/assets/85475762/60bfe6ad-3419-4f45-b331-25de92a101ff">
+##멀티 모듈: 헥사고날 아키텍처 + JPA Entity | Domain Model 구분
+헥사고날 아키텍처 + JPA Entity | Domain Model 구분
 
-<img width="947" alt="스크린샷 2023-08-26 오후 8 18 08" src="https://github.com/Ropung/integrated-api-workspace/assets/85475762/f24fbf42-7429-4b11-b683-df7741dc9103">
+```
+springboot-root (project)
+├── ... (common, base modules, ...)
+│
+├── authentication-service  (service module)
+│   ├── driving
+│   │   ├── web-adapter                          (api controllers), (driving adapter) 일반 사용자에게 API 제공
+│   │   └── internal-api-adapter                 (api controllers), (driving adapter) 다른 마이크로서비스에 API 제공
+│   ├── driven
+│   │   ├── rdb-adapter                          (jpa repository, domain repository impl), (driven adapter)
+│   │   └── redis-adapter                        (redis repository), (driven adapter)
+│   │
+│   ├── application (ports)
+│   │   ├── domain
+│   │   ├── read-models
+│   │   └── src (이하 패키지들)
+│   │       ├── config
+│   │       ├── exception
+│   │       ├── properties
+│   │       ├── domain repositories
+│   │       ├── service                          (service impl)
+│   │       ├── usecase                          (service interface) - 세분화된 서비스 인터페이스. web-adapter가 이를 구현.
+│   │       └── utils
+│   │
+│   ├── AuthenticationServiceApplication.java
+│   └── application.yml
+│
+└── book-service            (service module)
+    ├── driven
+    │   ├── ...
+    │   │
+    │   └── joara-member-client     (client module) 다른 마이크로서비스의 API를 이용(주로 내부 API)
+    ├── application
+    │   ├── ...
+    │   └── clients/MemberQueryPort.java    (client port file) (interface) 다른 도메인의 정보를 조회하는 인터페이스 예시
+    │
+    ├── BookServiceApplication.java
+    └── application.yml
+```
+
 
 
 ## 인프라 구성( 초기 청사진 )
