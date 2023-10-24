@@ -134,6 +134,9 @@ springboot-root (project)
     └── application.yml
 ```
 
+## DB 구성
+
+![image](https://github.com/Ropung/integrated-api-workspace/assets/85475762/c8272c8b-1b18-4b4c-878d-c82b0d0f5391)
 
 
 ## 인프라 구성( 초기 청사진 )
@@ -156,6 +159,9 @@ springboot-root (project)
     - 추천서비스의 경우 FastApi 환경이 필요하지만 용량이슈로 절감
 
 ## Postman Json 파일
+
+<details>
+<summary> Postman.json </summary>
 
 ```json
 {
@@ -1398,6 +1404,8 @@ springboot-root (project)
 	]
 }
 ```
+
+</details>
 
 
 
