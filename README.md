@@ -32,7 +32,8 @@ https://worried-parrotfish-2f5.notion.site/Team-SES-3-8b84882ff38a4535b575e2015e
 
 ## 🛠사용 기술
 
-![image](https://github.com/Ropung/integrated-api-workspace/assets/85475762/6afe5e27-4b22-447e-b636-eef456610a30)
+![image](https://github.com/Ropung/integrated-api-workspace/assets/85475762/37a4b51d-b507-4b28-869b-d0e914b750a9)
+
 
 <br>
 
